@@ -1,9 +1,9 @@
 
 <?php
 
-  require_once('static_references/header.php');
-  require_once('static_references/search.php');
-  require_once('static_references/navbar.php');
+  require_once('../static_references/header.php');
+  require_once('../static_references/search.php');
+  require_once('../static_references/navbar.php');
 
 ?>
 
@@ -322,6 +322,6 @@
 
     <?php
 
-      require_once('static_references/footer.php');
+      require_once('../static_references/footer.php');
 
     ?>

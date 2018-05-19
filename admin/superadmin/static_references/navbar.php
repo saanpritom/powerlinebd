@@ -1,4 +1,13 @@
 
+<?php
+
+include('../classes/navigation-active.php');
+
+$url_active = new NavigationActive();
+$url_active->url_detection($_SERVER['REQUEST_URI']);
+
+ ?>
+
 <!-- Top Bar -->
 <nav class="navbar">
     <div class="container-fluid">
@@ -54,7 +63,7 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="../../static/images/user.png" width="48" height="48" alt="User" />
+                <img src="/powerlinebd/static/images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -74,30 +83,50 @@
         <div class="menu">
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="active">
-                    <a href="../superadmin/dashboard">
-                        <i class="material-icons">home</i>
-                        <span>Home</span>
+                <?php
+
+                  if($url_active->child_menu == 'dashboard'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
+                    <a href="/powerlinebd/admin/superadmin/home/dashboard">
+                        <i class="material-icons">dashboard</i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
 
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="material-icons">flight</i>
+                        <i class="material-icons">flight_takeoff</i>
                         <span>Shipments</span>
                     </a>
                     <ul class="ml-menu">
                       <li>
                           <a href="javascript:void(0);" >
                               <i class="material-icons">view_stream</i>
-                              <span>Shippers List</span>
+                              <span>All Shipments</span>
                           </a>
                       </li>
                         <li>
                             <a href="javascript:void(0);" >
-                                <i class="material-icons">create</i>
-                                <span>Create Shippers</span>
+                                <i class="material-icons">cancel</i>
+                                <span>Undelivered Shipments</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">add_box</i>
+                                <span>Create New Shipment</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">add_box</i>
+                                <span>Create New Shipment</span>
                             </a>
                         </li>
                     </ul>
@@ -105,11 +134,92 @@
 
                 <li>
                     <a href="../superadmin/dashboard">
-                        <i class="material-icons">note</i>
+                        <i class="material-icons">description</i>
                         <span>Manifest Report</span>
                     </a>
                 </li>
 
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">group_work</i>
+                        <span>Master AWB</span>
+                    </a>
+                    <ul class="ml-menu">
+                      <li>
+                          <a href="javascript:void(0);" >
+                              <i class="material-icons">view_stream</i>
+                              <span>All MAWB</span>
+                          </a>
+                      </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">cancel</i>
+                                <span>Incomplete MAWB</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">add_box</i>
+                                <span>Create New MAWB</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">flight</i>
+                        <span>Flights</span>
+                    </a>
+                    <ul class="ml-menu">
+                      <li>
+                          <a href="javascript:void(0);" >
+                              <i class="material-icons">view_stream</i>
+                              <span>All Flight List</span>
+                          </a>
+                      </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">add_box</i>
+                                <span>Add New Flight</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">location_on</i>
+                        <span>Origin/Destination/Country</span>
+                    </a>
+                    <ul class="ml-menu">
+                      <li>
+                          <a href="javascript:void(0);" >
+                              <i class="material-icons">view_stream</i>
+                              <span>Origin List</span>
+                          </a>
+                      </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">view_stream</i>
+                                <span>Destination List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">view_stream</i>
+                                <span>Country List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="material-icons">add_box</i>
+                                <span>Add New Record</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
@@ -153,7 +263,15 @@
                     </ul>
                 </li>
 
-                <li>
+                <?php
+
+                  if($url_active->parent_menu == 'office_management'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">work</i>
                         <span>Office Management</span>
@@ -171,14 +289,30 @@
                                 <span>User List</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'create-branch'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/office_management/create-branch" >
                                 <i class="material-icons">create</i>
                                 <span>Create Branch</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'create-user'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/office_management/create-user" >
                                 <i class="material-icons">person_add</i>
                                 <span>Create User</span>
                             </a>
@@ -188,7 +322,7 @@
 
                 <li>
                     <a href="../superadmin/dashboard">
-                        <i class="material-icons">report</i>
+                        <i class="material-icons">access_time</i>
                         <span>System Log</span>
                     </a>
                 </li>
