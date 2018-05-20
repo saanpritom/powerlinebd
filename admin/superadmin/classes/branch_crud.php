@@ -27,7 +27,7 @@ class BranchCrudOperation extends DbConfig
     {
       $query = "SELECT sl_num FROM office_branch WHERE branch_id='$this->brancher_id'";
       $result = $this->connection->query($query);
-      if($result->num_rows == 0) {
+      if($result->num_rows > 0) {
         return true;
       }else{
         return false;
@@ -44,7 +44,7 @@ class BranchCrudOperation extends DbConfig
       //create and check branch_id;
       $this->brancher_id = mt_rand();
 
-      $branch_id_check = $this->check_branch_id($this->brancher_id);
+      $this->branch_id_check = $this->check_branch_id($this->brancher_id);
 
       if($this->branch_id_check){
         $this->brancher_id = 'Branch ID overflow. Please try again';
@@ -71,6 +71,24 @@ class BranchCrudOperation extends DbConfig
 
       }
 
+    }
+
+    //fetch data from branch table;
+    public function getData($query)
+    {
+      $result = $this->connection->query($query);
+
+        if ($result == false) {
+            return false;
+        }
+
+        $rows = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 
 

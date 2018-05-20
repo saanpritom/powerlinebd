@@ -28,8 +28,6 @@
                           $validation = new Validation();
                           $clearence = new Clearence();
                           $branch_operation = new BranchCrudOperation();
-                          //$fetch_time->fetch_time();
-                          //echo $fetch_time->timer_id;
 
                           //mysql escape string clearence;
                           $branch_name = $clearence->escape_string($_POST['branch_name']);
@@ -77,7 +75,7 @@
 
                             //sending all variables to branch_crud for creating new branch;
                             $new_branch = $branch_operation->create_branch($branch_name, $email_address, $contact_number, $address);
-                            //$new_branch = $branch_operation->create_branch();
+                            
                             //check if branch created properly;
                             if($new_branch == 'Successfully created a new branch'){
                               ?>
