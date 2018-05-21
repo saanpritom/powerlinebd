@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 20, 2018 at 04:01 PM
+-- Generation Time: May 21, 2018 at 02:49 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -53,7 +53,7 @@ INSERT INTO `admin_details` (`sl_num`, `admin_id`, `branch_id`, `admin_type`, `n
 (7, 707485416, 118750197, 'finance_user', 'Test5', 'Male', 'Test Desig', 'Test Dept', '433445', 2085795140),
 (11, 1754315326, 118750197, 'business_user', 'Test6', 'Female', 'Test Desig', 'Test Dept', '433445', 188365342),
 (14, 1980363788, 118750197, 'finance_user', 'Pritom', 'Male', 'Executive', 'IT', '01732844253', 2027745267),
-(17, 1332674017, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Marketing', '01732844253', 304374587);
+(20, 802124940, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Marketing', '01732844253', 271175730);
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,35 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (39, 2027745267, '2018/05/20', '03:39:34pm'),
 (40, 1830725635, '2018/05/20', '07:38:40pm'),
 (41, 1245604994, '2018/05/20', '07:44:46pm'),
-(42, 304374587, '2018/05/20', '07:55:43pm');
+(42, 304374587, '2018/05/20', '07:55:43pm'),
+(43, 1458050650, '2018/05/21', '12:00:31pm'),
+(44, 1133780913, '2018/05/21', '12:18:18pm'),
+(45, 1177349736, '2018/05/21', '12:21:42pm'),
+(46, 271175730, '2018/05/21', '12:33:08pm'),
+(47, 1146670803, '2018/05/21', '12:33:21pm'),
+(48, 799062154, '2018/05/21', '12:59:57pm'),
+(49, 790548326, '2018/05/21', '01:58:20pm'),
+(50, 792891264, '2018/05/21', '02:00:25pm'),
+(51, 2068944084, '2018/05/21', '02:01:10pm'),
+(52, 1749755394, '2018/05/21', '02:04:41pm'),
+(53, 1902291485, '2018/05/21', '02:13:39pm'),
+(54, 598361139, '2018/05/21', '02:18:40pm'),
+(55, 354349276, '2018/05/21', '02:26:17pm'),
+(56, 664833858, '2018/05/21', '03:04:19pm'),
+(57, 134753319, '2018/05/21', '03:05:31pm'),
+(58, 2044480621, '2018/05/21', '03:06:34pm'),
+(59, 1930386403, '2018/05/21', '03:33:15pm'),
+(60, 1442475147, '2018/05/21', '03:33:21pm'),
+(61, 2138774395, '2018/05/21', '03:33:29pm'),
+(62, 215174318, '2018/05/21', '03:33:34pm'),
+(63, 1767717756, '2018/05/21', '03:36:16pm'),
+(64, 1168860784, '2018/05/21', '03:36:52pm'),
+(65, 2085953132, '2018/05/21', '03:36:57pm'),
+(66, 38635514, '2018/05/21', '03:39:59pm'),
+(67, 395631740, '2018/05/21', '03:42:47pm'),
+(68, 251259148, '2018/05/21', '03:45:21pm'),
+(69, 10029548, '2018/05/21', '03:47:34pm'),
+(70, 746002526, '2018/05/21', '06:41:52pm');
 
 -- --------------------------------------------------------
 
@@ -144,7 +172,7 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (7, 707485416, 'test5@gmail.com', '$2y$10$vjk2smI3tPw/KGtMRAPRDOLTYQQcWYbbcTSeaJFaCt7cKinBCkV3y', '0', 'admin', 0),
 (11, 1754315326, 'test6@gmail.com', '$2y$10$31abRq/GjBGm.wfCaMfeh.5Sm6FYlgFP.UHW.gOXo3lc7HXLpd8oe', '0', 'admin', 0),
 (14, 1980363788, 'pritom@bylc.org', '$2y$10$mbqdbl8k97JXRkVhi6J6ReHACKQlCrRYRIqpq3si7e3hz5WeW9ER6', '0', 'admin', 0),
-(17, 1332674017, 'sam@gmail.com', '$2y$11$iRmyZ/N2OMCA3l06Fa3IM.btcpd.6Z3gt6RJIQBFOXAEZfMtndwyy', '0', 'admin', 0);
+(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 0);
 
 -- --------------------------------------------------------
 
@@ -160,6 +188,28 @@ CREATE TABLE `login_log` (
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `login_log`
+--
+
+INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
+(1, 802124940, '192.168.64.1', 799062154),
+(2, 802124940, '192.168.64.1', 790548326),
+(3, 802124940, '192.168.64.1', 792891264),
+(4, 802124940, '192.168.64.1', 2068944084),
+(5, 802124940, '192.168.64.1', 1749755394),
+(6, 802124940, '192.168.64.1', 1902291485),
+(7, 802124940, '192.168.64.1', 598361139),
+(8, 802124940, '192.168.64.1', 354349276),
+(9, 802124940, '192.168.64.1', 664833858),
+(10, 802124940, '192.168.64.1', 134753319),
+(11, 802124940, '192.168.64.1', 2044480621),
+(12, 802124940, '192.168.64.1', 1442475147),
+(13, 802124940, '192.168.64.1', 215174318),
+(14, 802124940, '192.168.64.1', 1168860784),
+(15, 802124940, '192.168.64.1', 38635514),
+(16, 802124940, '192.168.64.1', 10029548);
+
 -- --------------------------------------------------------
 
 --
@@ -173,6 +223,34 @@ CREATE TABLE `log_report` (
   `log_report` text COLLATE utf8_unicode_ci NOT NULL,
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `log_report`
+--
+
+INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
+(1, 802124940, 'User logged In', 799062154),
+(2, 802124940, 'User logged In', 790548326),
+(3, 802124940, 'User logged In', 792891264),
+(4, 802124940, 'User logged In', 2068944084),
+(5, 802124940, 'User logged In', 1749755394),
+(6, 802124940, 'User logged In', 1902291485),
+(7, 802124940, 'User logged In', 598361139),
+(8, 802124940, 'User logged In', 354349276),
+(9, 802124940, 'User logged In', 664833858),
+(10, 802124940, 'User logged In', 134753319),
+(11, 802124940, 'User logged In', 2044480621),
+(12, 0, 'User logged Out', 1930386403),
+(13, 802124940, 'User logged In', 1442475147),
+(14, 0, 'User logged Out', 2138774395),
+(15, 802124940, 'User logged In', 215174318),
+(16, 802124940, 'User logged Out', 1767717756),
+(17, 802124940, 'User logged In', 1168860784),
+(18, 802124940, 'User logged Out', 2085953132),
+(19, 802124940, 'User logged In', 38635514),
+(20, 802124940, 'User logged Out', 251259148),
+(21, 802124940, 'User logged In', 10029548),
+(22, 802124940, 'User logged Out', 746002526);
 
 -- --------------------------------------------------------
 
@@ -197,7 +275,8 @@ CREATE TABLE `office_branch` (
 
 INSERT INTO `office_branch` (`sl_num`, `branch_id`, `name`, `address`, `email`, `contact_number`, `timer_id`) VALUES
 (1, 118750197, 'Collabo', 'road#08, house no#04(1st floor), Kallayanpur', 'pritom.saan@gmail.com', '433445', 1321687697),
-(2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282);
+(2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282),
+(3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740);
 
 --
 -- Indexes for dumped tables
@@ -251,37 +330,37 @@ ALTER TABLE `office_branch`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `login_info`
 --
 ALTER TABLE `login_info`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `office_branch`
 --
 ALTER TABLE `office_branch`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
