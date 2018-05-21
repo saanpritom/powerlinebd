@@ -40,7 +40,7 @@
                             <i class="material-icons">email</i>
                         </span>
                         <div class="form-line">
-                            <input type="email" class="form-control" name="email_address" placeholder="Email" required autofocus>
+                            <input type="email" class="form-control" name="email_address" placeholder="Email" value="<?php if(isset($_COOKIE["member_email"])) { echo $_COOKIE["member_email"]; } ?>" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -48,7 +48,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Password" value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>" required>
                         </div>
                     </div>
                     <div class="row">
@@ -87,6 +87,7 @@
                   //mysql escape string;
                   $email_address = $clearence->escape_string($_POST['email_address']);
                   $password = $clearence->escape_string($_POST['password']);
+                  $remember_me = isset($_POST['rememberme']);
 
                   //input data triming;
                   $email_address = strip_tags(trim($email_address));
@@ -99,6 +100,8 @@
                   //check refined and input values are empty and valid or not;
                   $msg = $validation->check_empty(array($email_address, $password));
                   $check_email = $validation->is_email_valid($email_address);
+
+
 
                   if($msg != null){
                     ?>
@@ -115,8 +118,8 @@
                     <?php
                   }else{
 
-                    $new_login = $loginin->do_login($email_address, $password);
-
+                    $new_login = $loginin->do_login($email_address, $password, $remember_me);
+                    //$new_login = $loginin->password_match($email_address, $password);
                     echo $new_login;
 
                   }

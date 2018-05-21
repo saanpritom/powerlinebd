@@ -1,6 +1,7 @@
 
 <?php
 
+  require_once('../classes/authentication.php');
   require_once('../static_references/header.php');
   require_once('../static_references/search.php');
   require_once('../static_references/navbar.php');

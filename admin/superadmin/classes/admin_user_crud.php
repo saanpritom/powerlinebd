@@ -103,13 +103,10 @@ class UserCrudOperation extends DbConfig
       $this->usering_id = mt_rand();
 
       //create new password for user;
-      //$default_password = mt_rand();
-      $default_password = '1234';
+      $default_password = mt_rand();
+
       //hash the default password;
-      $options = [
-        'cost' => 11
-      ];
-      $hash_password = password_hash($default_password, PASSWORD_BCRYPT, $options);
+      $hash_password = hash('sha256', $default_password);
 
       //call user id check function
       $this->user_id_check = $this->check_user_id($this->usering_id);

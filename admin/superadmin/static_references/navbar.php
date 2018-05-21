@@ -73,7 +73,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="dropdown-menu pull-right">
                         <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="../../../signout"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -277,8 +277,16 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                         <span>Office Management</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'branch-list'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/office_management/branch-list" >
                               <i class="material-icons">business</i>
                               <span>Branch List</span>
                           </a>

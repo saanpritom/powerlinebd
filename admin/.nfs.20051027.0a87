@@ -1,0 +1,11 @@
+<?php
+
+	echo 'hello world';
+
+  $uiname = '1';
+
+?>
+
+<a href="second/<?php echo $uiname; ?>">
+   <?php echo $uiname; ?>
+</a>

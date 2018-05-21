@@ -1,5 +1,6 @@
 <?php
 
+  require_once('../classes/authentication.php');
   include('../static_references/header.php');
   include('../static_references/search.php');
   include('../static_references/navbar.php');
@@ -75,7 +76,7 @@
 
                             //sending all variables to branch_crud for creating new branch;
                             $new_branch = $branch_operation->create_branch($branch_name, $email_address, $contact_number, $address);
-                            
+
                             //check if branch created properly;
                             if($new_branch == 'Successfully created a new branch'){
                               ?>
