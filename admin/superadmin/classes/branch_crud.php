@@ -34,6 +34,23 @@ class BranchCrudOperation extends DbConfig
       }
     }
 
+    //insert data into log report table;
+    public function log_report_insert($user_id, $branch_name, $timing_id)
+    {
+
+      $report_data = "$branch_name updated by User";
+
+      $query = "INSERT INTO `log_report`(`user_id`, `log_report`, `timer_id`)
+                VALUES ('$user_id','$report_data','$timing_id')";
+      if($this->connection->query($query))
+      {
+        return true;
+      }else{
+        return false;
+      }
+
+    }
+
     //creating a new branch on the database;
     public function create_branch($b_name, $e_name, $c_name, $adrs)
     {
@@ -89,6 +106,50 @@ class BranchCrudOperation extends DbConfig
         }
 
         return $rows;
+    }
+
+    //update branch data
+    public function update_branch($b_id, $b_name, $e_name, $c_name, $adrs)
+    {
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      //check if timer_id created properly
+      if(is_numeric($this->timer_id)){
+
+        $query = "UPDATE `office_branch` SET `name`='$b_name',
+                         `address`='$adrs',`email`='$e_name',
+                         `contact_number`='$c_name' WHERE `branch_id`='$b_id'";
+        if($this->connection->query($query)){
+
+          $user_login_id = $_SESSION["plbd_id"];
+
+          if($this->log_report_insert($user_login_id, $b_name, $this->timer_id)){
+
+            $this->status_message = 'Branch updated Successfully';
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'Problem creating log report but branch updated';
+            return $this->status_message;
+
+          }
+
+
+        }else{
+          $this->status_message = 'Problem updating new branch. Please try again';
+          return $this->status_message;
+        }
+
+
+      }else{
+        return $this->timer_id;
+      }
+
+
+
     }
 
 

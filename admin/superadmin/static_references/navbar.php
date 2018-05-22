@@ -279,14 +279,14 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'branch-list'){
+                        if($url_active->child_menu == 'branch-list' or $url_active->child_menu == 'branch-detail' or $url_active->child_menu == 'branch-edit'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
                         }
 
                        ?>
-                          <a href="/powerlinebd/admin/superadmin/office_management/branch-list" >
+                          <a href="/powerlinebd/admin/superadmin/office_management/branch-list/1" >
                               <i class="material-icons">business</i>
                               <span>Branch List</span>
                           </a>

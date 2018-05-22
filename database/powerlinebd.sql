@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 21, 2018 at 02:49 PM
+-- Generation Time: May 22, 2018 at 12:49 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -143,7 +143,14 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (67, 395631740, '2018/05/21', '03:42:47pm'),
 (68, 251259148, '2018/05/21', '03:45:21pm'),
 (69, 10029548, '2018/05/21', '03:47:34pm'),
-(70, 746002526, '2018/05/21', '06:41:52pm');
+(70, 746002526, '2018/05/21', '06:41:52pm'),
+(71, 1720653143, '2018/05/21', '07:09:57pm'),
+(72, 845434693, '2018/05/22', '10:32:38am'),
+(73, 1748674145, '2018/05/22', '03:37:58pm'),
+(74, 2071377696, '2018/05/22', '03:39:45pm'),
+(75, 117048446, '2018/05/22', '03:40:57pm'),
+(76, 369165964, '2018/05/22', '03:43:14pm'),
+(77, 1531602248, '2018/05/22', '03:44:22pm');
 
 -- --------------------------------------------------------
 
@@ -172,7 +179,7 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (7, 707485416, 'test5@gmail.com', '$2y$10$vjk2smI3tPw/KGtMRAPRDOLTYQQcWYbbcTSeaJFaCt7cKinBCkV3y', '0', 'admin', 0),
 (11, 1754315326, 'test6@gmail.com', '$2y$10$31abRq/GjBGm.wfCaMfeh.5Sm6FYlgFP.UHW.gOXo3lc7HXLpd8oe', '0', 'admin', 0),
 (14, 1980363788, 'pritom@bylc.org', '$2y$10$mbqdbl8k97JXRkVhi6J6ReHACKQlCrRYRIqpq3si7e3hz5WeW9ER6', '0', 'admin', 0),
-(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 0);
+(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +215,9 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (13, 802124940, '192.168.64.1', 215174318),
 (14, 802124940, '192.168.64.1', 1168860784),
 (15, 802124940, '192.168.64.1', 38635514),
-(16, 802124940, '192.168.64.1', 10029548);
+(16, 802124940, '192.168.64.1', 10029548),
+(17, 802124940, '192.168.64.1', 1720653143),
+(18, 802124940, '192.168.64.1', 845434693);
 
 -- --------------------------------------------------------
 
@@ -250,7 +259,13 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (19, 802124940, 'User logged In', 38635514),
 (20, 802124940, 'User logged Out', 251259148),
 (21, 802124940, 'User logged In', 10029548),
-(22, 802124940, 'User logged Out', 746002526);
+(22, 802124940, 'User logged Out', 746002526),
+(23, 802124940, 'User logged In', 1720653143),
+(24, 802124940, 'User logged In', 845434693),
+(25, 0, ' updated by User', 2071377696),
+(26, 802124940, 'Collabo updated by User', 117048446),
+(27, 802124940, 'Collabo updated by User', 369165964),
+(28, 802124940, 'Collabo updated by User', 1531602248);
 
 -- --------------------------------------------------------
 
@@ -274,7 +289,7 @@ CREATE TABLE `office_branch` (
 --
 
 INSERT INTO `office_branch` (`sl_num`, `branch_id`, `name`, `address`, `email`, `contact_number`, `timer_id`) VALUES
-(1, 118750197, 'Collabo', 'road#08, house no#04(1st floor), Kallayanpur', 'pritom.saan@gmail.com', '433445', 1321687697),
+(1, 118750197, 'Collabo', 'Boston, United States', 'pritom.saan@gmail.com', '+8801732844253', 1321687697),
 (2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282),
 (3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740);
 
@@ -336,7 +351,7 @@ ALTER TABLE `admin_details`
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `login_info`
@@ -348,13 +363,13 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `office_branch`

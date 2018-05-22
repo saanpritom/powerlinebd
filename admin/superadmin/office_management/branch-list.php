@@ -8,6 +8,7 @@
   include_once('../classes/data_clearence.php');
   include_once('../classes/branch_crud.php');
   include_once('../classes/admin_user_crud.php');
+  include_once('../classes/pagination_class.php');
 
 ?>
 
@@ -39,12 +40,11 @@
                                 <tbody>
                                   <?php
 
-                                  //fetch branch list view;
-
+                                    //declare objects
                                     $get_branch = new BranchCrudOperation();
+                                    $show_pagination = new PaginationOperation();
 
-                                    $branch_pegi = $_GET['b_pa'];
-
+                                    //fetch branch list view;
                                     $query = "SELECT `branch_id`, `name`, `email`, `contact_number`
                                               FROM `office_branch` ORDER BY `name` ASC";
 
@@ -57,7 +57,7 @@
                                       ?>
                                       <tr>
                                           <th scope="row"><?php echo $counter; ?></th>
-                                          <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail"><?php echo $res['name']; ?></a></td>
+                                          <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $res['branch_id']; ?>"><?php echo $res['name']; ?></a></td>
                                           <td><?php echo $res['email']; ?></td>
                                           <td><?php echo $res['contact_number']; ?></td>
                                       </tr>
@@ -75,25 +75,31 @@
                         </div>
 
                         <div class="body">
-                          <nav>
-                                <ul class="pagination">
-                                    <li class="disabled">
-                                        <a href="javascript:void(0);">
-                                            <i class="material-icons">chevron_left</i>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="javascript:void(0);">1</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect">2</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect">3</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect">4</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect">5</a></li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="waves-effect">
-                                            <i class="material-icons">chevron_right</i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                          <?php
+
+                            $branch_page_number = $_GET['b_id'];
+
+                            //querying for calculating total page to show;
+                            $query = "SELECT COUNT(branch_id) AS total_id FROM office_branch WHERE 1";
+
+                            //calling total page number calculation function;
+                            $how_many_show = $show_pagination->counting_pagination($query, '20', $branch_page_number);
+
+                            ?>
+
+                            <div class="alert alert-info">
+                                <?php echo $how_many_show; ?>
+                            </div>
+
+                        </div>
+
+                        <div class="body">
+                           <?php
+
+                           //calling the pagination showing class, always send current page name;
+                           $show_pagination->do_pagination('branch-list');
+
+                            ?>
                         </div>
                     </div>
                 </div>

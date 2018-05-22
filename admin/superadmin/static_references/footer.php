@@ -49,8 +49,10 @@
 <script src="/powerlinebd/static/js/admin.js"></script>
 <script src="/powerlinebd/static/js/pages/index.js"></script>
 <script src="/powerlinebd/static/js/pages/forms/basic-form-elements.js"></script>
+<script src="/powerlinebd/static/js/pages/ui/modals.js"></script>
 <!-- Demo Js -->
 <script src="/powerlinebd/static/js/demo.js"></script>
+
 </body>
 
 </html>

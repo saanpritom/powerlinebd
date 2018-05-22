@@ -42,6 +42,8 @@
 </head>
 
 <body class="theme-deep-orange">
+    <?php
+    /*
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -59,6 +61,8 @@
         </div>
     </div>
     <!-- #END# Page Loader -->
+    */
+    ?>
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
