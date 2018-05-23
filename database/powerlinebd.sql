@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 22, 2018 at 12:49 PM
+-- Generation Time: May 23, 2018 at 01:07 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -150,7 +150,22 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (74, 2071377696, '2018/05/22', '03:39:45pm'),
 (75, 117048446, '2018/05/22', '03:40:57pm'),
 (76, 369165964, '2018/05/22', '03:43:14pm'),
-(77, 1531602248, '2018/05/22', '03:44:22pm');
+(77, 1531602248, '2018/05/22', '03:44:22pm'),
+(78, 788610104, '2018/05/22', '04:54:40pm'),
+(79, 1276362415, '2018/05/22', '04:54:42pm'),
+(80, 1175845374, '2018/05/22', '05:00:58pm'),
+(81, 713333057, '2018/05/22', '05:01:10pm'),
+(82, 455965985, '2018/05/22', '05:01:14pm'),
+(83, 1995186924, '2018/05/22', '05:01:22pm'),
+(84, 1850788022, '2018/05/22', '05:01:43pm'),
+(85, 639599145, '2018/05/23', '09:11:52am'),
+(86, 819251882, '2018/05/23', '09:12:56am'),
+(87, 2140484956, '2018/05/23', '09:13:21am'),
+(88, 1858644361, '2018/05/23', '01:30:26pm'),
+(89, 2122586965, '2018/05/23', '05:04:51pm'),
+(90, 1382251671, '2018/05/23', '05:05:16pm'),
+(91, 335793212, '2018/05/23', '05:05:36pm'),
+(92, 1841161016, '2018/05/23', '05:06:13pm');
 
 -- --------------------------------------------------------
 
@@ -217,7 +232,12 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (15, 802124940, '192.168.64.1', 38635514),
 (16, 802124940, '192.168.64.1', 10029548),
 (17, 802124940, '192.168.64.1', 1720653143),
-(18, 802124940, '192.168.64.1', 845434693);
+(18, 802124940, '192.168.64.1', 845434693),
+(19, 802124940, '192.168.64.1', 1276362415),
+(20, 802124940, '192.168.64.1', 713333057),
+(21, 802124940, '192.168.64.1', 1995186924),
+(22, 802124940, '192.168.64.1', 639599145),
+(23, 802124940, '192.168.64.1', 2140484956);
 
 -- --------------------------------------------------------
 
@@ -265,7 +285,21 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (25, 0, ' updated by User', 2071377696),
 (26, 802124940, 'Collabo updated by User', 117048446),
 (27, 802124940, 'Collabo updated by User', 369165964),
-(28, 802124940, 'Collabo updated by User', 1531602248);
+(28, 802124940, 'Collabo updated by User', 1531602248),
+(29, 802124940, 'User logged Out', 788610104),
+(30, 802124940, 'User logged In', 1276362415),
+(31, 802124940, 'User logged Out', 1175845374),
+(32, 802124940, 'User logged In', 713333057),
+(33, 802124940, 'User logged Out', 455965985),
+(34, 802124940, 'User logged In', 1995186924),
+(35, 802124940, 'User logged Out', 1850788022),
+(36, 802124940, 'User logged In', 639599145),
+(37, 802124940, 'User logged Out', 819251882),
+(38, 802124940, 'User logged In', 2140484956),
+(39, 802124940, 'Collabo updated by User', 1858644361),
+(40, 802124940, 'User downloades activity_report spreadsheet', 1382251671),
+(41, 802124940, 'User downloades activity_report spreadsheet', 335793212),
+(42, 802124940, 'User downloades user_login spreadsheet', 1841161016);
 
 -- --------------------------------------------------------
 
@@ -351,7 +385,7 @@ ALTER TABLE `admin_details`
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `login_info`
@@ -363,13 +397,13 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `office_branch`

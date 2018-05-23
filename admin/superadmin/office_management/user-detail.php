@@ -253,6 +253,8 @@
                                       </table>
 
                                   </div>
+
+                                  <a href="/powerlinebd/admin/superadmin/office_management/excel-download/<?php echo $user_id ?>/log_report" type="button" class="btn bg-blue waves-effect">Download User's Total Activity Report</a>
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="ip_with_icon_title">
@@ -303,6 +305,9 @@
                                           </tbody>
                                     </table>
                                 </div>
+
+                                <a href="/powerlinebd/admin/superadmin/office_management/excel-download/<?php echo $user_id ?>/user_login" type="button" class="btn bg-blue waves-effect">Download User's Total Login Report</a>
+
                             </div>
                         </div>
 
