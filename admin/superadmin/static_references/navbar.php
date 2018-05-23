@@ -73,7 +73,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="dropdown-menu pull-right">
                         <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="../../../signout"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="/powerlinebd/signout"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -291,7 +291,15 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                               <span>Branch List</span>
                           </a>
                       </li>
-                        <li>
+                      <?php
+
+                        if($url_active->child_menu == 'user-list' or $url_active->child_menu == 'user-detail' or $url_active->child_menu == 'user-edit'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
                             <a href="javascript:void(0);" >
                                 <i class="material-icons">person</i>
                                 <span>User List</span>

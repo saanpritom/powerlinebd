@@ -4,10 +4,8 @@
   include('../static_references/header.php');
   include('../static_references/search.php');
   include('../static_references/navbar.php');
-  include_once('../classes/data_validation.php');
   include_once('../classes/data_clearence.php');
   include_once('../classes/branch_crud.php');
-  include_once('../classes/admin_user_crud.php');
   include_once('../classes/pagination_class.php');
 
 ?>
@@ -43,10 +41,22 @@
                                     //declare objects
                                     $get_branch = new BranchCrudOperation();
                                     $show_pagination = new PaginationOperation();
+                                    $clearence = new Clearence();
+
+
+                                    $branch_page_number = $_GET['b_id'];
+
+                                    //data clearance;
+                                    $branch_page_number = $clearence->escape_string($branch_page_number);
+                                    $branch_page_number = strip_tags(trim($branch_page_number));
+                                    $branch_page_number = htmlentities($branch_page_number);
+
+                                    //calculate lowest point for query database;
+                                    $low_point = ($branch_page_number * 20) - 20;
 
                                     //fetch branch list view;
                                     $query = "SELECT `branch_id`, `name`, `email`, `contact_number`
-                                              FROM `office_branch` ORDER BY `name` ASC";
+                                              FROM `office_branch` ORDER BY `name` ASC LIMIT 20 OFFSET $low_point";
 
                                     $result = $get_branch->getData($query);
 
@@ -57,7 +67,7 @@
                                       ?>
                                       <tr>
                                           <th scope="row"><?php echo $counter; ?></th>
-                                          <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $res['branch_id']; ?>"><?php echo $res['name']; ?></a></td>
+                                          <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $res['branch_id']; ?>/1"><?php echo $res['name']; ?></a></td>
                                           <td><?php echo $res['email']; ?></td>
                                           <td><?php echo $res['contact_number']; ?></td>
                                       </tr>
@@ -76,8 +86,6 @@
 
                         <div class="body">
                           <?php
-
-                            $branch_page_number = $_GET['b_id'];
 
                             //querying for calculating total page to show;
                             $query = "SELECT COUNT(branch_id) AS total_id FROM office_branch WHERE 1";

@@ -1,0 +1,14 @@
+<?php
+
+  $b = $_GET['b_id'];
+
+  $c = $_GET['b_page'];
+
+
+  echo $b;
+  echo '<br/>';
+  echo $c;
+
+  print_r (explode('/', $c));
+
+?>

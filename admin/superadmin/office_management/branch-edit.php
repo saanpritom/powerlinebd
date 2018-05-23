@@ -32,6 +32,11 @@
                           $clearence = new Clearence();
                           $branch_operation = new BranchCrudOperation();
 
+                          //data clearance;
+                          $branch_id = $clearence->escape_string($branch_id);
+                          $branch_id = strip_tags(trim($branch_id));
+                          $branch_id = htmlentities($branch_id);
+
                           //mysql escape string clearence;
                           $branch_name = $clearence->escape_string($_POST['branch_name']);
                           $email_address = $clearence->escape_string($_POST['email_address']);
@@ -125,6 +130,12 @@
                               //populating edit branch form;
                               $branch_id = $_GET['b_id'];
                               $branch_operation = new BranchCrudOperation();
+                              $clearence = new Clearence();
+
+                              //data clearance;
+                              $branch_id = $clearence->escape_string($branch_id);
+                              $branch_id = strip_tags(trim($branch_id));
+                              $branch_id = htmlentities($branch_id);
 
                               $query = "SELECT `name`, `address`, `email`, `contact_number` FROM `office_branch` WHERE `branch_id`='$branch_id'";
 

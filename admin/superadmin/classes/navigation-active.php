@@ -16,9 +16,22 @@ class NavigationActive
 
         $total_url_length = sizeof($this->exploded_data);
 
-        $this->child_menu = $this->exploded_data[$total_url_length - 2];
+        //check if page url containes double get url ids;
+        if(is_numeric($this->exploded_data[$total_url_length-2])){
 
-        $this->parent_menu = $this->exploded_data[$total_url_length - 3];
+          $this->child_menu = $this->exploded_data[$total_url_length - 3];
+
+          $this->parent_menu = $this->exploded_data[$total_url_length - 4];
+
+        }else{
+
+          $this->child_menu = $this->exploded_data[$total_url_length - 2];
+
+          $this->parent_menu = $this->exploded_data[$total_url_length - 3];
+
+        }
+
+
 
       }
 
