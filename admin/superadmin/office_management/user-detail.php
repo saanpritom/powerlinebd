@@ -32,12 +32,18 @@
                               $user_id = strip_tags(trim($user_id));
                               $user_id = htmlentities($user_id);
 
-                              //extracting branch_id and page number from complecated URL;
-                              $exploded_url = explode('/', $user_id);
+                              //check if / exist in url
+                              if(strpos($user_id, '/')){
 
-                              $branch_page_number = end($exploded_url);
+                                //extracting branch_id and page number from complecated URL;
+                                $exploded_url = explode('/', $user_id);
 
-                              $user_id = prev($exploded_url);
+                                $branch_page_number = end($exploded_url);
+
+                                $user_id = prev($exploded_url);
+                              }
+
+
 
                           ?>
 

@@ -22,6 +22,22 @@ class UserCrudOperation extends DbConfig
 
     }
 
+    //insert data into log report table;
+    public function log_report_insert($user_login_id, $report_data)
+    {
+
+
+      $query = "INSERT INTO `log_report`(`user_id`, `log_report`, `timer_id`)
+                VALUES ('$user_login_id', '$report_data', '$this->timer_id')";
+      if($this->connection->query($query))
+      {
+        return true;
+      }else{
+        return false;
+      }
+
+    }
+
     //check if the user id is exist on the database;
     public function check_user_id($usering_id)
     {
@@ -180,6 +196,97 @@ class UserCrudOperation extends DbConfig
         }
 
         return $rows;
+    }
+
+
+
+    //updating a new user on the database;
+    public function update_user($u_name, $e_name, $c_name, $dnation, $dpment, $gndr, $b_id, $u_role, $u_id)
+    {
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      //create and check user_id;
+      $this->usering_id = $u_id;
+
+
+      //call user email check function
+      $this->user_email_check = $this->check_user_email($e_name);
+      //return $this->user_email_check;
+
+      if ($this->user_email_check) {
+
+        //check if email address is not changed;
+        $query = "SELECT email FROM login_info WHERE user_id='$this->usering_id'";
+        $result = $this->getData($query);
+        foreach($result as $key => $res){
+          $prev_email = $res['email'];
+        }
+
+        if($prev_email != $e_name){
+
+          $this->usering_id = 'User email exist. Please try a different email';
+          return $this->usering_id;
+
+        }else{
+
+          //check if timer_id created properly
+            if(is_numeric($this->timer_id)){
+
+              //first query inserting data into login table;
+              $query = "UPDATE `login_info` SET `email`='$e_name' WHERE `user_id`='$this->usering_id';";
+
+              //second query inserting data into admin details table;
+              $query .= "UPDATE `admin_details` SET `branch_id`='$b_id', `admin_type`='$u_role', `name`='$u_name', `gender`='$gndr', `designation`='$dnation',
+                        `department`='$dpment', `contact_number`='$c_name' WHERE `admin_id`='$this->usering_id';";
+
+              if($this->connection->multi_query($query)){
+
+                //fetch the login user id;
+                $user_login_id = $_SESSION["plbd_id"];
+
+                $report_data = $u_name . ' is updated by User';
+
+                //update log record data;
+                $report_status = $this->log_report_insert($user_login_id, $report_data);
+
+                if($report_status){
+
+                  $this->status_message = 'Successfully updated a new user';
+                  return $this->status_message;
+
+                }else{
+
+                  //insert log report not working unknown reason;
+                  $this->status_message = 'Successfully updated a new user';
+                  return $this->status_message;
+
+                }
+
+
+
+              }else{
+                $this->status_message = 'Problem updating new user. Please try again';
+                return $this->status_message;
+              }
+
+
+            }else{
+              return $this->timer_id;
+          }
+
+
+        }
+
+
+      }else{
+
+        $this->status_message = 'Problem updating new user. Please try again';
+        return $this->status_message;
+
+      }
+
     }
 
 

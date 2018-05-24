@@ -300,7 +300,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                         }
 
                        ?>
-                            <a href="javascript:void(0);" >
+                            <a href="/powerlinebd/admin/superadmin/office_management/user-list/1" >
                                 <i class="material-icons">person</i>
                                 <span>User List</span>
                             </a>

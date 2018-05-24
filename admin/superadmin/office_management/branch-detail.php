@@ -107,7 +107,7 @@
 
                                                 <tr>
                                                   <th><?php echo $counter; ?></th>
-                                                  <th><a href="/powerlinebd/admin/superadmin/office_management/user-detail/<?php echo $res['admin_id']; ?>/1"><?php echo $res['name']; ?></a></th>
+                                                  <th><a href="/powerlinebd/admin/superadmin/office_management/user-detail/<?php echo $res['admin_id']; ?>"><?php echo $res['name']; ?></a></th>
                                                   <th><?php echo $res['admin_type']; ?></th>
                                                   <th><?php echo $res['contact_number']; ?></th>
                                                 </tr>
