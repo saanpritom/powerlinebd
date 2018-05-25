@@ -167,20 +167,44 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     </ul>
                 </li>
 
-                <li>
+                <?php
+
+                  if($url_active->child_menu == 'flight-add' or $url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">flight</i>
                         <span>Flights</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/flights/flight-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>All Flight List</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'flight-add'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                            <a href="/powerlinebd/admin/superadmin/flights/flight-add" >
                                 <i class="material-icons">add_box</i>
                                 <span>Add New Flight</span>
                             </a>

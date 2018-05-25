@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 23, 2018 at 01:07 PM
+-- Generation Time: May 25, 2018 at 06:28 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -52,8 +52,22 @@ INSERT INTO `admin_details` (`sl_num`, `admin_id`, `branch_id`, `admin_type`, `n
 (3, 719546423, 118750197, 'finance_user', 'Test4', 'Male', 'Test Desig', 'Test Dept', '4444', 1301017427),
 (7, 707485416, 118750197, 'finance_user', 'Test5', 'Male', 'Test Desig', 'Test Dept', '433445', 2085795140),
 (11, 1754315326, 118750197, 'business_user', 'Test6', 'Female', 'Test Desig', 'Test Dept', '433445', 188365342),
-(14, 1980363788, 118750197, 'finance_user', 'Pritom', 'Male', 'Executive', 'IT', '01732844253', 2027745267),
-(20, 802124940, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Marketing', '01732844253', 271175730);
+(14, 1980363788, 118750197, 'finance_user', 'Pritom', 'Female', 'Administrator', 'IT', '01732844253', 2027745267),
+(20, 802124940, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Communication', '01732844253', 271175730);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awb_details`
+--
+
+DROP TABLE IF EXISTS `awb_details`;
+CREATE TABLE `awb_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `mawb_id` int(11) NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -165,7 +179,75 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (89, 2122586965, '2018/05/23', '05:04:51pm'),
 (90, 1382251671, '2018/05/23', '05:05:16pm'),
 (91, 335793212, '2018/05/23', '05:05:36pm'),
-(92, 1841161016, '2018/05/23', '05:06:13pm');
+(92, 1841161016, '2018/05/23', '05:06:13pm'),
+(93, 1833348794, '2018/05/23', '05:10:52pm'),
+(94, 1395252202, '2018/05/24', '12:37:18pm'),
+(95, 262767047, '2018/05/24', '02:26:55pm'),
+(96, 9021298, '2018/05/24', '02:34:50pm'),
+(97, 1097309706, '2018/05/24', '02:48:33pm'),
+(98, 1219410633, '2018/05/24', '02:52:40pm'),
+(99, 1940840930, '2018/05/24', '02:54:11pm'),
+(100, 1387192553, '2018/05/24', '02:57:24pm'),
+(101, 1104982099, '2018/05/24', '02:58:38pm'),
+(102, 1094568949, '2018/05/24', '03:00:50pm'),
+(103, 1164614997, '2018/05/24', '03:05:38pm'),
+(104, 1685920936, '2018/05/24', '03:08:35pm'),
+(105, 1183670899, '2018/05/24', '03:11:33pm'),
+(106, 2130242835, '2018/05/24', '03:15:19pm'),
+(107, 867404782, '2018/05/24', '03:17:13pm'),
+(108, 1434665752, '2018/05/24', '03:18:47pm'),
+(109, 1522252993, '2018/05/24', '03:22:23pm'),
+(110, 32363201, '2018/05/24', '03:23:41pm'),
+(111, 541394992, '2018/05/24', '03:24:57pm'),
+(112, 1977976527, '2018/05/24', '03:26:02pm'),
+(113, 1729784774, '2018/05/24', '03:27:53pm'),
+(114, 465471830, '2018/05/24', '03:28:54pm'),
+(115, 632792819, '2018/05/24', '04:26:34pm'),
+(116, 1710325542, '2018/05/25', '04:11:36pm'),
+(117, 2134612643, '2018/05/25', '05:01:48pm'),
+(118, 1069449770, '2018/05/25', '05:11:14pm'),
+(119, 1237659562, '2018/05/25', '05:13:52pm'),
+(120, 2062217614, '2018/05/25', '05:15:15pm'),
+(121, 1377784436, '2018/05/25', '05:16:14pm');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flight_awb_relation`
+--
+
+DROP TABLE IF EXISTS `flight_awb_relation`;
+CREATE TABLE `flight_awb_relation` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `flight_id` int(11) NOT NULL,
+  `awb_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flight_details`
+--
+
+DROP TABLE IF EXISTS `flight_details`;
+CREATE TABLE `flight_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `flight_number` text COLLATE utf8_unicode_ci NOT NULL,
+  `flight_date` text COLLATE utf8_unicode_ci NOT NULL,
+  `flight_time` text COLLATE utf8_unicode_ci NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `flight_details`
+--
+
+INSERT INTO `flight_details` (`sl_num`, `flight_number`, `flight_date`, `flight_time`, `timer_id`) VALUES
+(1, 'MH3908898', '30/5/2018', '12:30', 2134612643),
+(2, 'BG7899098', '30/5/2018', '12:30', 1069449770),
+(3, 'PK4567889', '30/5/2018', '12:30', 1237659562),
+(4, 'SL4556789', '30/5/2018', '12:30', 2062217614),
+(5, 'UK3455678', '30/5/2018', '12:30', 1377784436);
 
 -- --------------------------------------------------------
 
@@ -237,7 +319,9 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (20, 802124940, '192.168.64.1', 713333057),
 (21, 802124940, '192.168.64.1', 1995186924),
 (22, 802124940, '192.168.64.1', 639599145),
-(23, 802124940, '192.168.64.1', 2140484956);
+(23, 802124940, '192.168.64.1', 2140484956),
+(24, 802124940, '192.168.64.1', 1395252202),
+(25, 802124940, '192.168.64.1', 1710325542);
 
 -- --------------------------------------------------------
 
@@ -299,7 +383,29 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (39, 802124940, 'Collabo updated by User', 1858644361),
 (40, 802124940, 'User downloades activity_report spreadsheet', 1382251671),
 (41, 802124940, 'User downloades activity_report spreadsheet', 335793212),
-(42, 802124940, 'User downloades user_login spreadsheet', 1841161016);
+(42, 802124940, 'User downloades user_login spreadsheet', 1841161016),
+(43, 802124940, 'User logged Out', 1833348794),
+(44, 802124940, 'User logged In', 1395252202),
+(46, 802124940, 'Collabo updated by User', 1522252993),
+(47, 802124940, 'Pritom is updated by User', 465471830),
+(48, 802124940, 'User logged Out', 632792819),
+(49, 802124940, 'User logged In', 1710325542),
+(50, 802124940, 'SL4556789 created by User', 0),
+(51, 802124940, 'UK3455678 created by User', 1377784436);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mawb_details`
+--
+
+DROP TABLE IF EXISTS `mawb_details`;
+CREATE TABLE `mawb_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `mawb_id` int(11) NOT NULL,
+  `mawb_number` text COLLATE utf8_unicode_ci NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -323,7 +429,7 @@ CREATE TABLE `office_branch` (
 --
 
 INSERT INTO `office_branch` (`sl_num`, `branch_id`, `name`, `address`, `email`, `contact_number`, `timer_id`) VALUES
-(1, 118750197, 'Collabo', 'Boston, United States', 'pritom.saan@gmail.com', '+8801732844253', 1321687697),
+(1, 118750197, 'Collabo', 'Green Park, Boston, United States', 'pritom.saan@gmail.com', '+8801732844253', 1321687697),
 (2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282),
 (3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740);
 
@@ -339,10 +445,31 @@ ALTER TABLE `admin_details`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `awb_details`
+--
+ALTER TABLE `awb_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- Indexes for table `creation_details`
 --
 ALTER TABLE `creation_details`
   ADD PRIMARY KEY (`sl_num`);
+
+--
+-- Indexes for table `flight_awb_relation`
+--
+ALTER TABLE `flight_awb_relation`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `flight_details`
+--
+ALTER TABLE `flight_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
 -- Indexes for table `login_info`
@@ -366,6 +493,13 @@ ALTER TABLE `log_report`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `mawb_details`
+--
+ALTER TABLE `mawb_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- Indexes for table `office_branch`
 --
 ALTER TABLE `office_branch`
@@ -382,10 +516,28 @@ ALTER TABLE `admin_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `awb_details`
+--
+ALTER TABLE `awb_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+
+--
+-- AUTO_INCREMENT for table `flight_awb_relation`
+--
+ALTER TABLE `flight_awb_relation`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `flight_details`
+--
+ALTER TABLE `flight_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `login_info`
@@ -397,13 +549,19 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT for table `mawb_details`
+--
+ALTER TABLE `mawb_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `office_branch`

@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^flight-add flight-add.php
+    RewriteRule ^flight-list/(.*) flight-list.php?b_id=$1
+    RewriteRule ^flight-detail/(.*) flight-detail.php?b_id=$1
+    RewriteRule ^/signout ../../../../signout.php
+</IfModule>
