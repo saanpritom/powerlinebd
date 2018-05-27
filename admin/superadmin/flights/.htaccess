@@ -7,5 +7,6 @@
     RewriteRule ^flight-add flight-add.php
     RewriteRule ^flight-list/(.*) flight-list.php?b_id=$1
     RewriteRule ^flight-detail/(.*) flight-detail.php?b_id=$1
+    RewriteRule ^flight-edit/(.*) flight-edit.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

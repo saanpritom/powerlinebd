@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^place-add place-add.php
+    RewriteRule ^country-list/(.*) country-list.php?b_id=$1
+    RewriteRule ^destination-list/(.*) destination-list.php?b_id=$1
+    RewriteRule ^origin-list/(.*) origin-list.php?b_id=$1
+    RewriteRule ^place-detail/(.*) place-detail.php?b_id=$1
+    RewriteRule ^place-edit/(.*) place-edit.php?b_id=$1
+    RewriteRule ^/signout ../../../../signout.php
+</IfModule>

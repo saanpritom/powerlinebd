@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 25, 2018 at 06:28 PM
+-- Generation Time: May 27, 2018 at 11:48 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -208,7 +208,26 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (118, 1069449770, '2018/05/25', '05:11:14pm'),
 (119, 1237659562, '2018/05/25', '05:13:52pm'),
 (120, 2062217614, '2018/05/25', '05:15:15pm'),
-(121, 1377784436, '2018/05/25', '05:16:14pm');
+(121, 1377784436, '2018/05/25', '05:16:14pm'),
+(122, 1844716715, '2018/05/25', '10:31:39pm'),
+(123, 274613471, '2018/05/27', '10:58:01am'),
+(124, 2088566979, '2018/05/27', '11:25:33am'),
+(125, 1666575281, '2018/05/27', '11:26:08am'),
+(126, 955022688, '2018/05/27', '12:57:47pm'),
+(127, 1725144227, '2018/05/27', '01:00:16pm'),
+(128, 1501689331, '2018/05/27', '01:04:55pm'),
+(129, 1029244925, '2018/05/27', '01:05:25pm'),
+(130, 779947002, '2018/05/27', '01:05:55pm'),
+(131, 234220200, '2018/05/27', '01:07:16pm'),
+(132, 178678955, '2018/05/27', '01:07:27pm'),
+(133, 152014375, '2018/05/27', '01:08:04pm'),
+(134, 2064383634, '2018/05/27', '01:08:14pm'),
+(135, 1355563348, '2018/05/27', '01:08:25pm'),
+(136, 1205353701, '2018/05/27', '01:08:48pm'),
+(137, 15040059, '2018/05/27', '03:07:56pm'),
+(138, 1441400741, '2018/05/27', '03:08:35pm'),
+(139, 695784981, '2018/05/27', '03:09:04pm'),
+(140, 981273444, '2018/05/27', '03:47:10pm');
 
 -- --------------------------------------------------------
 
@@ -247,7 +266,26 @@ INSERT INTO `flight_details` (`sl_num`, `flight_number`, `flight_date`, `flight_
 (2, 'BG7899098', '30/5/2018', '12:30', 1069449770),
 (3, 'PK4567889', '30/5/2018', '12:30', 1237659562),
 (4, 'SL4556789', '30/5/2018', '12:30', 2062217614),
-(5, 'UK3455678', '30/5/2018', '12:30', 1377784436);
+(5, 'UK3455678', '30/6/2018', '12:30', 1377784436);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `freight_transport_relation`
+--
+
+DROP TABLE IF EXISTS `freight_transport_relation`;
+CREATE TABLE `freight_transport_relation` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `trans_id` int(11) NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `shipper_id` int(11) NOT NULL,
+  `consignee_id` int(11) NOT NULL,
+  `origin_d_id` int(11) NOT NULL,
+  `destination_d_id` int(11) NOT NULL,
+  `bag_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -276,7 +314,7 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (7, 707485416, 'test5@gmail.com', '$2y$10$vjk2smI3tPw/KGtMRAPRDOLTYQQcWYbbcTSeaJFaCt7cKinBCkV3y', '0', 'admin', 0),
 (11, 1754315326, 'test6@gmail.com', '$2y$10$31abRq/GjBGm.wfCaMfeh.5Sm6FYlgFP.UHW.gOXo3lc7HXLpd8oe', '0', 'admin', 0),
 (14, 1980363788, 'pritom@bylc.org', '$2y$10$mbqdbl8k97JXRkVhi6J6ReHACKQlCrRYRIqpq3si7e3hz5WeW9ER6', '0', 'admin', 0),
-(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 1);
+(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 0);
 
 -- --------------------------------------------------------
 
@@ -321,7 +359,8 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (22, 802124940, '192.168.64.1', 639599145),
 (23, 802124940, '192.168.64.1', 2140484956),
 (24, 802124940, '192.168.64.1', 1395252202),
-(25, 802124940, '192.168.64.1', 1710325542);
+(25, 802124940, '192.168.64.1', 1710325542),
+(26, 802124940, '192.168.64.1', 274613471);
 
 -- --------------------------------------------------------
 
@@ -391,7 +430,24 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (48, 802124940, 'User logged Out', 632792819),
 (49, 802124940, 'User logged In', 1710325542),
 (50, 802124940, 'SL4556789 created by User', 0),
-(51, 802124940, 'UK3455678 created by User', 1377784436);
+(51, 802124940, 'UK3455678 created by User', 1377784436),
+(52, 802124940, 'User logged Out', 1844716715),
+(53, 802124940, 'User logged In', 274613471),
+(54, 802124940, 'UK3455678 updated by User', 2088566979),
+(55, 802124940, 'UK3455678 updated by User', 1666575281),
+(56, 802124940, 'Place Hong Kong created by User', 955022688),
+(57, 802124940, 'Place Singapore created by User', 1725144227),
+(58, 802124940, 'Place China created by User', 1501689331),
+(59, 802124940, 'Place Canberra created by User', 779947002),
+(60, 802124940, 'Place Dhaka created by User', 234220200),
+(61, 802124940, 'Place Mumbai created by User', 178678955),
+(62, 802124940, 'Place Bangalore created by User', 152014375),
+(63, 802124940, 'Place India created by User', 2064383634),
+(64, 802124940, 'Place Chittagong created by User', 1355563348),
+(65, 802124940, 'Place Bangladesh created by User', 1205353701),
+(66, 802124940, 'Place Bangladesh updated by User', 15040059),
+(67, 802124940, 'Place Bangladesh updated by User', 1441400741),
+(68, 802124940, 'User logged Out', 981273444);
 
 -- --------------------------------------------------------
 
@@ -433,6 +489,38 @@ INSERT INTO `office_branch` (`sl_num`, `branch_id`, `name`, `address`, `email`, 
 (2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282),
 (3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `origin_destination_details`
+--
+
+DROP TABLE IF EXISTS `origin_destination_details`;
+CREATE TABLE `origin_destination_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `o_id_id` int(11) NOT NULL,
+  `full_name` text COLLATE utf8_unicode_ci NOT NULL,
+  `short_form` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `origin_destination_details`
+--
+
+INSERT INTO `origin_destination_details` (`sl_num`, `o_id_id`, `full_name`, `short_form`, `type`, `timer_id`) VALUES
+(1, 1844140912, 'Hong Kong', 'HK', 'origin', 955022688),
+(2, 788742545, 'Singapore', 'SN', 'destination', 1725144227),
+(3, 60481767, 'China', 'CN', 'country', 1501689331),
+(4, 2050934909, 'Canberra', 'CN', 'origin', 779947002),
+(5, 1725951133, 'Dhaka', 'DHK', 'origin', 234220200),
+(6, 934171028, 'Mumbai', 'MB', 'destination', 178678955),
+(7, 1429313512, 'Bangalore', 'BGL', 'destination', 152014375),
+(8, 264690165, 'India', 'IN', 'country', 2064383634),
+(9, 1282026063, 'Chittagong', 'CTG', 'origin', 1355563348),
+(10, 1812560163, 'Bangladesh', 'BD', 'country', 1205353701);
+
 --
 -- Indexes for dumped tables
 --
@@ -472,6 +560,13 @@ ALTER TABLE `flight_details`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `freight_transport_relation`
+--
+ALTER TABLE `freight_transport_relation`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- Indexes for table `login_info`
 --
 ALTER TABLE `login_info`
@@ -506,6 +601,13 @@ ALTER TABLE `office_branch`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `origin_destination_details`
+--
+ALTER TABLE `origin_destination_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -525,7 +627,7 @@ ALTER TABLE `awb_details`
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `flight_awb_relation`
@@ -540,6 +642,12 @@ ALTER TABLE `flight_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `freight_transport_relation`
+--
+ALTER TABLE `freight_transport_relation`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `login_info`
 --
 ALTER TABLE `login_info`
@@ -549,13 +657,13 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`
@@ -568,6 +676,12 @@ ALTER TABLE `mawb_details`
 --
 ALTER TABLE `office_branch`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `origin_destination_details`
+--
+ALTER TABLE `origin_destination_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

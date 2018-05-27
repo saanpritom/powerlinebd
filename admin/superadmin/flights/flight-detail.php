@@ -137,8 +137,13 @@
 
                                                       foreach($result as $key => $res){
 
+                                                        ?>
+                                                        <a href="/powerlinebd/admin/superadmin/mawbs/mawb-detail/<?php echo $res['mawb_id']; ?>">
+                                                        <?php
                                                         echo $res['mawb_number'];
-
+                                                        ?>
+                                                      </a>
+                                                      <?php
                                                       }
 
                                                     }else{
@@ -186,10 +191,10 @@
                                     <h4 class="modal-title" id="defaultModalLabel">Delete Flight?</h4>
                                 </div>
                                 <div class="modal-body">
-                                  Are you sure you want to delete this flight? 
+                                  Are you sure you want to delete this flight?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Branch</button>
+                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Flight</button>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

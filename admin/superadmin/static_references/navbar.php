@@ -169,7 +169,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
 
                 <?php
 
-                  if($url_active->child_menu == 'flight-add' or $url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail'){
+                  if($url_active->child_menu == 'flight-add' or $url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail' or $url_active->child_menu == 'flight-edit'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -183,7 +183,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail'){
+                        if($url_active->child_menu == 'flight-list' or $url_active->child_menu == 'flight-detail' or $url_active->child_menu == 'flight-edit'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -212,32 +212,72 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     </ul>
                 </li>
 
-                <li>
+                <?php
+
+                  if($url_active->child_menu == 'place-add' or $url_active->child_menu == 'origin-list' or $url_active->child_menu == 'destination-list' or $url_active->child_menu == 'country-list' or $url_active->child_menu == 'place-detail' or $url_active->child_menu == 'place-edit'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">location_on</i>
                         <span>Origin/Destination/Country</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'origin-list'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/places/origin-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>Origin List</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'destination-list'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                            <a href="/powerlinebd/admin/superadmin/places/destination-list/1" >
                                 <i class="material-icons">view_stream</i>
                                 <span>Destination List</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'country-list'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/places/country-list/1" >
                                 <i class="material-icons">view_stream</i>
                                 <span>Country List</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'place-add'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/places/place-add" >
                                 <i class="material-icons">add_box</i>
                                 <span>Add New Record</span>
                             </a>
