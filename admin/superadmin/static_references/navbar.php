@@ -285,20 +285,45 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     </ul>
                 </li>
 
-                <li>
+                <?php
+
+                  if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-add' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit'
+                      or $url_active->child_menu == 'contract-add'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">local_shipping</i>
                         <span>Shippers</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit' or $url_active->child_menu == 'contract-add'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/shippers/shipper-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>Shippers List</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'shipper-add'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                            <a href="/powerlinebd/admin/superadmin/shippers/shipper-add" >
                                 <i class="material-icons">create</i>
                                 <span>Create Shippers</span>
                             </a>

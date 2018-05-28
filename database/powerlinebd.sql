@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 27, 2018 at 11:48 AM
+-- Generation Time: May 28, 2018 at 03:59 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -53,7 +53,8 @@ INSERT INTO `admin_details` (`sl_num`, `admin_id`, `branch_id`, `admin_type`, `n
 (7, 707485416, 118750197, 'finance_user', 'Test5', 'Male', 'Test Desig', 'Test Dept', '433445', 2085795140),
 (11, 1754315326, 118750197, 'business_user', 'Test6', 'Female', 'Test Desig', 'Test Dept', '433445', 188365342),
 (14, 1980363788, 118750197, 'finance_user', 'Pritom', 'Female', 'Administrator', 'IT', '01732844253', 2027745267),
-(20, 802124940, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Communication', '01732844253', 271175730);
+(20, 802124940, 118750197, 'super_admin', 'Sam Bilings', 'Male', 'Executive', 'Communication', '01732844253', 271175730),
+(21, 1083224601, 1103059601, 'business_user', 'test66', 'Female', 'Asst. manager', 'Finance', '93399393', 439874440);
 
 -- --------------------------------------------------------
 
@@ -66,6 +67,24 @@ CREATE TABLE `awb_details` (
   `sl_num` bigint(20) UNSIGNED NOT NULL,
   `awb_id` int(11) NOT NULL,
   `mawb_id` int(11) NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_person_details`
+--
+
+DROP TABLE IF EXISTS `contact_person_details`;
+CREATE TABLE `contact_person_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `person_from` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_organization_id` int(11) NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `designation` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `contact_number` text COLLATE utf8_unicode_ci NOT NULL,
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -227,7 +246,31 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (137, 15040059, '2018/05/27', '03:07:56pm'),
 (138, 1441400741, '2018/05/27', '03:08:35pm'),
 (139, 695784981, '2018/05/27', '03:09:04pm'),
-(140, 981273444, '2018/05/27', '03:47:10pm');
+(140, 981273444, '2018/05/27', '03:47:10pm'),
+(141, 1938246069, '2018/05/28', '10:45:24am'),
+(142, 1174094438, '2018/05/28', '12:03:39pm'),
+(143, 217133139, '2018/05/28', '12:04:45pm'),
+(144, 536019051, '2018/05/28', '12:11:46pm'),
+(145, 795591491, '2018/05/28', '12:17:27pm'),
+(146, 471533696, '2018/05/28', '12:21:11pm'),
+(147, 1886112451, '2018/05/28', '12:24:14pm'),
+(148, 1031687478, '2018/05/28', '12:26:42pm'),
+(149, 1966493265, '2018/05/28', '12:30:10pm'),
+(150, 514948431, '2018/05/28', '12:58:02pm'),
+(151, 566324921, '2018/05/28', '01:00:20pm'),
+(152, 1367810358, '2018/05/28', '01:00:57pm'),
+(153, 1259158642, '2018/05/28', '01:02:47pm'),
+(154, 1989364687, '2018/05/28', '01:11:23pm'),
+(155, 1716219904, '2018/05/28', '01:13:43pm'),
+(156, 1299455887, '2018/05/28', '01:20:13pm'),
+(157, 2106831468, '2018/05/28', '06:06:47pm'),
+(158, 1002266330, '2018/05/28', '06:12:24pm'),
+(159, 1395414632, '2018/05/28', '06:13:26pm'),
+(160, 528288543, '2018/05/28', '07:20:36pm'),
+(161, 730172739, '2018/05/28', '07:23:05pm'),
+(162, 659581167, '2018/05/28', '07:25:26pm'),
+(163, 1179384652, '2018/05/28', '07:29:38pm'),
+(164, 439874440, '2018/05/28', '07:30:36pm');
 
 -- --------------------------------------------------------
 
@@ -314,7 +357,18 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (7, 707485416, 'test5@gmail.com', '$2y$10$vjk2smI3tPw/KGtMRAPRDOLTYQQcWYbbcTSeaJFaCt7cKinBCkV3y', '0', 'admin', 0),
 (11, 1754315326, 'test6@gmail.com', '$2y$10$31abRq/GjBGm.wfCaMfeh.5Sm6FYlgFP.UHW.gOXo3lc7HXLpd8oe', '0', 'admin', 0),
 (14, 1980363788, 'pritom@bylc.org', '$2y$10$mbqdbl8k97JXRkVhi6J6ReHACKQlCrRYRIqpq3si7e3hz5WeW9ER6', '0', 'admin', 0),
-(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 0);
+(20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 1),
+(23, 1790269349, 'info@maersk.co', 'f10dc8008c106a7830f0d5235bfbfc401363f08893d2778bf04b3b5f0658b583', '0', 'shipper', 0),
+(24, 304337732, 'big@fishing.com', 'dfebcea35c7b08893802e60a7638e1c2bd805c026c2c58cc96f865ffd06af861', '0', 'shipper', 0),
+(25, 1694196334, 'info@shabo.com', '02f5fb9f796c52f234fb3df49ac054bf006a953d4dd4fa81d10cbdbe962d520a', '0', 'shipper', 0),
+(26, 598534282, 'doc@gmail.com', '78c4065053330b0e1f214abfec80bd0ced42e65bcdb57e3df6665b5886559f9c', '0', 'shipper', 0),
+(27, 1411207400, 'btc@gmail.com', '1c5829fb6efcb29fb3ce58b094a72a08ffb45c0d4c7accac95a9da075d1f5930', '0', 'shipper', 0),
+(28, 190729367, 'zhau@baidu.com', 'e27f413a7f98a51d61c87c4af1847c9c39dcc7f4c0e935f0467f493ed94decdf', '0', 'shipper', 0),
+(29, 1364012038, 'line@zipline.com', '663e2048bc4ad24b5eae2f9b329c188c11a90fd7bd887480d90ae28c3731c7e6', '0', 'shipper', 0),
+(30, 911943126, 'bitopi@gmail.com', '384eb1dcf31dca07a3ed13ec4bed2f339793d00802aaeb16977f33c266bf92c8', '0', 'shipper', 0),
+(32, 1790735697, 'ngs@yahoo.com', '87ac8e62fdd3036a16c3230ca81c9fa32906b0dfa1efb5c1420e1c0ffc341f65', '0', 'shipper', 0),
+(33, 125403235, 'royal@srilanka.co', '97b7dab588fa70e7429ad40d9de51ebdc902211a07d6d02aae68b60ff54dd4fb', '0', 'shipper', 0),
+(34, 1083224601, 'dsfd@gmail.com', '60b756d1f2db2af7ea5e8ebf6f1637664f4f90c15284be91a2811e117ad15606', '0', 'admin', 0);
 
 -- --------------------------------------------------------
 
@@ -360,7 +414,9 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (23, 802124940, '192.168.64.1', 2140484956),
 (24, 802124940, '192.168.64.1', 1395252202),
 (25, 802124940, '192.168.64.1', 1710325542),
-(26, 802124940, '192.168.64.1', 274613471);
+(26, 802124940, '192.168.64.1', 274613471),
+(27, 802124940, '192.168.64.1', 1938246069),
+(28, 802124940, '192.168.64.1', 730172739);
 
 -- --------------------------------------------------------
 
@@ -447,7 +503,18 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (65, 802124940, 'Place Bangladesh created by User', 1205353701),
 (66, 802124940, 'Place Bangladesh updated by User', 15040059),
 (67, 802124940, 'Place Bangladesh updated by User', 1441400741),
-(68, 802124940, 'User logged Out', 981273444);
+(68, 802124940, 'User logged Out', 981273444),
+(69, 802124940, 'User logged In', 1938246069),
+(71, 802124940, 'Shipper BTC Trading Corp. created by User', 1031687478),
+(72, 802124940, 'Place Sri Lanka created by User', 1367810358),
+(73, 802124940, 'Shipper Bitopi Lmited created by User', 1259158642),
+(74, 802124940, 'Shipper Chino Trade created by User', 1989364687),
+(75, 802124940, 'Shipper Royal Srilanka Shiping created by User', 1299455887),
+(76, 802124940, 'Shipper Maersk Shipping Co. is updated by User', 2106831468),
+(77, 802124940, 'Shipper Maersk Shipping Co. is updated by User', 1002266330),
+(78, 802124940, 'User logged Out', 528288543),
+(79, 802124940, 'User logged In', 730172739),
+(80, 802124940, 'Collabo1 updated by User', 659581167);
 
 -- --------------------------------------------------------
 
@@ -485,9 +552,10 @@ CREATE TABLE `office_branch` (
 --
 
 INSERT INTO `office_branch` (`sl_num`, `branch_id`, `name`, `address`, `email`, `contact_number`, `timer_id`) VALUES
-(1, 118750197, 'Collabo', 'Green Park, Boston, United States', 'pritom.saan@gmail.com', '+8801732844253', 1321687697),
+(1, 118750197, 'Collabo1', 'Green Park, Boston, United States', 'pritom.saan@gmail.com', '+8801732844253', 1321687697),
 (2, 1568829822, 'DBShine', '44/2 Derbyshire, London, UK', 'info@dbshine.com', '8997688876', 1421439282),
-(3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740);
+(3, 404137689, 'Barca Brother\'s', 'Monte Carlo, Barcelona, Spain', 'barca@spaintransport.com', '3445444322', 395631740),
+(4, 1103059601, 'dhaka', 'fsdfdsf', 'dsf@g.com', '38938833', 1179384652);
 
 -- --------------------------------------------------------
 
@@ -519,7 +587,41 @@ INSERT INTO `origin_destination_details` (`sl_num`, `o_id_id`, `full_name`, `sho
 (7, 1429313512, 'Bangalore', 'BGL', 'destination', 152014375),
 (8, 264690165, 'India', 'IN', 'country', 2064383634),
 (9, 1282026063, 'Chittagong', 'CTG', 'origin', 1355563348),
-(10, 1812560163, 'Bangladesh', 'BD', 'country', 1205353701);
+(10, 1812560163, 'Bangladesh', 'BD', 'country', 1205353701),
+(11, 1986606526, 'Sri Lanka', 'SL', 'country', 1367810358);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipper_details`
+--
+
+DROP TABLE IF EXISTS `shipper_details`;
+CREATE TABLE `shipper_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `shipper_id` int(11) NOT NULL,
+  `name` text COLLATE utf8_unicode_ci NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `contact_number` text COLLATE utf8_unicode_ci NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `shipper_details`
+--
+
+INSERT INTO `shipper_details` (`sl_num`, `shipper_id`, `name`, `country_id`, `address`, `contact_number`, `timer_id`) VALUES
+(1, 1790269349, 'Maersk Shipping Co.', 60481767, 'Suite 43, Chang Yumma Tower, North Street Shanghai', '022833448', 536019051),
+(2, 304337732, 'Big Fish Shipping', 264690165, 'JD Street, Mumbai, Maharastra', '0233455455', 795591491),
+(3, 1694196334, 'Shabo', 1812560163, 'Chittangong', '87787789', 471533696),
+(4, 598534282, 'Doc Shipper', 1812560163, 'Mongla, Khulna', '78899887', 1886112451),
+(5, 1411207400, 'BTC Trading Corp.', 264690165, 'Chennai, Tamil Nadu', '9987768776', 1031687478),
+(6, 190729367, 'Zhau Trading', 60481767, 'Wallcroft Street, Beijing', '899800998', 1966493265),
+(7, 1364012038, 'Zipline', 264690165, 'Delhi', '899877887', 514948431),
+(8, 911943126, 'Bitopi Lmited', 1986606526, 'Colombo', '0677877667', 1259158642),
+(9, 1790735697, 'NSG Global', 1812560163, 'Chittagong', '34453', 1716219904),
+(10, 125403235, 'Royal Srilanka Shiping', 1986606526, 'St. Xavier Street, Candy', '244778878', 1299455887);
 
 --
 -- Indexes for dumped tables
@@ -536,6 +638,13 @@ ALTER TABLE `admin_details`
 -- Indexes for table `awb_details`
 --
 ALTER TABLE `awb_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `contact_person_details`
+--
+ALTER TABLE `contact_person_details`
   ADD PRIMARY KEY (`sl_num`),
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
@@ -608,6 +717,13 @@ ALTER TABLE `origin_destination_details`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `shipper_details`
+--
+ALTER TABLE `shipper_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -615,7 +731,7 @@ ALTER TABLE `origin_destination_details`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `awb_details`
@@ -624,10 +740,16 @@ ALTER TABLE `awb_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `contact_person_details`
+--
+ALTER TABLE `contact_person_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `flight_awb_relation`
@@ -651,19 +773,19 @@ ALTER TABLE `freight_transport_relation`
 -- AUTO_INCREMENT for table `login_info`
 --
 ALTER TABLE `login_info`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`
@@ -675,12 +797,18 @@ ALTER TABLE `mawb_details`
 -- AUTO_INCREMENT for table `office_branch`
 --
 ALTER TABLE `office_branch`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `origin_destination_details`
 --
 ALTER TABLE `origin_destination_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `shipper_details`
+--
+ALTER TABLE `shipper_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
