@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^consignee-add consignee-add.php
+    RewriteRule ^consignee-list/(.*) consignee-list.php?b_id=$1
+    RewriteRule ^consignee-detail/(.*) consignee-detail.php?b_id=$1
+    RewriteRule ^consignee-edit/(.*) consignee-edit.php?b_id=$1
+    RewriteRule ^contact-add/(.*) contact-add.php?b_id=$1
+    RewriteRule ^consignee-contact-detail/(.*) consignee-contact-detail.php?b_id=$1
+    RewriteRule ^consignee-contact-edit/(.*) consignee-contact-edit.php?b_id=$1
+    RewriteRule ^consignee-shipper-add/(.*) consignee-shipper-add.php?b_id=$1
+    RewriteRule ^/signout ../../../../signout.php
+</IfModule>

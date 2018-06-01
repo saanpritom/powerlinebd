@@ -9,5 +9,7 @@
     RewriteRule ^shipper-detail/(.*) shipper-detail.php?b_id=$1
     RewriteRule ^shipper-edit/(.*) shipper-edit.php?b_id=$1
     RewriteRule ^contract-add/(.*) contract-add.php?b_id=$1
+    RewriteRule ^contact-detail/(.*) contact-detail.php?b_id=$1
+    RewriteRule ^contact-edit/(.*) contact-edit.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

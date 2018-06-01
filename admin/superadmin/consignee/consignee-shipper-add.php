@@ -6,8 +6,7 @@
   include('../static_references/navbar.php');
   include_once('../classes/data_validation.php');
   include_once('../classes/data_clearence.php');
-  include_once('../classes/contact_person_crud.php');
-  include_once('../classes/place_crud.php');
+  include_once('../classes/consignee_crud.php');
 
 ?>
 
@@ -29,33 +28,34 @@
                           //declare classes for checking;
                           $validation = new Validation();
                           $clearence = new Clearence();
-                          $contact_operation = new ContactCrudOperation();
-
-                          $organization_id = $_GET['b_id'];
-                          $organization_id = $clearence->escape_string($organization_id);
-                          $organization_id = strip_tags(trim($organization_id));
-                          $organization_id = htmlentities($organization_id);
+                          $consignee_operation = new ConsigneeCrudOperation();
 
                           //mysql escape string clearence;
                           $name = $clearence->escape_string($_POST['name']);
                           $email = $clearence->escape_string($_POST['email']);
                           $contact_number = $clearence->escape_string($_POST['contact_number']);
-                          $designation = $clearence->escape_string($_POST['designation']);
+                          $address = $clearence->escape_string($_POST['address']);
+                          $country_id = $clearence->escape_string($_POST['country_id']);
+                          $shipper_id = $clearence->escape_string($_POST['shipper_id']);
 
                           //input data triming;
                           $name = strip_tags(trim($name));
                           $email = strip_tags(trim($email));
                           $contact_number = strip_tags(trim($contact_number));
-                          $designation = strip_tags(trim($designation));
+                          $address = strip_tags(trim($address));
+                          $country_id = strip_tags(trim($country_id));
+                          $shipper_id = strip_tags(trim($shipper_id));
 
                           // Escape any html characters;
                           $name = htmlentities($name);
                           $email = htmlentities($email);
                           $contact_number = htmlentities($contact_number);
-                          $designation = htmlentities($designation);
+                          $address = htmlentities($address);
+                          $country_id = htmlentities($country_id);
+                          $shipper_id = htmlentities($shipper_id);
 
                           //check refined and input values are empty and valid or not;
-                          $msg = $validation->check_empty(array($name, $email, $contact_number, $designation));
+                          $msg = $validation->check_empty(array($name, $email, $contact_number, $address, $country_id, $shipper_id));
                           $check_email = $validation->is_email_valid($email);
                           $check_contact_number = $validation->is_contact_number_valid($contact_number);
 
@@ -83,19 +83,19 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_contact = $contact_operation->create_contact($name, $email, $contact_number, $designation, $organization_id, 'shipper', $user_id);
+                            $new_consignee = $consignee_operation->create_consignee($name, $email, $contact_number, $country_id, $address, $shipper_id, $user_id);
 
                             //check if branch created properly;
-                            if($new_contact == 'Successfully created a new contact'){
+                            if($new_consignee == 'Successfully created a new consignee'){
                               ?>
                               <div class="alert bg-green">
-                                  <?php echo 'Successfully created a new contact'; ?>
+                                  <?php echo 'Successfully created a new consignee'; ?>
                               </div>
                               <?php
                             }else{
                               ?>
                               <div class="alert bg-red">
-                                  <?php echo $new_contact; ?>
+                                  <?php echo $new_consignee; ?>
                               </div>
                               <?php
                             }
@@ -121,41 +121,32 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Add New Contact
+                                Add New Shipper
                             </h2>
 
                         </div>
                         <div class="body">
-                            <form action="<?php echo $_GET['b_id']; ?>" method="POST">
-                                <label for="name">Name of the Contact Person</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="full_name" class="form-control" required aria-required="true" placeholder="Enter Name here" name="name">
-                                    </div>
-                                </div>
-                                <label for="email_address">Contact Email</label>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="email" class="form-control" name="email" placeholder="Enter Email Here">
-                                    </div>
-                                </div>
-                                <label for="contact_number">Designation</label>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="designation" placeholder="Enter Designation Here">
-                                    </div>
-                                </div>
-                                <label for="contact_number">Contact Number</label>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="contact_number" placeholder="Enter Contact Number Here">
-                                    </div>
-                                </div>
+                            <?php
+
+                              $get_consignee = new ConsigneeCrudOperation();
+
+                            ?>
+
+                            <form action="<?php echo $consignee_id; ?>" method="POST">
+
+                              <div class="demo-checkbox">
+
+                                  <input type="checkbox" id="md_checkbox_35" class="filled-in chk-col-deep-orange" checked="">
+                                  <label for="md_checkbox_35">ORANGE</label>
 
 
-                                <br>
-                                <input type="submit" name="submit" class="btn bg-deep-orange waves-effect m-t-15" value="Add Contact">
+
+                              </div>
+
+
                             </form>
+
+
                         </div>
                     </div>
                 </div>

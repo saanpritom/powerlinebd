@@ -288,7 +288,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 <?php
 
                   if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-add' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit'
-                      or $url_active->child_menu == 'contract-add'){
+                      or $url_active->child_menu == 'contract-add' or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -302,7 +302,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit' or $url_active->child_menu == 'contract-add'){
+                        if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit' or $url_active->child_menu == 'contract-add'
+                            or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -331,20 +332,47 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     </ul>
                 </li>
 
-                <li>
+                <?php
+
+                  if($url_active->child_menu == 'consignee-list' or $url_active->child_menu == 'consignee-add' or $url_active->child_menu == 'consignee-detail' or $url_active->child_menu == 'consignee-edit'
+                      or $url_active->child_menu == 'contact-add' or $url_active->child_menu == 'consignee-contact-detail' or $url_active->child_menu == 'consignee-contact-edit'
+                      or $url_active->child_menu == 'consignee-shipper-add'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">shopping_cart</i>
                         <span>Consignee</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'consignee-list' or $url_active->child_menu == 'consignee-detail' or $url_active->child_menu == 'consignee-edit' or $url_active->child_menu == 'contact-add'
+                            or $url_active->child_menu == 'consignee-contact-detail' or $url_active->child_menu == 'consignee-contact-edit' or $url_active->child_menu == 'consignee-shipper-add'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/consignee/consignee-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>Consignee List</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'consignee-add'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                            <a href="/powerlinebd/admin/superadmin/consignee/consignee-add" >
                                 <i class="material-icons">create</i>
                                 <span>Create Consignee</span>
                             </a>

@@ -83,7 +83,7 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_contact = $contact_operation->create_contact($name, $email, $contact_number, $designation, $organization_id, 'shipper', $user_id);
+                            $new_contact = $contact_operation->create_contact($name, $email, $contact_number, $designation, $organization_id, 'consignee', $user_id);
 
                             //check if branch created properly;
                             if($new_contact == 'Successfully created a new contact'){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 28, 2018 at 03:59 PM
+-- Generation Time: Jun 01, 2018 at 08:05 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -49,7 +49,7 @@ CREATE TABLE `admin_details` (
 INSERT INTO `admin_details` (`sl_num`, `admin_id`, `branch_id`, `admin_type`, `name`, `gender`, `designation`, `department`, `contact_number`, `timer_id`) VALUES
 (1, 898134556, 1568829822, 'finance_user', 'Test2', 'Male', 'Managing Director', 'Test Dept', '4554', 586380511),
 (2, 1109885108, 118750197, 'finance_user', 'Test3', 'Male', 'Test Desig', 'Test Dept', '8778778', 555376270),
-(3, 719546423, 118750197, 'finance_user', 'Test4', 'Male', 'Test Desig', 'Test Dept', '4444', 1301017427),
+(3, 719546423, 118750197, 'finance_user', 'Test4', 'Male', 'Test Desig', 'Test Dept', '89000989', 1301017427),
 (7, 707485416, 118750197, 'finance_user', 'Test5', 'Male', 'Test Desig', 'Test Dept', '433445', 2085795140),
 (11, 1754315326, 118750197, 'business_user', 'Test6', 'Female', 'Test Desig', 'Test Dept', '433445', 188365342),
 (14, 1980363788, 118750197, 'finance_user', 'Pritom', 'Female', 'Administrator', 'IT', '01732844253', 2027745267),
@@ -73,6 +73,52 @@ CREATE TABLE `awb_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `consignee_details`
+--
+
+DROP TABLE IF EXISTS `consignee_details`;
+CREATE TABLE `consignee_details` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `consignee_id` int(11) NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `contact_number` text COLLATE utf8_unicode_ci NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `consignee_details`
+--
+
+INSERT INTO `consignee_details` (`sl_num`, `consignee_id`, `name`, `email`, `address`, `contact_number`, `country_id`, `timer_id`) VALUES
+(1, 5125804, 'DK Brothers', 'dk@gmail.com', 'Palekelle, Sri Lanka', '3445444322', 1986606526, 2109939260);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `consignee_shipper_relation`
+--
+
+DROP TABLE IF EXISTS `consignee_shipper_relation`;
+CREATE TABLE `consignee_shipper_relation` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `shipper_id` int(11) NOT NULL,
+  `consignee_id` int(11) NOT NULL,
+  `timer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `consignee_shipper_relation`
+--
+
+INSERT INTO `consignee_shipper_relation` (`sl_num`, `shipper_id`, `consignee_id`, `timer_id`) VALUES
+(1, 598534282, 5125804, 2109939260);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contact_person_details`
 --
 
@@ -87,6 +133,16 @@ CREATE TABLE `contact_person_details` (
   `contact_number` text COLLATE utf8_unicode_ci NOT NULL,
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `contact_person_details`
+--
+
+INSERT INTO `contact_person_details` (`sl_num`, `contact_id`, `person_from`, `parent_organization_id`, `name`, `designation`, `contact_number`, `timer_id`) VALUES
+(1, 535431200, 'shipper', 1790269349, 'Mr. Zhiang Shaw Gung', 'Marketing Manager', '899878890', 146375882),
+(2, 2125651344, 'shipper', 1790735697, 'Mr. Debendra Chouhan', 'Administrator', '9987767766345', 966880233),
+(3, 1923018243, 'shipper', 304337732, 'M Satish', 'Managing Director', '998988789', 1018180944),
+(4, 633925319, 'consignee', 5125804, 'Mr. Eric Shaw', 'Marketing Manager', '56678878', 64932065);
 
 -- --------------------------------------------------------
 
@@ -270,7 +326,45 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (161, 730172739, '2018/05/28', '07:23:05pm'),
 (162, 659581167, '2018/05/28', '07:25:26pm'),
 (163, 1179384652, '2018/05/28', '07:29:38pm'),
-(164, 439874440, '2018/05/28', '07:30:36pm');
+(164, 439874440, '2018/05/28', '07:30:36pm'),
+(165, 1100729377, '2018/05/28', '08:06:08pm'),
+(166, 1566444242, '2018/05/31', '10:20:30am'),
+(167, 146375882, '2018/05/31', '11:01:39am'),
+(168, 966880233, '2018/05/31', '11:09:45am'),
+(169, 1018180944, '2018/05/31', '11:10:31am'),
+(170, 1615961494, '2018/05/31', '01:32:49pm'),
+(171, 1034739011, '2018/05/31', '01:33:37pm'),
+(172, 1124184379, '2018/05/31', '01:34:02pm'),
+(173, 959324439, '2018/05/31', '01:34:32pm'),
+(174, 2112248659, '2018/05/31', '01:35:03pm'),
+(175, 1666522378, '2018/05/31', '01:35:22pm'),
+(176, 1070069472, '2018/05/31', '01:35:39pm'),
+(177, 698223982, '2018/05/31', '01:36:12pm'),
+(178, 2061393099, '2018/05/31', '01:37:47pm'),
+(179, 1476024402, '2018/05/31', '01:42:28pm'),
+(180, 1504801190, '2018/05/31', '01:43:43pm'),
+(181, 1791046291, '2018/05/31', '01:44:01pm'),
+(182, 454684264, '2018/05/31', '01:44:56pm'),
+(183, 446243596, '2018/05/31', '02:05:33pm'),
+(184, 49200842, '2018/05/31', '02:07:33pm'),
+(185, 2111370448, '2018/05/31', '02:08:00pm'),
+(186, 745418551, '2018/05/31', '02:08:08pm'),
+(187, 2092593259, '2018/05/31', '02:09:24pm'),
+(188, 1727650413, '2018/05/31', '02:16:37pm'),
+(189, 345269787, '2018/06/01', '06:46:56pm'),
+(190, 1052326532, '2018/06/01', '06:54:56pm'),
+(191, 1088354497, '2018/06/01', '06:55:12pm'),
+(192, 1128768249, '2018/06/01', '06:58:55pm'),
+(193, 1864919267, '2018/06/01', '06:59:05pm'),
+(194, 1789966167, '2018/06/01', '08:02:18pm'),
+(195, 2109939260, '2018/06/01', '08:03:13pm'),
+(196, 879805295, '2018/06/01', '09:40:35pm'),
+(197, 1792863961, '2018/06/01', '09:41:10pm'),
+(198, 1935403559, '2018/06/01', '09:43:10pm'),
+(199, 373144816, '2018/06/01', '09:44:10pm'),
+(200, 1295104784, '2018/06/01', '09:44:57pm'),
+(201, 64932065, '2018/06/01', '11:04:10pm'),
+(202, 1153727111, '2018/06/01', '11:28:27pm');
 
 -- --------------------------------------------------------
 
@@ -353,13 +447,13 @@ CREATE TABLE `login_info` (
 
 INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_token`, `user_type`, `login_status`) VALUES
 (1, 69725902, 'test@gmail.com', '$2y$10$sowG5bp2iX87smdZnJRp1ewgoIixhPMWw8g7qGcUXgMlyppnP59ba', '0', 'admin', 0),
-(2, 719546423, 'test4@gmail.com', '$2y$10$2UcEjAF4vHhfyV9CYoQvCO./gk3dC1l4rzLYiOyT4/bQlPxcYutm.', '0', 'admin', 0),
+(2, 719546423, 'test4@yahoo.com', '$2y$10$2UcEjAF4vHhfyV9CYoQvCO./gk3dC1l4rzLYiOyT4/bQlPxcYutm.', '0', 'admin', 0),
 (7, 707485416, 'test5@gmail.com', '$2y$10$vjk2smI3tPw/KGtMRAPRDOLTYQQcWYbbcTSeaJFaCt7cKinBCkV3y', '0', 'admin', 0),
 (11, 1754315326, 'test6@gmail.com', '$2y$10$31abRq/GjBGm.wfCaMfeh.5Sm6FYlgFP.UHW.gOXo3lc7HXLpd8oe', '0', 'admin', 0),
 (14, 1980363788, 'pritom@bylc.org', '$2y$10$mbqdbl8k97JXRkVhi6J6ReHACKQlCrRYRIqpq3si7e3hz5WeW9ER6', '0', 'admin', 0),
 (20, 802124940, 'sam@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0', 'admin', 1),
 (23, 1790269349, 'info@maersk.co', 'f10dc8008c106a7830f0d5235bfbfc401363f08893d2778bf04b3b5f0658b583', '0', 'shipper', 0),
-(24, 304337732, 'big@fishing.com', 'dfebcea35c7b08893802e60a7638e1c2bd805c026c2c58cc96f865ffd06af861', '0', 'shipper', 0),
+(24, 304337732, 'info@bigfish.com', 'dfebcea35c7b08893802e60a7638e1c2bd805c026c2c58cc96f865ffd06af861', '0', 'shipper', 0),
 (25, 1694196334, 'info@shabo.com', '02f5fb9f796c52f234fb3df49ac054bf006a953d4dd4fa81d10cbdbe962d520a', '0', 'shipper', 0),
 (26, 598534282, 'doc@gmail.com', '78c4065053330b0e1f214abfec80bd0ced42e65bcdb57e3df6665b5886559f9c', '0', 'shipper', 0),
 (27, 1411207400, 'btc@gmail.com', '1c5829fb6efcb29fb3ce58b094a72a08ffb45c0d4c7accac95a9da075d1f5930', '0', 'shipper', 0),
@@ -368,7 +462,11 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (30, 911943126, 'bitopi@gmail.com', '384eb1dcf31dca07a3ed13ec4bed2f339793d00802aaeb16977f33c266bf92c8', '0', 'shipper', 0),
 (32, 1790735697, 'ngs@yahoo.com', '87ac8e62fdd3036a16c3230ca81c9fa32906b0dfa1efb5c1420e1c0ffc341f65', '0', 'shipper', 0),
 (33, 125403235, 'royal@srilanka.co', '97b7dab588fa70e7429ad40d9de51ebdc902211a07d6d02aae68b60ff54dd4fb', '0', 'shipper', 0),
-(34, 1083224601, 'dsfd@gmail.com', '60b756d1f2db2af7ea5e8ebf6f1637664f4f90c15284be91a2811e117ad15606', '0', 'admin', 0);
+(34, 1083224601, 'dsfd@gmail.com', '60b756d1f2db2af7ea5e8ebf6f1637664f4f90c15284be91a2811e117ad15606', '0', 'admin', 0),
+(35, 535431200, 'zhiang@maerks.com', '5a4a9879d31ff76c13622ba8821bcb21eb9adcbfcbdcfe99d07917fa4f39718a', '0', 'contact_person', 0),
+(36, 2125651344, 'debendra@nsg-global.com', '0b826c848db83a2bd4c5aab142a9e35dc61f77f8a11974c1d1ab1265034b46b4', '0', 'contact_person', 0),
+(37, 1923018243, 'sathish@bigfish.com', '1b056482b89d81976c20ce7e53048a0812c52e752162dd3c75b6b262bfe3c841', '0', 'contact_person', 0),
+(38, 633925319, 'eric@gmail.com', '0319dc2462f6553312a72599f65b9a822ffd89d76c11d3dab65455db82e5eb73', '0', 'contact_person', 0);
 
 -- --------------------------------------------------------
 
@@ -416,7 +514,10 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (25, 802124940, '192.168.64.1', 1710325542),
 (26, 802124940, '192.168.64.1', 274613471),
 (27, 802124940, '192.168.64.1', 1938246069),
-(28, 802124940, '192.168.64.1', 730172739);
+(28, 802124940, '192.168.64.1', 730172739),
+(29, 802124940, '192.168.64.1', 1566444242),
+(30, 802124940, '192.168.64.1', 345269787),
+(31, 802124940, '192.168.64.1', 1789966167);
 
 -- --------------------------------------------------------
 
@@ -514,7 +615,28 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (77, 802124940, 'Shipper Maersk Shipping Co. is updated by User', 1002266330),
 (78, 802124940, 'User logged Out', 528288543),
 (79, 802124940, 'User logged In', 730172739),
-(80, 802124940, 'Collabo1 updated by User', 659581167);
+(80, 802124940, 'Collabo1 updated by User', 659581167),
+(81, 802124940, 'User logged Out', 1100729377),
+(82, 802124940, 'User logged In', 1566444242),
+(83, 802124940, 'Contact Mr. Zhiang Shaw created by User', 146375882),
+(84, 802124940, 'Contact Mr. Debendra Chouhan created by User', 966880233),
+(85, 802124940, 'Contact M Satish created by User', 1018180944),
+(86, 802124940, 'Contact Mr. Zhiang Shaw Gung is updated by User', 1615961494),
+(87, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 959324439),
+(88, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 1070069472),
+(89, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 446243596),
+(90, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 49200842),
+(91, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 745418551),
+(92, 802124940, 'Contact Mr. Debendra Chouhan is updated by User', 2092593259),
+(93, 802124940, 'User logged Out', 1727650413),
+(94, 802124940, 'User logged In', 345269787),
+(95, 802124940, 'Shipper Big Fish Shipping is updated by User', 1052326532),
+(96, 802124940, 'Shipper Big Fish Shipping is updated by User', 1088354497),
+(97, 802124940, 'User logged In', 1789966167),
+(98, 802124940, 'Consignee DK Brothers created by User', 2109939260),
+(99, 802124940, 'Consignee DK Brothers is updated by User', 1295104784),
+(100, 802124940, 'Contact Mr. Eric Shaw created by User', 64932065),
+(101, 802124940, 'Contact Mr. Eric Shaw is updated by User', 1153727111);
 
 -- --------------------------------------------------------
 
@@ -613,7 +735,7 @@ CREATE TABLE `shipper_details` (
 
 INSERT INTO `shipper_details` (`sl_num`, `shipper_id`, `name`, `country_id`, `address`, `contact_number`, `timer_id`) VALUES
 (1, 1790269349, 'Maersk Shipping Co.', 60481767, 'Suite 43, Chang Yumma Tower, North Street Shanghai', '022833448', 536019051),
-(2, 304337732, 'Big Fish Shipping', 264690165, 'JD Street, Mumbai, Maharastra', '0233455455', 795591491),
+(2, 304337732, 'Big Fish Shipping', 264690165, 'JD Street, Borivalli, Mumbai, Maharastra', '0233455455', 795591491),
 (3, 1694196334, 'Shabo', 1812560163, 'Chittangong', '87787789', 471533696),
 (4, 598534282, 'Doc Shipper', 1812560163, 'Mongla, Khulna', '78899887', 1886112451),
 (5, 1411207400, 'BTC Trading Corp.', 264690165, 'Chennai, Tamil Nadu', '9987768776', 1031687478),
@@ -638,6 +760,20 @@ ALTER TABLE `admin_details`
 -- Indexes for table `awb_details`
 --
 ALTER TABLE `awb_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `consignee_details`
+--
+ALTER TABLE `consignee_details`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `consignee_shipper_relation`
+--
+ALTER TABLE `consignee_shipper_relation`
   ADD PRIMARY KEY (`sl_num`),
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
@@ -740,16 +876,28 @@ ALTER TABLE `awb_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `consignee_details`
+--
+ALTER TABLE `consignee_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `consignee_shipper_relation`
+--
+ALTER TABLE `consignee_shipper_relation`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `contact_person_details`
 --
 ALTER TABLE `contact_person_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- AUTO_INCREMENT for table `flight_awb_relation`
@@ -773,19 +921,19 @@ ALTER TABLE `freight_transport_relation`
 -- AUTO_INCREMENT for table `login_info`
 --
 ALTER TABLE `login_info`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`
