@@ -276,6 +276,118 @@ class ConsigneeCrudOperation extends DbConfig
 
     }
 
+    //check if consignee belongs to a shipper;
+    public function getShipper($query)
+    {
+      $result = $this->connection->query($query);
+
+      if($result->num_rows >= 1) {
+
+        return true;
+
+      }else{
+
+        return false;
+
+      }
+
+
+    }
+
+    //add new shipper;
+    public function newShipper(array $shippers, $user_id, $consignee_id)
+    {
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      //fetch Consignee name for log_report;
+      $query = "SELECT name FROM consignee_details WHERE consignee_id='$consignee_id'";
+      $result = $this->connection->query($query);
+      foreach ($result as $key => $res) {
+        $consignee_name = $res['name'];
+      }
+
+
+      $counter = 0;
+
+      $existed_shipper_count = 0;
+
+
+      for($i=0; $i<sizeof($shippers); $i++){
+
+        $temp_shipper_id = $shippers[$i];
+
+        //check if the shipper is already added to the consignee;
+        $mother_query = "SELECT sl_num FROM consignee_shipper_relation WHERE
+                      shipper_id='$temp_shipper_id' AND consignee_id='$consignee_id'";
+
+        $mother_result = $this->getShipper($mother_query);
+
+        //if shipper not existed then only inserted;
+        if(!$mother_result){
+
+          $query = "INSERT INTO `consignee_shipper_relation`(`shipper_id`, `consignee_id`, `timer_id`)
+                    VALUES ('$temp_shipper_id','$consignee_id','$this->timer_id')";
+
+          $result = $this->connection->query($query);
+
+          if($result){
+
+            $counter++;
+
+          }
+
+        }else{
+
+          $existed_shipper_count++;
+
+        }
+
+
+
+
+      }
+
+
+      //combine new and existed shipper to match all data inserted correctly;
+      $counter = $counter + $existed_shipper_count;
+
+
+      //check if all inserted correctly;
+      if($counter == sizeof($shippers)){
+
+
+
+          $report_data = 'New Shippers for ' . $consignee_name . ' is added by User';
+
+          //update log record data;
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully added new Shippers';
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'New Shippers added but log report cannot inserted';
+            return $this->status_message;
+
+          }
+
+
+      }else{
+
+        $this->status_message = 'Sorry some of the Shippers can not be added. Please try again';
+        return $this->status_message;
+
+      }
+
+
+
+    }
+
 
 }
 

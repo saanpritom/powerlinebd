@@ -66,6 +66,11 @@
                                       <i class="material-icons">face</i> Shipper's Contacts
                                   </a>
                               </li>
+                              <li role="presentation">
+                                  <a href="#shipper_with_icon_title" data-toggle="tab">
+                                      <i class="material-icons">list</i> Connected Consignee
+                                  </a>
+                              </li>
                             </ul>
 
                             <!-- Tab panes -->
@@ -239,6 +244,96 @@
                                           </tbody>
                                       </table>
 
+
+                                  </div>
+
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade in" id="shipper_with_icon_title">
+
+
+                                  <div class="body table-responsive">
+
+
+                                    <table class="table table-hover">
+                                          <thead>
+                                              <tr class="bg-orange">
+                                                  <th>#</th>
+                                                  <th>Name</th>
+                                                  <th>Email</th>
+                                                  <th>Country</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+
+                                            <?php
+
+                                            //calculate lowest point for query database;
+                                            $low_point = ($shipper_page_number * 20) - 20;
+
+                                              $query = "SELECT consignee_details.consignee_id, consignee_details.name,
+                                                        consignee_details.email, origin_destination_details.full_name FROM shipper_details
+                                                        INNER JOIN consignee_shipper_relation
+                                                        ON shipper_details.shipper_id=consignee_shipper_relation.shipper_id
+                                                        INNER JOIN consignee_details
+                                                        ON consignee_shipper_relation.consignee_id=consignee_details.consignee_id
+                                                        INNER JOIN origin_destination_details
+                                                        ON consignee_details.country_id=origin_destination_details.o_id_id
+                                                        WHERE shipper_details.shipper_id='$shipper_id'
+                                                        ORDER BY consignee_details.name ASC LIMIT 20 OFFSET $low_point";
+
+                                              $result = $get_shipper->getData($query);
+
+                                              $counter = 1;
+
+                                              foreach($result as $key => $res){
+
+                                                ?>
+
+                                                <tr>
+                                                  <th><?php echo $counter; ?></th>
+                                                  <th><a href="/powerlinebd/admin/superadmin/consignee/consignee-detail/<?php echo $res['consignee_id']; ?>/1"><?php echo $res['name']; ?></a></th>
+                                                  <th><?php echo $res['email']; ?></th>
+                                                  <th><?php echo $res['full_name']; ?></th>
+                                                </tr>
+
+
+                                                <?php
+                                                $counter++;
+                                              }
+
+                                            ?>
+
+                                          </tbody>
+                                      </table>
+
+                                      <?php
+
+                                        //pagination;
+
+                                        //querying for calculating total page to show;
+                                        $query = "SELECT COUNT(consignee_details.consignee_id) AS total_id FROM shipper_details
+                                                  INNER JOIN consignee_shipper_relation
+                                                  ON shipper_details.shipper_id=consignee_shipper_relation.shipper_id
+                                                  INNER JOIN consignee_details
+                                                  ON consignee_shipper_relation.consignee_id=consignee_details.consignee_id
+                                                  WHERE shipper_details.shipper_id='$shipper_id'";
+
+                                        //calling total page number calculation function;
+                                        $how_many_show = $show_pagination->counting_pagination($query, '20', $shipper_page_number);
+
+                                        ?>
+
+                                        <div class="alert alert-info">
+                                            <?php echo $how_many_show; ?>
+                                        </div>
+
+                                        <?php
+
+                                        //calling the pagination showing class, always send current page name;
+                                        $show_pagination->do_pagination('shipper-detail');
+
+                                         ?>
 
                                   </div>
 

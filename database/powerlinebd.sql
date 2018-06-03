@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 01, 2018 at 08:05 PM
+-- Generation Time: Jun 03, 2018 at 08:22 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -93,7 +93,8 @@ CREATE TABLE `consignee_details` (
 --
 
 INSERT INTO `consignee_details` (`sl_num`, `consignee_id`, `name`, `email`, `address`, `contact_number`, `country_id`, `timer_id`) VALUES
-(1, 5125804, 'DK Brothers', 'dk@gmail.com', 'Palekelle, Sri Lanka', '3445444322', 1986606526, 2109939260);
+(1, 5125804, 'DK Brothers', 'dk@gmail.com', 'Palekelle, Sri Lanka', '3445444322', 1986606526, 2109939260),
+(2, 179032019, 'Duckson Brothers', 'duckson@gmail.com', 'Ostford Road, Shaghai', '3445444322', 60481767, 1262168240);
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,13 @@ CREATE TABLE `consignee_shipper_relation` (
 --
 
 INSERT INTO `consignee_shipper_relation` (`sl_num`, `shipper_id`, `consignee_id`, `timer_id`) VALUES
-(1, 598534282, 5125804, 2109939260);
+(1, 598534282, 5125804, 2109939260),
+(19, 1790735697, 5125804, 1131479746),
+(20, 1694196334, 5125804, 1131479746),
+(21, 1364012038, 5125804, 1131479746),
+(22, 190729367, 179032019, 1262168240),
+(23, 911943126, 179032019, 499341193),
+(24, 598534282, 179032019, 956983388);
 
 -- --------------------------------------------------------
 
@@ -142,7 +149,8 @@ INSERT INTO `contact_person_details` (`sl_num`, `contact_id`, `person_from`, `pa
 (1, 535431200, 'shipper', 1790269349, 'Mr. Zhiang Shaw Gung', 'Marketing Manager', '899878890', 146375882),
 (2, 2125651344, 'shipper', 1790735697, 'Mr. Debendra Chouhan', 'Administrator', '9987767766345', 966880233),
 (3, 1923018243, 'shipper', 304337732, 'M Satish', 'Managing Director', '998988789', 1018180944),
-(4, 633925319, 'consignee', 5125804, 'Mr. Eric Shaw', 'Marketing Manager', '56678878', 64932065);
+(4, 633925319, 'consignee', 5125804, 'Mr. Eric Shaw', 'Marketing Manager', '56678878', 64932065),
+(5, 1404893974, 'consignee', 179032019, 'Mr. Piere', 'Managing Director', '01732844253', 659087224);
 
 -- --------------------------------------------------------
 
@@ -364,7 +372,27 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (199, 373144816, '2018/06/01', '09:44:10pm'),
 (200, 1295104784, '2018/06/01', '09:44:57pm'),
 (201, 64932065, '2018/06/01', '11:04:10pm'),
-(202, 1153727111, '2018/06/01', '11:28:27pm');
+(202, 1153727111, '2018/06/01', '11:28:27pm'),
+(203, 1028080133, '2018/06/03', '08:24:35pm'),
+(204, 1308413971, '2018/06/03', '09:51:55pm'),
+(205, 1909682407, '2018/06/03', '09:52:35pm'),
+(206, 523413152, '2018/06/03', '09:53:54pm'),
+(207, 1572837133, '2018/06/03', '09:58:35pm'),
+(208, 1344591851, '2018/06/03', '09:59:41pm'),
+(209, 35890316, '2018/06/03', '10:01:06pm'),
+(210, 2092532465, '2018/06/03', '10:02:43pm'),
+(211, 1251092016, '2018/06/03', '10:05:39pm'),
+(212, 638332624, '2018/06/03', '10:06:51pm'),
+(213, 1917197422, '2018/06/03', '10:08:46pm'),
+(214, 1429764809, '2018/06/03', '10:09:17pm'),
+(215, 1324196760, '2018/06/03', '10:14:44pm'),
+(216, 1879304749, '2018/06/03', '10:18:14pm'),
+(217, 1131479746, '2018/06/03', '10:29:12pm'),
+(218, 462199536, '2018/06/03', '10:33:57pm'),
+(219, 1262168240, '2018/06/03', '11:27:36pm'),
+(220, 659087224, '2018/06/03', '11:28:07pm'),
+(221, 499341193, '2018/06/03', '11:28:28pm'),
+(222, 956983388, '2018/06/03', '11:40:45pm');
 
 -- --------------------------------------------------------
 
@@ -466,7 +494,8 @@ INSERT INTO `login_info` (`sl_num`, `user_id`, `email`, `password`, `rememberme_
 (35, 535431200, 'zhiang@maerks.com', '5a4a9879d31ff76c13622ba8821bcb21eb9adcbfcbdcfe99d07917fa4f39718a', '0', 'contact_person', 0),
 (36, 2125651344, 'debendra@nsg-global.com', '0b826c848db83a2bd4c5aab142a9e35dc61f77f8a11974c1d1ab1265034b46b4', '0', 'contact_person', 0),
 (37, 1923018243, 'sathish@bigfish.com', '1b056482b89d81976c20ce7e53048a0812c52e752162dd3c75b6b262bfe3c841', '0', 'contact_person', 0),
-(38, 633925319, 'eric@gmail.com', '0319dc2462f6553312a72599f65b9a822ffd89d76c11d3dab65455db82e5eb73', '0', 'contact_person', 0);
+(38, 633925319, 'eric@gmail.com', '0319dc2462f6553312a72599f65b9a822ffd89d76c11d3dab65455db82e5eb73', '0', 'contact_person', 0),
+(39, 1404893974, 'piere@duckson.com', '0fb406afeffecdd7417af57715c33185abf5d97368b76b6da0487eb98bb49bfa', '0', 'contact_person', 0);
 
 -- --------------------------------------------------------
 
@@ -517,7 +546,8 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (28, 802124940, '192.168.64.1', 730172739),
 (29, 802124940, '192.168.64.1', 1566444242),
 (30, 802124940, '192.168.64.1', 345269787),
-(31, 802124940, '192.168.64.1', 1789966167);
+(31, 802124940, '192.168.64.1', 1789966167),
+(32, 802124940, '192.168.64.1', 1028080133);
 
 -- --------------------------------------------------------
 
@@ -636,7 +666,23 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (98, 802124940, 'Consignee DK Brothers created by User', 2109939260),
 (99, 802124940, 'Consignee DK Brothers is updated by User', 1295104784),
 (100, 802124940, 'Contact Mr. Eric Shaw created by User', 64932065),
-(101, 802124940, 'Contact Mr. Eric Shaw is updated by User', 1153727111);
+(101, 802124940, 'Contact Mr. Eric Shaw is updated by User', 1153727111),
+(102, 802124940, 'User logged In', 1028080133),
+(103, 802124940, 'New Shippers for DK Brothers is added by User', 1308413971),
+(104, 802124940, 'New Shippers for DK Brothers is added by User', 1909682407),
+(105, 802124940, 'New Shippers for DK Brothers is added by User', 523413152),
+(106, 802124940, 'New Shippers for DK Brothers is added by User', 1572837133),
+(107, 802124940, 'New Shippers for DK Brothers is added by User', 1344591851),
+(108, 802124940, 'New Shippers for DK Brothers is added by User', 35890316),
+(109, 802124940, 'New Shippers for DK Brothers is added by User', 2092532465),
+(110, 802124940, 'New Shippers for DK Brothers is added by User', 1251092016),
+(111, 802124940, 'New Shippers for DK Brothers is added by User', 638332624),
+(112, 802124940, 'New Shippers for DK Brothers is added by User', 1131479746),
+(113, 802124940, 'New Shippers for DK Brothers is added by User', 462199536),
+(114, 802124940, 'Consignee Duckson Brothers created by User', 1262168240),
+(115, 802124940, 'Contact Mr. Piere created by User', 659087224),
+(116, 802124940, 'New Shippers for Duckson Brothers is added by User', 499341193),
+(117, 802124940, 'New Shippers for Duckson Brothers is added by User', 956983388);
 
 -- --------------------------------------------------------
 
@@ -879,25 +925,25 @@ ALTER TABLE `awb_details`
 -- AUTO_INCREMENT for table `consignee_details`
 --
 ALTER TABLE `consignee_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `consignee_shipper_relation`
 --
 ALTER TABLE `consignee_shipper_relation`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `contact_person_details`
 --
 ALTER TABLE `contact_person_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- AUTO_INCREMENT for table `flight_awb_relation`
@@ -921,19 +967,19 @@ ALTER TABLE `freight_transport_relation`
 -- AUTO_INCREMENT for table `login_info`
 --
 ALTER TABLE `login_info`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`

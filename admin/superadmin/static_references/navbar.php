@@ -453,8 +453,16 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     </ul>
                 </li>
 
-                <li>
-                    <a href="../superadmin/dashboard">
+                <?php
+
+                  if($url_active->child_menu == 'log-report'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
+                    <a href="/powerlinebd/admin/superadmin/logs/log-report/1">
                         <i class="material-icons">access_time</i>
                         <span>System Log</span>
                     </a>
