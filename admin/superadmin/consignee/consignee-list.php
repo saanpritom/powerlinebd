@@ -65,7 +65,7 @@
 
                                     $result = $get_consignee->getData($query);
 
-                                    $counter = 1;
+                                    $counter = ($consignee_page_number * 20) - 19;
 
                                     foreach ($result as $key => $res)
                                     {

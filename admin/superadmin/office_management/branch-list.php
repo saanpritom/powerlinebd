@@ -60,7 +60,7 @@
 
                                     $result = $get_branch->getData($query);
 
-                                    $counter = 1;
+                                     $counter = ($branch_page_number * 20) - 19;
 
                                     foreach ($result as $key => $res)
                                     {

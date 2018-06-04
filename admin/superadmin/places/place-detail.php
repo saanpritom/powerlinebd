@@ -159,7 +159,7 @@
 
                                               $result = $get_place->getData($query);
 
-                                              $counter = 1;
+                                              $counter = ($place_page_number * 20) - 19;
 
                                               foreach($result as $key => $res){
 

@@ -66,7 +66,7 @@
 
                                     $result = $get_log->getData($query);
 
-                                    $counter = 1;
+                                    $counter = ($log_page_number * 20) - 19;
 
                                     foreach ($result as $key => $res)
                                     {
