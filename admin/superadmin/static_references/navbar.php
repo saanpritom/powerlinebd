@@ -140,26 +140,58 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 </li>
 
 
-                <li>
+                <?php
+
+                  if($url_active->child_menu == 'mawb-add' or $url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit'){
+                    echo '<li class="active">';
+                  }else{
+                    echo '<li>';
+                  }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">group_work</i>
                         <span>Master AWB</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/mawb/mawb-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>All MAWB</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'incomplete-mawb'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                            <a href="/powerlinebd/admin/superadmin/mawb/incomplete-mawb/1" >
                                 <i class="material-icons">cancel</i>
                                 <span>Incomplete MAWB</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'mawb-add'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/mawb/mawb-add" >
                                 <i class="material-icons">add_box</i>
                                 <span>Create New MAWB</span>
                             </a>
