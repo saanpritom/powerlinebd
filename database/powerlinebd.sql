@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 03, 2018 at 08:22 PM
+-- Generation Time: Jul 16, 2018 at 10:38 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -66,7 +66,15 @@ DROP TABLE IF EXISTS `awb_details`;
 CREATE TABLE `awb_details` (
   `sl_num` bigint(20) UNSIGNED NOT NULL,
   `awb_id` int(11) NOT NULL,
-  `mawb_id` int(11) NOT NULL,
+  `shipper_id` int(11) NOT NULL,
+  `consignee_id` int(11) NOT NULL,
+  `destination_id` int(11) NOT NULL,
+  `bag_number` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `pcs` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `a.weight` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `b.weight` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -115,13 +123,14 @@ CREATE TABLE `consignee_shipper_relation` (
 --
 
 INSERT INTO `consignee_shipper_relation` (`sl_num`, `shipper_id`, `consignee_id`, `timer_id`) VALUES
-(1, 598534282, 5125804, 2109939260),
 (19, 1790735697, 5125804, 1131479746),
 (20, 1694196334, 5125804, 1131479746),
 (21, 1364012038, 5125804, 1131479746),
 (22, 190729367, 179032019, 1262168240),
 (23, 911943126, 179032019, 499341193),
-(24, 598534282, 179032019, 956983388);
+(24, 598534282, 179032019, 956983388),
+(26, 598534282, 5125804, 1636410615),
+(28, 1790735697, 179032019, 947827693);
 
 -- --------------------------------------------------------
 
@@ -392,20 +401,31 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (219, 1262168240, '2018/06/03', '11:27:36pm'),
 (220, 659087224, '2018/06/03', '11:28:07pm'),
 (221, 499341193, '2018/06/03', '11:28:28pm'),
-(222, 956983388, '2018/06/03', '11:40:45pm');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `flight_awb_relation`
---
-
-DROP TABLE IF EXISTS `flight_awb_relation`;
-CREATE TABLE `flight_awb_relation` (
-  `sl_num` bigint(20) UNSIGNED NOT NULL,
-  `flight_id` int(11) NOT NULL,
-  `awb_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(222, 956983388, '2018/06/03', '11:40:45pm'),
+(223, 446604344, '2018/06/03', '12:27:08am'),
+(224, 1016716079, '2018/06/03', '12:27:11am'),
+(225, 553737464, '2018/06/03', '12:27:17am'),
+(226, 834393665, '2018/06/04', '07:32:39pm'),
+(227, 1499158197, '2018/06/04', '07:44:31pm'),
+(228, 1030252161, '2018/06/04', '07:44:51pm'),
+(229, 843428833, '2018/06/04', '07:55:40pm'),
+(230, 542769685, '2018/06/04', '07:55:51pm'),
+(231, 1442686070, '2018/06/04', '08:10:59pm'),
+(232, 1636410615, '2018/06/04', '08:11:27pm'),
+(233, 476508697, '2018/06/04', '08:12:44pm'),
+(234, 657024748, '2018/06/04', '08:13:01pm'),
+(235, 947827693, '2018/06/04', '08:16:17pm'),
+(236, 1197540110, '2018/06/05', '07:52:12pm'),
+(237, 685317243, '2018/06/27', '10:38:30pm'),
+(238, 818394517, '2018/06/27', '11:29:33pm'),
+(239, 1536382148, '2018/06/27', '11:29:59pm'),
+(240, 1569046019, '2018/06/28', '02:56:40am'),
+(241, 106699753, '2018/07/16', '06:40:09pm'),
+(242, 966672986, '2018/07/16', '06:40:53pm'),
+(243, 1136185721, '2018/07/16', '07:00:57pm'),
+(244, 610520042, '2018/07/16', '07:03:27pm'),
+(245, 2096089224, '2018/07/16', '12:37:36am'),
+(246, 1200179493, '2018/07/16', '12:39:07am');
 
 -- --------------------------------------------------------
 
@@ -432,25 +452,6 @@ INSERT INTO `flight_details` (`sl_num`, `flight_number`, `flight_date`, `flight_
 (3, 'PK4567889', '30/5/2018', '12:30', 1237659562),
 (4, 'SL4556789', '30/5/2018', '12:30', 2062217614),
 (5, 'UK3455678', '30/6/2018', '12:30', 1377784436);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `freight_transport_relation`
---
-
-DROP TABLE IF EXISTS `freight_transport_relation`;
-CREATE TABLE `freight_transport_relation` (
-  `sl_num` bigint(20) UNSIGNED NOT NULL,
-  `trans_id` int(11) NOT NULL,
-  `awb_id` int(11) NOT NULL,
-  `shipper_id` int(11) NOT NULL,
-  `consignee_id` int(11) NOT NULL,
-  `origin_d_id` int(11) NOT NULL,
-  `destination_d_id` int(11) NOT NULL,
-  `bag_id` int(11) NOT NULL,
-  `country_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -547,7 +548,14 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (29, 802124940, '192.168.64.1', 1566444242),
 (30, 802124940, '192.168.64.1', 345269787),
 (31, 802124940, '192.168.64.1', 1789966167),
-(32, 802124940, '192.168.64.1', 1028080133);
+(32, 802124940, '192.168.64.1', 1028080133),
+(33, 802124940, '192.168.64.1', 1016716079),
+(34, 802124940, '192.168.64.1', 834393665),
+(35, 802124940, '192.168.64.1', 1197540110),
+(36, 802124940, '192.168.64.1', 685317243),
+(37, 802124940, '192.168.64.1', 1569046019),
+(38, 802124940, '192.168.64.1', 106699753),
+(39, 802124940, '192.168.64.1', 1200179493);
 
 -- --------------------------------------------------------
 
@@ -682,7 +690,30 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (114, 802124940, 'Consignee Duckson Brothers created by User', 1262168240),
 (115, 802124940, 'Contact Mr. Piere created by User', 659087224),
 (116, 802124940, 'New Shippers for Duckson Brothers is added by User', 499341193),
-(117, 802124940, 'New Shippers for Duckson Brothers is added by User', 956983388);
+(117, 802124940, 'New Shippers for Duckson Brothers is added by User', 956983388),
+(118, 802124940, 'User logged Out', 446604344),
+(119, 802124940, 'User logged In', 1016716079),
+(120, 802124940, 'User logged Out', 553737464),
+(121, 802124940, 'User logged In', 834393665),
+(122, 802124940, 'New Shippers for DK Brothers is added by User', 1499158197),
+(123, 802124940, 'New Shippers for DK Brothers is added by User', 1030252161),
+(124, 802124940, 'New Shippers for DK Brothers is added by User', 843428833),
+(125, 802124940, 'New Shippers for DK Brothers is added by User', 542769685),
+(126, 802124940, 'New Shippers for DK Brothers is added by User', 1442686070),
+(127, 802124940, 'New Shippers for DK Brothers is added by User', 1636410615),
+(128, 802124940, 'New Shippers for DK Brothers is added by User', 476508697),
+(129, 802124940, 'New Shippers for DK Brothers is added by User', 657024748),
+(130, 802124940, 'New Shippers for Duckson Brothers is added by User', 947827693),
+(131, 802124940, 'User logged In', 1197540110),
+(132, 802124940, 'User logged In', 685317243),
+(133, 802124940, 'MAWB MA2345543 created by User', 818394517),
+(134, 802124940, 'MAWB GH899878898 created by User', 1536382148),
+(135, 802124940, 'User logged In', 1569046019),
+(136, 802124940, 'User logged In', 106699753),
+(137, 802124940, 'MAWB MA23455444 is updated by User', 1136185721),
+(138, 802124940, 'MAWB MA23455333 is updated by User', 610520042),
+(139, 802124940, 'MAWB PB4566789 created by User', 2096089224),
+(140, 802124940, 'User logged In', 1200179493);
 
 -- --------------------------------------------------------
 
@@ -697,6 +728,15 @@ CREATE TABLE `mawb_details` (
   `mawb_number` text COLLATE utf8_unicode_ci NOT NULL,
   `timer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `mawb_details`
+--
+
+INSERT INTO `mawb_details` (`sl_num`, `mawb_id`, `mawb_number`, `timer_id`) VALUES
+(1, 950823073, 'MA23455333', 818394517),
+(2, 25085972, 'GH899878898', 1536382148),
+(3, 1994325899, 'PB4566789', 2096089224);
 
 -- --------------------------------------------------------
 
@@ -837,23 +877,9 @@ ALTER TABLE `creation_details`
   ADD PRIMARY KEY (`sl_num`);
 
 --
--- Indexes for table `flight_awb_relation`
---
-ALTER TABLE `flight_awb_relation`
-  ADD PRIMARY KEY (`sl_num`),
-  ADD UNIQUE KEY `sl_num` (`sl_num`);
-
---
 -- Indexes for table `flight_details`
 --
 ALTER TABLE `flight_details`
-  ADD PRIMARY KEY (`sl_num`),
-  ADD UNIQUE KEY `sl_num` (`sl_num`);
-
---
--- Indexes for table `freight_transport_relation`
---
-ALTER TABLE `freight_transport_relation`
   ADD PRIMARY KEY (`sl_num`),
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
@@ -931,7 +957,7 @@ ALTER TABLE `consignee_details`
 -- AUTO_INCREMENT for table `consignee_shipper_relation`
 --
 ALTER TABLE `consignee_shipper_relation`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `contact_person_details`
@@ -943,25 +969,13 @@ ALTER TABLE `contact_person_details`
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
-
---
--- AUTO_INCREMENT for table `flight_awb_relation`
---
-ALTER TABLE `flight_awb_relation`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
 -- AUTO_INCREMENT for table `flight_details`
 --
 ALTER TABLE `flight_details`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `freight_transport_relation`
---
-ALTER TABLE `freight_transport_relation`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `login_info`
@@ -973,19 +987,19 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`
 --
 ALTER TABLE `mawb_details`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `office_branch`

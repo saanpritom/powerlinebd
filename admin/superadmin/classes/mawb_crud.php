@@ -143,66 +143,6 @@ class MAWBCrudOperation extends DbConfig
         return $rows;
     }
 
-    public function update_query($shipper_id, $shipper_name, $email_address, $contact_number, $country_id, $address, $user_id)
-    {
-
-      //check if timer_id created properly
-        if(is_numeric($this->timer_id)){
-
-          //first query inserting data into login table;
-          $query = "UPDATE `login_info` SET `email`='$email_address' WHERE `user_id`='$this->usering_id'";
-
-          if($this->connection->query($query)){
-
-            //second query inserting data into admin details table;
-            $query = "UPDATE `shipper_details` SET `name`='$shipper_name',`country_id`='$country_id',
-                      `address`='$address',`contact_number`='$contact_number' WHERE `shipper_id`='$this->usering_id'";
-
-
-            if($this->connection->query($query)){
-
-
-              $report_data = 'Shipper ' . $shipper_name . ' is updated by User';
-
-              //update log record data;
-              $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
-
-              if($report_status){
-
-                $this->status_message = 'Successfully updated shipper';
-                return $this->status_message;
-
-              }else{
-
-                //insert log report not working unknown reason;
-                $this->status_message = 'Shipper updated but log report can not be inserted';
-                return $this->status_message;
-
-              }
-
-            }else{
-
-              $this->status_message = 'Shipper email updated but rests are not';
-              return $this->status_message;
-            }
-
-
-          }else{
-
-            $this->status_message = 'Problem updating shipper. Please try again';
-            return $this->status_message;
-
-          }
-
-
-        }else{
-          return $this->timer_id;
-      }
-
-
-    }
-
-
 
     //updating a new user on the database;
     public function update_mawb($mawb_id, $mawb_number, $user_id)
@@ -211,31 +151,50 @@ class MAWBCrudOperation extends DbConfig
       //calling the timer fetch function;
       $this->timer_id = $this->fetch_time();
 
-      if ($this->user_email_check) {
+      $this->mawb_number_check = $this->check_mawb_number($mawb_number);
 
-        //check if email address is not changed;
-        $query = "SELECT email FROM login_info WHERE user_id='$this->usering_id'";
-        $result = $this->getData($query);
-        foreach($result as $key => $res){
-          $prev_email = $res['email'];
-        }
+      if($this->mawb_number_check){
 
-        if($prev_email != $email_address){
+        $this->usering_id = 'MAWB number already exists. Please try a different one';
 
-          $this->usering_id = 'User email exist. Please try a different email';
-          return $this->usering_id;
-
-        }else{
-
-          return $this->update_query($shipper_id, $shipper_name, $email_address, $contact_number, $country_id, $address, $user_id);
-
-
-        }
-
+        return $this->usering_id;
 
       }else{
 
-        return $this->update_query($shipper_id, $shipper_name, $email_address, $contact_number, $country_id, $address, $user_id);
+        if(is_numeric($this->timer_id)){
+
+          $query = "UPDATE `mawb_details` SET `mawb_number`='$mawb_number' WHERE `mawb_id`='$mawb_id'";
+
+          if($this->connection->query($query)){
+
+            $report_data = 'MAWB ' . $mawb_number . ' is updated by User';
+
+            //update log record data;
+            $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+            if($report_status){
+
+              $this->status_message = 'MAWB updated Successfully';
+              return $this->status_message;
+
+            }else{
+
+              //insert log report not working unknown reason;
+              $this->status_message = 'MAWB updated but log report can not be inserted';
+              return $this->status_message;
+
+            }
+
+          }else{
+
+            return 'Some problem happened. Please try again later.';
+
+          }
+
+
+        }else{
+          return $this->timer_id;
+        }
 
       }
 

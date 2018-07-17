@@ -99,34 +99,50 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 </li>
 
 
-                <li>
+                <?php
+
+                if($url_active->child_menu == 'awb-add' or $url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit'){
+                  echo '<li class="active">';
+                }else{
+                  echo '<li>';
+                }
+
+                 ?>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">flight_takeoff</i>
-                        <span>Shipments</span>
+                        <span>AWBs</span>
                     </a>
                     <ul class="ml-menu">
                       <li>
                           <a href="javascript:void(0);" >
                               <i class="material-icons">view_stream</i>
-                              <span>All Shipments</span>
+                              <span>All AWBs</span>
                           </a>
                       </li>
                         <li>
                             <a href="javascript:void(0);" >
                                 <i class="material-icons">cancel</i>
-                                <span>Undelivered Shipments</span>
+                                <span>Undelivered AWBs</span>
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0);" >
                                 <i class="material-icons">add_box</i>
-                                <span>Create New Shipment</span>
+                                <span>Delivered AWBs</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" >
+                        <?php
+
+                          if($url_active->child_menu == 'awb-add'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                            <a href="/powerlinebd/admin/superadmin/awb/awb-add" >
                                 <i class="material-icons">add_box</i>
-                                <span>Create New Shipment</span>
+                                <span>Create New AWB</span>
                             </a>
                         </li>
                     </ul>

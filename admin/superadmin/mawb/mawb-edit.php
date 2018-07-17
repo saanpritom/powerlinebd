@@ -107,9 +107,9 @@
                             $clearence = new Clearence();
 
                             //data clearance;
-                            $mawb_operation = $clearence->escape_string($mawb_operation);
-                            $mawb_operation = strip_tags(trim($mawb_operation));
-                            $mawb_operation = htmlentities($mawb_operation);
+                            $mawb_id = $clearence->escape_string($mawb_id);
+                            $mawb_id = strip_tags(trim($mawb_id));
+                            $mawb_id = htmlentities($mawb_id);
 
                             $query = "SELECT `mawb_number` FROM `mawb_details` WHERE `mawb_id`='$mawb_id'";
 
