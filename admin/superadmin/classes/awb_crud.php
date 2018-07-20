@@ -42,7 +42,7 @@ class AWBCrudOperation extends DbConfig
     //check if the user id is exist on the database;
     public function check_awb_number($awb_number)
     {
-      $query = "SELECT sl_num FROM awb_details WHERE awb_number='$awb_number'";
+      $query = "SELECT sl_num FROM awb_details WHERE awb_id='$awb_number'";
       $result = $this->connection->query($query);
       if($result->num_rows >= 1) {
         return true;
@@ -51,101 +51,44 @@ class AWBCrudOperation extends DbConfig
       }
     }
 
-    //fetch consignee id FROM consignee name;
-    public function collect_consignee_id($consignee_name){
 
-      //spliting name and country short name;
-      $country_short_name = end(explode('-', $consignee_name));
+    public function get_consignee_id($consignee_name){
 
-      $consignee_name =  current(explode('-', $consignee_name));
+      //check if the string contains -
+      if (strpos($consignee_name, '-') !== false) {
 
-      //getting the consignee id;
-      $query = "SELECT consignee_details.consignee_id FROM consignee_details
-                INNER JOIN origin_destination_details ON consignee_details.country_id=origin_destination_details.o_id_id
-                WHERE consignee_details.consignee_name='$consignee_name' AND origin_destination_details.short_form='$country_short_name'";
+        $country_short_name = explode('-', $consignee_name);
 
-      $result = $this->connection->query($query);
+        $country_short_name = end($country_short_name);
 
-      //collect the consignee_id
-      while ($row = $result->fetch_assoc()) {
+        $c_name =  current(explode('-', $consignee_name));
 
-          $consignee_id = $row['consignee_id'];
+        //getting the consignee id;
+        $query = "SELECT consignee_details.consignee_id FROM consignee_details
+                  INNER JOIN origin_destination_details ON consignee_details.country_id=origin_destination_details.o_id_id
+                  WHERE consignee_details.name='$c_name' AND origin_destination_details.short_form='$country_short_name'";
 
-      }
+        $result = $this->getData($query);
 
-      //send true or false signal for consignee_id
-      if($result->num_rows >= 1) {
+        foreach ($result as $key => $res)
+        {
+          $consignee_id = $res['consignee_id'];
+        }
 
         return $consignee_id;
 
       }else{
 
-        return false;
-
-      }
-    }
-
-
-    //check destination
-    public function check_destination($designation){
-
-      //getting the consignee id;
-      $query = "SELECT `o_id_id` FROM `origin_destination_details` WHERE
-                full_name='$destination' AND type='destination'";
-
-      $result = $this->connection->query($query);
-
-      //collect the consignee_id
-      while ($row = $result->fetch_assoc()) {
-
-          $destination_id = $row['o_id_id'];
+        return 'new consignee';
 
       }
 
-      //send true or false signal for consignee_id
-      if($result->num_rows >= 1) {
-
-        return $destination_id;
-
-      }else{
-
-        return false;
-
-      }
-    }
-
-
-
-    //check if newly creating consignee id already exists or not;
-    public function check_consignee_id($new_consignee_id){
-
-      $query = "SELECT sl_num FROM consignee_details WHERE consignee_id='$new_consignee_id'";
-      $result = $this->connection->query($query);
-      if($result->num_rows >= 1) {
-        return true;
-      }else{
-        return false;
 
 
     }
-
-
-    //check if newly creating consignee id already exists or not;
-    public function check_destination_id($new_destination_id){
-
-      $query = "SELECT sl_num FROM origin_destination_details WHERE o_id_id='$new_destination_id'";
-      $result = $this->connection->query($query);
-      if($result->num_rows >= 1) {
-        return true;
-      }else{
-        return false;
-
-
-    }
-
 
     //creating a new user on the database;
-    public function create_mawb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
+    public function create_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
     {
 
       //calling the timer fetch function;
@@ -154,8 +97,12 @@ class AWBCrudOperation extends DbConfig
       //check mawb number uniqueness
       $this->awb_number_check = $this->check_awb_number($awb_number);
 
-      //collect consignee_id FROM consignee_name
-      $consignee_id = $this->collect_consignee_id($consignee_name);
+      //check destination is null or not;
+      if($destination==''){
+        $destination = 0;
+      }else{
+        $destination = $destination;
+      }
 
       if($this->awb_number_check){
         $this->usering_id = 'AWB number already exists. Please try a different one';
@@ -165,104 +112,63 @@ class AWBCrudOperation extends DbConfig
         //check if timer_id created properly
         if(is_numeric($this->timer_id)){
 
+          //determine new or existing consignee;
+          $check_consignee = $this->get_consignee_id($consignee_name);
 
-          //check if consignee is new or old. If new then a new consignee will be created;
-          if(!$consignee_id){
+          if($check_consignee == 'new consignee'){
 
-            //generate new consignee id
-            $new_consignee_id = mt_rand();
+            $consignee_name = $consignee_name;
 
-            //check consignee id already exists
-            $consignee_id_check = $this->check_consignee_id($new_consignee_id);
+          }else{
 
-            if($consignee_id_check){
-
-              $this->usering_id = 'Newly creating consignee ID overflow. Please try again';
-              return $this->usering_id;
-
-            }else{
-
-              //check if destination is already exists or not;
-              $destination_check = $this->check_destination($destination);
-
-              //create destination if not found;
-              if(!$destination_check){
-
-                //generate new destination ID;
-                $new_destination_id = mt_rand();
-
-                //check destination id already exists
-                $destination_id_check = $this->check_destination_id($new_destination_id);
-
-                if($destination_id_check){
-
-                  //generate new destination ID;
-                  $new_destination_id = mt_rand() * mt_rand();
-
-                }
-
-                $query = "INSERT INTO `origin_destination_details`(`o_id_id`, `full_name`, `short_form`, `type`) VALUES ('$new_destination_id',
-                          '$destination', 'N/A', 'destination')";
-
-                $this->connection->query($query);
-
-              }
-
-
-              //insert a new consignee into consignee_details
-              $query = "INSERT INTO `consignee_details`(`consignee_id`, `name`, `email`, `address`, `contact_number`,
-                        `country_id`) VALUES ('$new_consignee_id', $consignee_name, 'no@email.com',
-                        'No Address', 'No Contact Number', '0')";
-
-              if($this->connection->query($query)){
-
-                //insert data into AWB details table
-                $query = "INSERT INTO `awb_details`(`awb_id`, `shipper_id`, `consignee_id`, `destination_id`, `bag_number`,
-                          `type`, `pcs`, `a.weight`, `b.weight`, `value`, `timer_id`)
-                          VALUES ('$awb_number','$shipper_id','$new_consignee_id','$new_destination_id','$bag_number',
-                          '$type','$pcs','$a_weight',
-                          '$b_weight','$value','$this->timer_id')";
-
-
-              }else{
-
-                $this->usering_id = 'Problem creating new consignee. Please try again';
-                return $this->usering_id;
-
-              }
-
-
-
-            }
-
+            $consignee_name = $check_consignee;
 
           }
 
           //first query inserting data into login table;
-          $query = "INSERT INTO `mawb_details`(`mawb_id`, `mawb_number`, `timer_id`)
-                    VALUES ('$mawb_id', '$mawb_number', '$this->timer_id')";
+          $query ="INSERT INTO `awb_details`(`awb_id`, `shipper_id`, `consignee_id`, `destination_id`,
+                   `bag_number`, `type`, `pcs`, `a.weight`, `b.weight`, `value`, `timer_id`, `user_id`)
+                   VALUES ('$awb_number', '$shipper_id', '$consignee_name', '$destination', '$bag_number',
+                           '$type', '$pcs', '$a_weight', '$b_weight', '$price_value', '$this->timer_id', '$user_id')";
 
           if($this->connection->query($query)){
 
-            $report_data = 'MAWB ' . $mawb_number . ' created by User';
+            //insert into awb status table;
+            $query = "INSERT INTO `awb_lock`(`awb_id`, `lock_status`, `operational_awb`)
+                      VALUES ('$awb_number', 'unlocked', '1')";
 
-            $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+            if($this->connection->query($query)){
 
-            if($report_status){
+              $report_data = 'AWB ' . $awb_number . ' created by User';
 
-              $this->status_message = 'Successfully created a new MAWB';
-              return $this->status_message;
+              $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+              if($report_status){
+
+                $this->status_message = 'Successfully created a new AWB';
+                return $this->status_message;
+
+              }else{
+
+                $this->status_message = 'Successfully created a new AWB but log can not be generated';
+                return $this->status_message;
+
+              }
+
 
             }else{
 
-              $this->status_message = 'Successfully created a new MAWB but log can not be generated';
+              $this->status_message = 'Successfully created a new AWB but status can not be created';
               return $this->status_message;
+
 
             }
 
 
+
+
           }else{
-            $this->status_message = 'Problem creating new MAWB. Please try again';
+            $this->status_message = 'Problem creating new AWB. Please try again';
             return $this->status_message;
           }
 

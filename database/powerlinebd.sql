@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 16, 2018 at 10:38 PM
+-- Generation Time: Jul 20, 2018 at 07:43 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -67,15 +67,102 @@ CREATE TABLE `awb_details` (
   `sl_num` bigint(20) UNSIGNED NOT NULL,
   `awb_id` int(11) NOT NULL,
   `shipper_id` int(11) NOT NULL,
-  `consignee_id` int(11) NOT NULL,
-  `destination_id` int(11) NOT NULL,
+  `consignee_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `destination_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `bag_number` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `pcs` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `a.weight` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `b.weight` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `value` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `timer_id` int(11) NOT NULL
+  `timer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `awb_details`
+--
+
+INSERT INTO `awb_details` (`sl_num`, `awb_id`, `shipper_id`, `consignee_id`, `destination_id`, `bag_number`, `type`, `pcs`, `a.weight`, `b.weight`, `value`, `timer_id`, `user_id`) VALUES
+(1, 987787768, 304337732, 'Dibrugarh Corp.', 'Dibrugarh', '34', 'dual cam', '2', '34.9', '67.8', '23.9', 925188112, 802124940),
+(2, 34553345, 598534282, '', 'Shemichol', '32', 'Desktop Computer', '34', '144.90', '230.7', '450000', 1075318246, 802124940),
+(3, 456776544, 911943126, '', 'Shemichol', '34', 'dual cam', '4', '34.9', '67.8', '23.9', 736915004, 802124940),
+(4, 56678, 304337732, '', 'Dibrugarh', '34', 'dual cam', '3', '34.9', '67.8', '23.9', 1715463362, 802124940),
+(5, 456654445, 1411207400, '5125804', 'Dibrugarh', '34', 'dual cam', '3', '34.9', '67.8', '23.9', 1502824346, 802124940),
+(6, 2147483647, 598534282, '5125804', '0', '45', 'Desktop Computer', '56', '144.90', '230.7', '450000', 2057174093, 802124940),
+(7, 679887787, 1790735697, '179032019', '0', '45', 'Laptop', '56', '450.0', '560.0', '3890098', 1348673262, 802124940);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awb_lock`
+--
+
+DROP TABLE IF EXISTS `awb_lock`;
+CREATE TABLE `awb_lock` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `lock_status` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `operational_awb` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `awb_lock`
+--
+
+INSERT INTO `awb_lock` (`sl_num`, `awb_id`, `lock_status`, `operational_awb`) VALUES
+(1, 987787768, 'unlocked', 1),
+(2, 34553345, 'unlocked', 1),
+(3, 456776544, 'unlocked', 1),
+(4, 56678, 'unlocked', 1),
+(5, 456654445, 'unlocked', 1),
+(6, 2147483647, 'unlocked', 1),
+(7, 679887787, 'unlocked', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awb_mawb_flight_relation`
+--
+
+DROP TABLE IF EXISTS `awb_mawb_flight_relation`;
+CREATE TABLE `awb_mawb_flight_relation` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `mawb_id` int(11) NOT NULL,
+  `flight_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awb_status`
+--
+
+DROP TABLE IF EXISTS `awb_status`;
+CREATE TABLE `awb_status` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `timer_id` int(11) NOT NULL,
+  `delivery_status` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awb_third_party`
+--
+
+DROP TABLE IF EXISTS `awb_third_party`;
+CREATE TABLE `awb_third_party` (
+  `sl_num` bigint(20) UNSIGNED NOT NULL,
+  `awb_id` int(11) NOT NULL,
+  `third_party_name` text COLLATE utf8_unicode_ci NOT NULL,
+  `third_party_address` text COLLATE utf8_unicode_ci NOT NULL,
+  `third_party_number` text COLLATE utf8_unicode_ci NOT NULL,
+  `third_party_destination` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -425,7 +512,20 @@ INSERT INTO `creation_details` (`sl_num`, `timer_id`, `creation_date`, `creation
 (243, 1136185721, '2018/07/16', '07:00:57pm'),
 (244, 610520042, '2018/07/16', '07:03:27pm'),
 (245, 2096089224, '2018/07/16', '12:37:36am'),
-(246, 1200179493, '2018/07/16', '12:39:07am');
+(246, 1200179493, '2018/07/16', '12:39:07am'),
+(247, 136132150, '2018/07/20', '09:13:15pm'),
+(248, 1405491427, '2018/07/20', '10:56:43pm'),
+(249, 2075841463, '2018/07/20', '10:58:29pm'),
+(250, 593758557, '2018/07/20', '10:59:56pm'),
+(251, 555653991, '2018/07/20', '11:01:21pm'),
+(252, 925188112, '2018/07/20', '11:06:27pm'),
+(253, 891721222, '2018/07/20', '11:09:05pm'),
+(254, 1075318246, '2018/07/20', '11:15:38pm'),
+(255, 736915004, '2018/07/20', '11:18:00pm'),
+(256, 1715463362, '2018/07/20', '11:19:27pm'),
+(257, 1502824346, '2018/07/20', '11:20:48pm'),
+(258, 2057174093, '2018/07/20', '11:22:50pm'),
+(259, 1348673262, '2018/07/20', '11:27:06pm');
 
 -- --------------------------------------------------------
 
@@ -555,7 +655,8 @@ INSERT INTO `login_log` (`sl_num`, `user_id`, `public_ip`, `timer_id`) VALUES
 (36, 802124940, '192.168.64.1', 685317243),
 (37, 802124940, '192.168.64.1', 1569046019),
 (38, 802124940, '192.168.64.1', 106699753),
-(39, 802124940, '192.168.64.1', 1200179493);
+(39, 802124940, '192.168.64.1', 1200179493),
+(40, 802124940, '192.168.64.1', 136132150);
 
 -- --------------------------------------------------------
 
@@ -713,7 +814,15 @@ INSERT INTO `log_report` (`sl_num`, `user_id`, `log_report`, `timer_id`) VALUES
 (137, 802124940, 'MAWB MA23455444 is updated by User', 1136185721),
 (138, 802124940, 'MAWB MA23455333 is updated by User', 610520042),
 (139, 802124940, 'MAWB PB4566789 created by User', 2096089224),
-(140, 802124940, 'User logged In', 1200179493);
+(140, 802124940, 'User logged In', 1200179493),
+(141, 802124940, 'User logged In', 136132150),
+(142, 802124940, 'AWB 987787768 created by User', 925188112),
+(143, 802124940, 'AWB 34553345 created by User', 1075318246),
+(144, 802124940, 'AWB 456776544 created by User', 736915004),
+(145, 802124940, 'AWB 56678 created by User', 1715463362),
+(146, 802124940, 'AWB 456654445 created by User', 1502824346),
+(147, 802124940, 'AWB 56778777788 created by User', 2057174093),
+(148, 802124940, 'AWB 679887787 created by User', 1348673262);
 
 -- --------------------------------------------------------
 
@@ -850,6 +959,34 @@ ALTER TABLE `awb_details`
   ADD UNIQUE KEY `sl_num` (`sl_num`);
 
 --
+-- Indexes for table `awb_lock`
+--
+ALTER TABLE `awb_lock`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `awb_mawb_flight_relation`
+--
+ALTER TABLE `awb_mawb_flight_relation`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `awb_status`
+--
+ALTER TABLE `awb_status`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
+-- Indexes for table `awb_third_party`
+--
+ALTER TABLE `awb_third_party`
+  ADD PRIMARY KEY (`sl_num`),
+  ADD UNIQUE KEY `sl_num` (`sl_num`);
+
+--
 -- Indexes for table `consignee_details`
 --
 ALTER TABLE `consignee_details`
@@ -945,6 +1082,30 @@ ALTER TABLE `admin_details`
 -- AUTO_INCREMENT for table `awb_details`
 --
 ALTER TABLE `awb_details`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `awb_lock`
+--
+ALTER TABLE `awb_lock`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `awb_mawb_flight_relation`
+--
+ALTER TABLE `awb_mawb_flight_relation`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `awb_status`
+--
+ALTER TABLE `awb_status`
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `awb_third_party`
+--
+ALTER TABLE `awb_third_party`
   MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -969,7 +1130,7 @@ ALTER TABLE `contact_person_details`
 -- AUTO_INCREMENT for table `creation_details`
 --
 ALTER TABLE `creation_details`
-  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+  MODIFY `sl_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
 
 --
 -- AUTO_INCREMENT for table `flight_details`
@@ -987,13 +1148,13 @@ ALTER TABLE `login_info`
 -- AUTO_INCREMENT for table `login_log`
 --
 ALTER TABLE `login_log`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `log_report`
 --
 ALTER TABLE `log_report`
-  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `sl_num` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `mawb_details`

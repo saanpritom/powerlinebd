@@ -36,7 +36,7 @@
                           $awb_number = $clearence->escape_string($_POST['awb_number']);
                           $shipper_id = $clearence->escape_string($_POST['shipper_id']);
                           $consignee_name = $clearence->escape_string($_POST['consignee_id']);
-                          $designation = $clearence->escape_string($_POST['destination']);
+                          $destination = $clearence->escape_string($_POST['destination']);
                           $bag_number = $clearence->escape_string($_POST['bag_number']);
                           $type = $clearence->escape_string($_POST['type']);
                           $pcs = $clearence->escape_string($_POST['pcs']);
@@ -69,7 +69,7 @@
                           $price_value = htmlentities($price_value);
 
                           //check refined and input values are empty and valid or not;
-                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value));
+                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value));
 
                           if($msg != null){
                             ?>
@@ -83,7 +83,7 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_awb = $awb_operation->create_awb($awb_number, $shipper_id, $consignee_name, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
+                            $new_awb = $awb_operation->create_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
 
                             //check if branch created properly;
                             if($new_awb == 'Successfully created a new AWB'){
@@ -168,7 +168,7 @@
                                 <label for="consignee">To</label>
                                 <div class="form-group">
                                   <div class="form-line frmSearch">
-                                    <input type="text" id="search-box" placeholder="Consignee Name" class="form-control" required aria-required="true" name="consignee_id" />
+                                    <input type="text" id="search-box" placeholder="Consignee Name" class="form-control" required aria-required="true" name="consignee_id"  autocomplete="off"/>
                                     <div id="suggesstion-box"></div>
                                   </div>
                                 </div>
@@ -176,7 +176,7 @@
                                 <label for="destination">Destination</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="destination" class="form-control" required aria-required="true" placeholder="Enter Destination" name="destination">
+                                        <input type="text" id="destination" class="form-control" placeholder="Enter Destination (Keep free if choosen from existing consignee)" name="destination">
                                     </div>
                                 </div>
 
