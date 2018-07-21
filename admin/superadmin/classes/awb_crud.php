@@ -123,6 +123,12 @@ class AWBCrudOperation extends DbConfig
 
             $consignee_name = $check_consignee;
 
+            //update consignee shipper relation table;
+            $query = "INSERT INTO `consignee_shipper_relation`(`shipper_id`, `consignee_id`, `timer_id`)
+                      VALUES ('$shipper_id', '$consignee_name', '$this->timer_id')";
+
+            $this->connection->query($query);
+
           }
 
           //first query inserting data into login table;
@@ -139,19 +145,34 @@ class AWBCrudOperation extends DbConfig
 
             if($this->connection->query($query)){
 
-              $report_data = 'AWB ' . $awb_number . ' created by User';
+              //insert a basic delivery status into awb_status
+              $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                        VALUES ('$awb_number', '$user_id', '$this->timer_id', 'Created', '1')";
 
-              $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+              if($this->connection->query($query)){
 
-              if($report_status){
+                $report_data = 'AWB ' . $awb_number . ' created by User';
 
-                $this->status_message = 'Successfully created a new AWB';
-                return $this->status_message;
+                $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                if($report_status){
+
+                  $this->status_message = 'Successfully created a new AWB';
+                  return $this->status_message;
+
+                }else{
+
+                  $this->status_message = 'Successfully created a new AWB but log can not be generated';
+                  return $this->status_message;
+
+                }
+
 
               }else{
 
-                $this->status_message = 'Successfully created a new AWB but log can not be generated';
+                $this->status_message = 'Successfully created a new AWB but initial delivery status can not be generated';
                 return $this->status_message;
+
 
               }
 

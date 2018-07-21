@@ -113,8 +113,16 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                         <span>AWBs</span>
                     </a>
                     <ul class="ml-menu">
-                      <li>
-                          <a href="javascript:void(0);" >
+                      <?php
+
+                        if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail'){
+                          echo '<li class="active">';
+                        }else{
+                          echo '<li>';
+                        }
+
+                       ?>
+                          <a href="/powerlinebd/admin/superadmin/awb/awb-list/1" >
                               <i class="material-icons">view_stream</i>
                               <span>All AWBs</span>
                           </a>
