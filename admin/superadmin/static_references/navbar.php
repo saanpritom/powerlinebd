@@ -115,7 +115,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail'){
+                        if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';

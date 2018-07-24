@@ -221,58 +221,87 @@ class AWBCrudOperation extends DbConfig
 
 
     //updating a new user on the database;
-    public function update_mawb($mawb_id, $mawb_number, $user_id)
+    public function update_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
     {
+
+      //fetch sl_num by awb_id
+      $query = "SELECT sl_num FROM awb_details WHERE awb_id='$awb_number'";
+
+      $get_sl = $this->getData($query);
+
+      foreach ($get_sl as $key => $res){
+
+        $sl_num = $res['sl_num'];
+
+      }
 
       //calling the timer fetch function;
       $this->timer_id = $this->fetch_time();
 
-      $this->mawb_number_check = $this->check_mawb_number($mawb_number);
 
-      if($this->mawb_number_check){
 
-        $this->usering_id = 'MAWB number already exists. Please try a different one';
+        //determine new or existing consignee;
+        $check_consignee = $this->get_consignee_id($consignee_name);
 
-        return $this->usering_id;
+        //if check consignee numeric then need to check shipper consignee relation table;
+        if(is_numeric($check_consignee)){
 
-      }else{
+          //check if this consignee already belongs to the shipper
+          $query = "SELECT `sl_num` FROM `consignee_shipper_relation` WHERE shipper_id='$shipper_id' AND consignee_id='$check_consignee'";
 
-        if(is_numeric($this->timer_id)){
+          $result = $this->connection->query($query);
 
-          $query = "UPDATE `mawb_details` SET `mawb_number`='$mawb_number' WHERE `mawb_id`='$mawb_id'";
+          if($result->num_rows < 1) {
 
-          if($this->connection->query($query)){
+            //create a new relation between this shipper and consignee;
 
-            $report_data = 'MAWB ' . $mawb_number . ' is updated by User';
+            $query = "INSERT INTO `consignee_shipper_relation`(`shipper_id`, `consignee_id`, `timer_id`)
+                      VALUES ('$shipper_id', '$check_consignee', '$this->timer_id')";
 
-            //update log record data;
-            $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
-
-            if($report_status){
-
-              $this->status_message = 'MAWB updated Successfully';
-              return $this->status_message;
-
-            }else{
-
-              //insert log report not working unknown reason;
-              $this->status_message = 'MAWB updated but log report can not be inserted';
-              return $this->status_message;
-
-            }
-
-          }else{
-
-            return 'Some problem happened. Please try again later.';
+            $this->connection->query($query);
 
           }
 
+          $destination = '0';
 
         }else{
-          return $this->timer_id;
+
+          $check_consignee = $consignee_name;
+
         }
 
-      }
+        //update awb details table
+
+        $query = "UPDATE `awb_details` SET `awb_id`='$awb_number',`shipper_id`='$shipper_id',
+                 `consignee_id`='$consignee_name',`destination_id`='$destination',`bag_number`='$bag_number',
+                 `type`='$type',`pcs`='$pcs',`a.weight`='$a_weight',`b.weight`='$b_weight',`value`='$price_value',
+                 `timer_id`='$this->timer_id' WHERE sl_num='$sl_num'";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'AWB ' . $awb_number . ' updated by User';
+
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully updated a new AWB';
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'Successfully updated a new AWB but log can not be generated';
+            return $this->status_message;
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem updating AWB. Please try again';
+
+          return $this->status_message;
+
+        }
 
     }
 

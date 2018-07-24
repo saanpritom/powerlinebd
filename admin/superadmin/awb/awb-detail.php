@@ -74,7 +74,7 @@
                                 }
 
                               ?>
-
+                              <a href="/powerlinebd/admin/superadmin/awb/awb-edit/<?php echo $awb_id ?>" type="button" class="btn bg-green waves-effect">Update MAWB & Flight</a>
                               <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
 
                             </div>
