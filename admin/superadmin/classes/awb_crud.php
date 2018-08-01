@@ -306,6 +306,370 @@ class AWBCrudOperation extends DbConfig
     }
 
 
+
+    public function update_mawb_flight($awb_id, $mawb_id, $flight_number, $next_delivery, $user_id){
+
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      if(is_numeric($this->timer_id)){
+
+        $query = "INSERT INTO `awb_mawb_flight_relation`(`awb_id`, `mawb_id`, `flight_id`, `next_branch`)
+                  VALUES ('$awb_id', '$mawb_id', '$flight_number', '$next_delivery')";
+
+        if($this->connection->query($query)){
+
+          //update AWB status;
+          //First make previous status inactive
+          $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
+
+          if($this->connection->query($query)){
+
+            //insert new status
+            $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                      VALUES ('$awb_id', '$user_id', '$this->timer_id', 'On the way', '1')";
+
+            if($this->connection->query($query)){
+
+              $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
+
+              if($this->connection->query($query)){
+
+                $report_data = 'MAWB and Flight of AWB Number ' . $awb_id . ' is updated and locked by User';
+
+                $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                if($report_status){
+
+                  $this->status_message = 'Successfully updated MAWB, Flight and Next Destination';
+
+                  return $this->status_message;
+
+                }else{
+
+                  $this->status_message = 'AWB is updated but log report cannot be generated';
+
+                  return $this->status_message;
+
+
+                }
+
+              }else{
+
+                $this->status_message = 'AWB is updated but lock status cannot be changed';
+
+                return $this->status_message;
+
+
+              }
+
+            }else{
+
+              $this->status_message = 'AWB is updated but new status cannot be changed';
+
+              return $this->status_message;
+
+
+            }
+
+          }else{
+
+            $this->status_message = 'AWB is updated but previous status cannot be changed';
+
+            return $this->status_message;
+
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem updating MAWB and Flight. Please try again';
+
+          return $this->status_message;
+
+
+        }
+
+
+      }else{
+
+        $this->status_message = 'Problem updating. Please try again';
+
+        return $this->status_message;
+
+
+      }
+
+
+    }
+
+
+
+    public function unlock_awb($awb_id, $user_id){
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      if(is_numeric($this->timer_id)){
+
+        $query = "UPDATE `awb_lock` SET `lock_status`='unlocked' WHERE awb_id='$awb_id'";
+
+        if($this->connection->query($query)){
+
+          $query = "SELECT sl_num FROM awb_status WHERE awb_id='$awb_id' AND status_active='1'";
+
+          $result = $this->getData($query);
+
+          foreach ($result as $key => $res) {
+
+            $sl_num = $res['sl_num'];
+
+            echo $sl_num;
+
+          }
+
+          //query running double times for unkown reason. This only works in 'Received by branch' is seletcted
+          $query = "SELECT delivery_status FROM awb_status WHERE awb_id='$awb_id' AND sl_num='$sl_num'";
+
+          $result = $this->getData($query);
+
+          foreach ($result as $key => $res) {
+
+            $dev_status = $res['delivery_status'];
+
+          }
+
+          if($dev_status != 'Received by branch'){
+
+            //inactive previous status;
+            $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id' AND sl_num='$sl_num'";
+
+            if($this->connection->query($query)){
+
+              $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                        VALUES ('$awb_id', '$user_id', '$this->timer_id', 'Received by branch', '1')";
+
+              if($this->connection->query($query)){
+
+                $report_data = 'AWB unlocked ' . $awb_id . ' by User';
+
+                $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                if($report_status){
+
+                  $this->status_message = 'Successfully unlocked AWB';
+
+                  return $this->status_message;
+
+                }else{
+
+                  $this->status_message = 'AWB is unlocked but log report cannot be generated';
+
+                  return $this->status_message;
+
+
+                }
+
+              }else{
+
+                $this->status_message = 'Problem creating new status. Please try again';
+
+                return $this->status_message;
+
+              }
+
+            }else{
+
+              $this->status_message = 'Problem changing previous status. Please try again';
+
+              return $this->status_message;
+
+            }
+
+          }else{
+
+            $this->status_message = 'That unknown error found';
+
+            return $this->status_message;
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem unlocking AWB. Please try again';
+
+          return $this->status_message;
+
+        }
+
+      }else{
+
+        $this->status_message = 'Problem unlocking. Please try again';
+
+        return $this->status_message;
+
+      }
+
+    }
+
+
+    public function awb_delete($awb_id, $user_id){
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      if(is_numeric($this->timer_id)){
+
+        //delete awb_third_party
+        $query = "DELETE FROM `awb_third_party` WHERE awb_id='$awb_id'";
+
+        if($this->connection->query($query)){
+
+          //delete awb status_active
+          $query = "DELETE FROM `awb_status` WHERE awb_id='$awb_id'";
+
+          if($this->connection->query($query)){
+
+            //delete awb mawb flight relation
+            $query = "DELETE FROM `awb_mawb_flight_relation` WHERE awb_id='$awb_id'";
+
+            if($this->connection->query($query)){
+
+              $query = "DELETE FROM `awb_lock` WHERE awb_id='$awb_id'";
+
+              if($this->connection->query($query)){
+
+                //delete awb details
+
+                $query = "DELETE FROM `awb_details` WHERE awb_id='$awb_id'";
+
+                if($this->connection->query($query)){
+
+                  $report_data = 'AWB ' . $awb_id . ' deleted by User';
+
+                  $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                  if($report_status){
+
+                    $this->status_message = 'Successfully delete AWB';
+
+                    return $this->status_message;
+
+                  }else{
+
+                    $this->status_message = 'AWB is deleted but log report cannot be generated';
+
+                    return $this->status_message;
+
+
+                  }
+
+                }else{
+
+                  $this->status_message = 'Problem deletion AWB Lock Status. Please try again';
+
+                  return $this->status_message;
+
+                }
+
+              }else{
+
+                $this->status_message = 'Problem deletion AWB Lock Status. Please try again';
+
+                return $this->status_message;
+
+              }
+
+            }else{
+
+              $this->status_message = 'Problem deletion AWB MAWB Flight Relation. Please try again';
+
+              return $this->status_message;
+
+            }
+
+          }else{
+
+            $this->status_message = 'Problem deletion AWB Status. Please try again';
+
+            return $this->status_message;
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem deletion AWB Third Party. Please try again';
+
+          return $this->status_message;
+
+        }
+
+
+      }else{
+
+        $this->status_message = 'Problem deletion. Please try again';
+
+        return $this->status_message;
+
+      }
+
+
+    }
+
+
+    public function update_thirdparty_consignee($awb_id, $next_delivery, $user_id){
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+      //check if next delivery is only a third party on consignee;
+
+      if($next_delivery == 'third_party' or $next_delivery == 'consignee'){
+
+        $query = "UPDATE `awb_mawb_flight_relation` SET `next_branch`='$next_delivery' WHERE `awb_id`='$awb_id'";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'AWB ' . $awb_id . ' destination updated by User';
+
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully updated next destination';
+
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'AWB is updated but log report cannot be generated';
+
+            return $this->status_message;
+
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem updating next branch';
+
+          return $this->status_message;
+
+        }
+
+      }else{
+
+        $this->status_message = 'Must be a third party or consignee';
+
+        return $this->status_message;
+
+      }
+
+
+    }
+
+
 }
 
 

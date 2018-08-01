@@ -122,7 +122,7 @@
                                                 <?php
 
 
-                                              }elseif($res['delivery_status'] == 'On The Way'){
+                                              }elseif($res['delivery_status'] == 'On the way'){
 
                                                 ?>
 
@@ -135,6 +135,14 @@
                                                 ?>
 
                                                 <button type="button" data-color="deep-blue" class="btn bg-blue waves-effect">Third Party</button>
+
+                                                <?php
+
+                                              }elseif($res['delivery_status'] == 'Received by branch'){
+
+                                                ?>
+
+                                                <button type="button" data-color="deep-blue" class="btn bg-blue waves-effect">Received by branch</button>
 
                                                 <?php
 
@@ -156,7 +164,7 @@
 
                                             <?php
 
-                                              if($res['lock_status'] == 'Created'){
+                                              if($res['lock_status'] == 'locked'){
 
                                                 ?>
 

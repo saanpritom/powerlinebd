@@ -101,7 +101,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
 
                 <?php
 
-                if($url_active->child_menu == 'awb-add' or $url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit'){
+                if($url_active->child_menu == 'awb-add' or $url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit' or $url_active->child_menu == 'update_mawb_flight'
+                    or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party'){
                   echo '<li class="active">';
                 }else{
                   echo '<li>';
@@ -115,7 +116,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit'){
+                        if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit' or $url_active->child_menu == 'update_mawb_flight'
+                            or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -166,7 +168,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
 
                 <?php
 
-                  if($url_active->child_menu == 'mawb-add' or $url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit'){
+                  if($url_active->child_menu == 'mawb-add' or $url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit' or $url_active->child_menu == 'bulk-mawb'
+                      or $url_active->child_menu == 'bulk-awb-unlock'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -180,7 +183,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit'){
+                        if($url_active->child_menu == 'mawb-list' or $url_active->child_menu == 'mawb-detail' or $url_active->child_menu == 'mawb-edit' or $url_active->child_menu == 'bulk_awb_unlock'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -194,18 +197,32 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       </li>
                       <?php
 
-                        if($url_active->child_menu == 'incomplete-mawb'){
+                        if($url_active->child_menu == 'bulk-mawb'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
                         }
 
                        ?>
-                            <a href="/powerlinebd/admin/superadmin/mawb/incomplete-mawb/1" >
+                            <a href="/powerlinebd/admin/superadmin/mawb/bulk-mawb" >
                                 <i class="material-icons">cancel</i>
-                                <span>Incomplete MAWB</span>
+                                <span>Bulk AWB Lock</span>
                             </a>
                         </li>
+                        <?php
+
+                          if($url_active->child_menu == 'bulk-awb-unlock'){
+                            echo '<li class="active">';
+                          }else{
+                            echo '<li>';
+                          }
+
+                         ?>
+                              <a href="/powerlinebd/admin/superadmin/mawb/bulk-awb-unlock" >
+                                  <i class="material-icons">cancel</i>
+                                  <span>Bulk AWB Unlock</span>
+                              </a>
+                          </li>
                         <?php
 
                           if($url_active->child_menu == 'mawb-add'){

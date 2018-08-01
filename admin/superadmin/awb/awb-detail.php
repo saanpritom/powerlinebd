@@ -45,7 +45,7 @@
                                 AWB Details
                             </h2>
                             <div style="text-align: right;">
-                              <a href="/powerlinebd/admin/superadmin/awb/third-party/<?php echo $awb_id ?>" type="button" class="btn bg-red waves-effect">Add Third Party Delivery</a>
+
 
                               <?php
 
@@ -63,19 +63,19 @@
                                 if($lock_status == 'unlocked'){
 
                                   ?>
+                                  <a href="/powerlinebd/admin/superadmin/awb/awb-third-party/<?php echo $awb_id ?>" type="button" class="btn bg-red waves-effect">Add Third Party Delivery</a>
                                   <a href="/powerlinebd/admin/superadmin/awb/awb-edit/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Edit</a>
-
+                                  <a href="/powerlinebd/admin/superadmin/awb/update_mawb_flight/<?php echo $awb_id ?>" type="button" class="btn bg-green waves-effect">Update MAWB & Flight</a>
+                                  <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
                                   <?php
                                 }else{
                                   ?>
-                                  <a href="#" type="button" class="btn bg-blue waves-effect">Locked</a>
-
+                                  <a href="#" type="button" class="btn bg-red waves-effect">Locked</a>
+                                  <a href="/powerlinebd/admin/superadmin/awb/unlock_awb/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Unlock AWB</a>
                                   <?php
                                 }
 
                               ?>
-                              <a href="/powerlinebd/admin/superadmin/awb/awb-edit/<?php echo $awb_id ?>" type="button" class="btn bg-green waves-effect">Update MAWB & Flight</a>
-                              <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
 
                             </div>
 
@@ -117,10 +117,6 @@
                                                   <th>MAWB Number</th>
                                                   <th>Flight Number</th>
                                                   <th>Next Branch</th>
-                                                  <th>Employer Name</th>
-                                                  <th>Branch Name</th>
-                                                  <th>Creation Date</th>
-                                                  <th>Creation Time</th>
                                               </tr>
                                           </thead>
                                           <tbody>
@@ -130,17 +126,12 @@
                                             //calculate lowest point for query database;
                                             $low_point = ($awb_page_number * 20) - 20;
 
-                                              $query = "SELECT awb_mawb_flight_relation.mawb_id, mawb_details.mawb_number, awb_mawb_flight_relation.flight_id, awb_mawb_flight_relation.next_branch,
-                                                        admin_details.name AS admin_name, admin_details.admin_id, office_branch.name AS office_branch,
-                                                        office_branch.branch_id, creation_details.creation_date,
-                                                        creation_details.creation_time FROM awb_mawb_flight_relation
-                                                        INNER JOIN awb_status ON awb_mawb_flight_relation.awb_id=awb_status.awb_id
+                                              $query = "SELECT awb_mawb_flight_relation.mawb_id, awb_mawb_flight_relation.flight_id,
+                                                        awb_mawb_flight_relation.next_branch, mawb_details.mawb_number
+                                                        FROM awb_mawb_flight_relation
                                                         INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
-                                                        INNER JOIN admin_details ON awb_status.user_id=admin_details.admin_id
-                                                        INNER JOIN office_branch ON admin_details.branch_id=office_branch.branch_id
-                                                        INNER JOIN creation_details ON awb_status.timer_id=creation_details.timer_id WHERE
-                                                        awb_mawb_flight_relation.awb_id = '$awb_id'
-                                                        ORDER BY creation_details.creation_date DESC LIMIT 20 OFFSET $low_point";
+                                                        WHERE awb_mawb_flight_relation.awb_id='$awb_id'
+                                                        ORDER BY awb_mawb_flight_relation.sl_num DESC LIMIT 20 OFFSET $low_point";
 
                                               $result = $get_awb->getData($query);
 
@@ -152,46 +143,46 @@
 
                                                 <tr>
                                                   <td><?php echo $counter; ?></td>
-                                                  <td><a href="/powerlinebd/admin/superadmin/mawb/mawb-detail/<?php echo $res['mawb_id']; ?>"><?php echo $res['mawb_id']; ?></a></td>
-                                                  <td><a href="/powerlinebd/admin/superadmin/flights/flight-detail/<?php echo $res['flight_id']; ?>"><?php echo $res['flight_id']; ?></a></td>
-                                                  <td>
+                                                  <td><a href="/powerlinebd/admin/superadmin/mawb/mawb-detail/<?php echo $res['mawb_id']; ?>"><?php echo $res['mawb_number']; ?></a></td>
+                                                  <td><?php echo $res['flight_id']; ?></td>
 
-                                                    <?php
+                                                  <?php
 
-                                                      //check if next branch is a branch or direct consignee;
-                                                      if(is_numeric($res['next_branch'])){
+                                                    if(is_numeric($res['next_branch'])){
 
-                                                        $t_b_id = $res['next_branch'];
+                                                      $next_branch = $res['next_branch'];
 
-                                                        $query2 = "SELECT name AS b_name FROM office_branch WHERE branch_id='$t_b_id'";
+                                                      $query2 = "SELECT name FROM office_branch WHERE branch_id='$next_branch'";
 
-                                                        $result2 = $get_awb->getData($query2);
+                                                      $result2 = $get_awb->getData($query2);
 
-                                                        foreach($result2 as $key2 => $res2){
+                                                      foreach($result2 as $key2 => $res2){
 
-                                                          ?>
-
-                                                          <a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $t_b_id; ?>/1"><?php echo $res2['b_name']; ?></a>
-
-                                                          <?php
-
-                                                        }
-
-
-                                                      }else{
-
-                                                        $res['next_branch'];
+                                                        $b_name = $res2['name'];
 
                                                       }
 
+                                                      ?>
 
-                                                    ?>
+                                                      <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $res['next_branch']; ?>/1"><?php echo $b_name; ?></a></td>
 
-                                                  </td>
-                                                  <td><a href="/powerlinebd/admin/superadmin/office_management/user-detail/<?php echo $res['admin_id']; ?>"><?php echo $res['admin_name']; ?></a></td>
-                                                  <td><a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $res['branch_id']; ?>/1"><?php echo $res['office_branch']; ?></a></td>
-                                                  <td><?php echo $res['creation_date']; ?></td>
-                                                  <td><?php echo $res['creation_time']; ?></td>
+                                                      <?php
+
+
+                                                    }else{
+
+                                                      ?>
+
+                                                      <td><?php echo $res['next_branch']; ?></td>
+
+                                                      <?php
+
+                                                    }
+
+                                                  ?>
+
+
+
                                                 </tr>
 
 
@@ -533,6 +524,8 @@
                                                 </tr>
                                                 <?php
 
+                                                break;
+
                                               }
 
                                             ?>
@@ -650,7 +643,7 @@
                                   Are you sure you want to delete this shipper?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Shipper</button>
+                                  <a href="/powerlinebd/admin/superadmin/awb/delete_awb/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">I understand, Delete</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

@@ -5,7 +5,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^mawb-list/(.*) mawb-list.php?b_id=$1
-    RewriteRule ^incomplete-mawb/(.*) incomplete-mawb.php?b_id=$1
+    RewriteRule ^bulk-mawb bulk-mawb.php
+    RewriteRule ^bulk-awb-unlock bulk-awb-unlock.php
     RewriteRule ^mawb-add mawb-add.php
     RewriteRule ^mawb-detail/(.*) mawb-detail.php?b_id=$1
     RewriteRule ^mawb-edit/(.*) mawb-edit.php?b_id=$1
