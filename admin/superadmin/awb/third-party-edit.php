@@ -73,13 +73,13 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_awb = $awb_operation->create_third_party($awb_id, $third_party_name, $third_party_address, $third_party_contact_number, $third_party_awb_number, $third_party_destination, $user_id);
+                            $new_awb = $awb_operation->update_third_party($awb_id, $third_party_name, $third_party_address, $third_party_contact_number, $third_party_awb_number, $third_party_destination, $user_id);
 
                             //check if branch created properly;
-                            if($new_awb == 'Successfully created Third Party for AWB'){
+                            if($new_awb == 'Successfully updated Third Party for AWB'){
                               ?>
                               <div class="alert bg-green">
-                                  <?php echo 'Successfully created Third Party for AWB'; ?>
+                                  <?php echo 'Successfully updated Third Party for AWB'; ?>
                               </div>
                               <?php
                             }else{
@@ -111,7 +111,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Add Third Party Details to AWB
+                                Edit Third Party Details to AWB
                             </h2>
 
                         </div>
@@ -123,77 +123,60 @@
 
                           $awb_id = $_GET['b_id'];
 
-                          $query = "SELECT next_branch FROM awb_mawb_flight_relation WHERE awb_id='$awb_id'";
+                          $query = "SELECT `third_party_name`, `third_party_address`, `third_party_contact_number`,
+                                    `third_party_number`, `third_party_destination` FROM `awb_third_party` WHERE awb_id='$awb_id'";
 
                           $result = $get_data->getData($query);
 
                           foreach ($result as $key => $res) {
 
-                            $next_branch = $res['next_branch'];
-
-                          }
-
-                          if($next_branch == 'third_party'){
-
-                            ?>
-
-                            <form action="<?php echo $awb_id; ?>" method="POST">
-                                <label for="awb_number">Third Party Name</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="mawb_number" class="form-control" required aria-required="true" placeholder="Enter Third Party Name Here" name="third_party_name">
-                                    </div>
-                                </div>
-                                <br>
-                                <label for="bag_number">Third Party Address</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Address" name="third_party_address">
-                                    </div>
-                                </div>
-                                <label for="bag_number">Third Party Contact Number</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Contact Number" name="third_party_contact_number">
-                                    </div>
-                                </div>
-
-                                <label for="bag_number">Third Party AWB Number</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Given Unique Number" name="third_party_awb_number">
-                                    </div>
-                                </div>
-
-                                <label for="bag_number">Third Party Destination</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Delivery Place" name="third_party_destination">
-                                    </div>
-                                </div>
-
-                                <input type="submit" name="submit" class="btn bg-deep-orange waves-effect m-t-15" value="Add Third Party">
-                            </form>
-
-                            <?php
-
-                          }else{
-
-                            ?>
-
-                            <div class="alert bg-red">
-
-                              You can only set Third Party details if Third Party is set as the next destination of this AWB.
-
-                            </div>
-
-                            <?php
+                            $third_party_name = $res['third_party_name'];
+                            $third_party_address = $res['third_party_address'];
+                            $third_party_contact_number = $res['third_party_contact_number'];
+                            $third_party_awb_number = $res['third_party_number'];
+                            $third_party_destination = $res['third_party_destination'];
 
                           }
 
                           ?>
 
+                          <form action="<?php echo $awb_id; ?>" method="POST">
+                              <label for="awb_number">Third Party Name</label>
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" id="mawb_number" class="form-control" required aria-required="true" placeholder="Enter Third Party Name Here" name="third_party_name" value="<?php echo $third_party_name; ?>">
+                                  </div>
+                              </div>
+                              <br>
+                              <label for="bag_number">Third Party Address</label>
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Address" name="third_party_address" value="<?php echo $third_party_address; ?>">
+                                  </div>
+                              </div>
+                              <label for="bag_number">Third Party Contact Number</label>
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Contact Number" name="third_party_contact_number" value="<?php echo $third_party_contact_number; ?>">
+                                  </div>
+                              </div>
 
+                              <label for="bag_number">Third Party AWB Number</label>
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Given Unique Number" name="third_party_awb_number" value="<?php echo $third_party_awb_number; ?>">
+                                  </div>
+                              </div>
+
+                              <label for="bag_number">Third Party Destination</label>
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" id="bag_number" class="form-control" placeholder="Enter Third Party Delivery Place" name="third_party_destination" value="<?php echo $third_party_destination; ?>">
+                                  </div>
+                              </div>
+
+                              <input type="submit" name="submit" class="btn bg-deep-orange waves-effect m-t-15" value="Update Third Party">
+                          </form>
 
 
 

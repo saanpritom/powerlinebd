@@ -12,6 +12,7 @@
     RewriteRule ^update_mawb_flight/(.*) update_mawb_flight.php?b_id=$1
     RewriteRule ^unlock_awb/(.*) unlock_awb.php?b_id=$1
     RewriteRule ^awb-third-party/(.*) awb-third-party.php?b_id=$1
+    RewriteRule ^third-party-edit/(.*) third-party-edit.php?b_id=$1
     RewriteRule ^delete_awb/(.*) delete_awb.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

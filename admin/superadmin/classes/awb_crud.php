@@ -669,6 +669,120 @@ class AWBCrudOperation extends DbConfig
 
     }
 
+    public function create_third_party($awb_id, $third_party_name, $third_party_address, $third_party_contact_number, $third_party_awb_number, $third_party_destination, $user_id){
+
+
+      //check if awb_id exists or not;
+      $query = "SELECT sl_num FROM awb_details WHERE awb_id='$awb_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows >= 1) {
+
+        //calling the timer fetch function;
+        $this->timer_id = $this->fetch_time();
+
+        $query = "INSERT INTO `awb_third_party`(`awb_id`, `third_party_name`, `third_party_address`, `third_party_contact_number`,
+                  `third_party_number`, `third_party_destination`, `timer_id`) VALUES ('$awb_id', '$third_party_name', '$third_party_address',
+                  '$third_party_contact_number', '$third_party_awb_number', '$third_party_destination', '$this->timer_id')";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'Third party created for ' . $awb_id . ' by User';
+
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully created Third Party for AWB';
+
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'Third Party created but log report cannot be generated';
+
+            return $this->status_message;
+
+
+          }
+
+        }else{
+
+          $this->status_message = 'Cannot create Third Party. Please try again';
+
+          return $this->status_message;
+
+        }
+
+      }else{
+
+        $this->status_message = 'Do not try this again. AWB not exists';
+
+        return $this->status_message;
+
+      }
+
+    }
+
+
+    public function update_third_party($awb_id, $third_party_name, $third_party_address, $third_party_contact_number, $third_party_awb_number, $third_party_destination, $user_id){
+
+
+      //check if awb_id exists or not;
+      $query = "SELECT sl_num FROM awb_details WHERE awb_id='$awb_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows >= 1) {
+
+        //calling the timer fetch function;
+        $this->timer_id = $this->fetch_time();
+
+        $query = "UPDATE `awb_third_party` SET `third_party_name`='$third_party_name',
+                 `third_party_address`='$third_party_address',`third_party_contact_number`='$third_party_contact_number',
+                 `third_party_number`='$third_party_awb_number',`third_party_destination`='$third_party_destination'
+                  WHERE `awb_id`='$awb_id'";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'Third party updated for ' . $awb_id . ' by User';
+
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully updated Third Party for AWB';
+
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'Third Party updated but log report cannot be generated';
+
+            return $this->status_message;
+
+
+          }
+
+        }else{
+
+          $this->status_message = 'Cannot update Third Party. Please try again';
+
+          return $this->status_message;
+
+        }
+
+      }else{
+
+        $this->status_message = 'Do not try this again. AWB not exists';
+
+        return $this->status_message;
+
+      }
+
+    }
+
 
 }
 

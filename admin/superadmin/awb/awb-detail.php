@@ -273,6 +273,7 @@
                                                         awb_status.delivery_status,
                                                         awb_third_party.third_party_name,
                                                         awb_third_party.third_party_address,
+                                                        awb_third_party.third_party_contact_number,
                                                         awb_third_party.third_party_number,
                                                         awb_third_party.third_party_destination
                                                         FROM awb_details
@@ -502,7 +503,11 @@
                                                 <tr>
                                                   <th>18</th>
                                                   <th>Third Party Name</th>
-                                                  <th><?php echo $res['third_party_name']; ?></th>
+                                                  <th><?php
+                                                        echo $res['third_party_name'];
+                                                        $t_p_n = $res['third_party_name'];
+                                                      ?>
+                                                  </th>
                                                 </tr>
 
                                                 <tr>
@@ -513,12 +518,18 @@
 
                                                 <tr>
                                                   <th>20</th>
+                                                  <th>Third Party Contact Number</th>
+                                                  <th><?php echo $res['third_party_contact_number']; ?></th>
+                                                </tr>
+
+                                                <tr>
+                                                  <th>21</th>
                                                   <th>Third Party Number</th>
                                                   <th><?php echo $res['third_party_number']; ?></th>
                                                 </tr>
 
                                                 <tr>
-                                                  <th>21</th>
+                                                  <th>22</th>
                                                   <th>Third Party Destination</th>
                                                   <th><?php echo $res['third_party_destination']; ?></th>
                                                 </tr>
@@ -531,8 +542,23 @@
                                             ?>
 
                                           </tbody>
+
                                       </table>
 
+                                      <?php
+
+                                        if($lock_status == 'unlocked' and $t_p_n != ''){
+
+                                          ?>
+
+                                          <a href="/powerlinebd/admin/superadmin/awb/third-party-edit/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Edit Third Party Information</a>
+
+
+                                          <?php
+                                        }
+
+
+                                       ?>
 
                                   </div>
 
