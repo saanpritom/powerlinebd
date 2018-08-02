@@ -10,5 +10,6 @@
     RewriteRule ^mawb-add mawb-add.php
     RewriteRule ^mawb-detail/(.*) mawb-detail.php?b_id=$1
     RewriteRule ^mawb-edit/(.*) mawb-edit.php?b_id=$1
+    RewriteRule ^mawb-delete/(.*) mawb-delete.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

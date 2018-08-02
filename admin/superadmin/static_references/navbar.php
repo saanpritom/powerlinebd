@@ -129,18 +129,6 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                               <span>All AWBs</span>
                           </a>
                       </li>
-                        <li>
-                            <a href="javascript:void(0);" >
-                                <i class="material-icons">cancel</i>
-                                <span>Undelivered AWBs</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" >
-                                <i class="material-icons">add_box</i>
-                                <span>Delivered AWBs</span>
-                            </a>
-                        </li>
                         <?php
 
                           if($url_active->child_menu == 'awb-add'){

@@ -139,7 +139,7 @@
                                   Are you sure you want to delete this MAWB?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete MAWB</button>
+                                  <a href="/powerlinebd/admin/superadmin/mawb/mawb-delete/<?php echo $mawb_id ?>" type="button" class="btn bg-blue waves-effect">I understand Delete MAWB</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

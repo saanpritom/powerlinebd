@@ -201,6 +201,61 @@ class MAWBCrudOperation extends DbConfig
     }
 
 
+    public function mawb_delete($mawb_id, $user_id){
+
+      //check if this MAWB has associated AWB or Transaction;
+      $query = "SELECT awb_id FROM awb_mawb_flight_relation WHERE mawb_id='$mawb_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows >= 1) {
+
+        $this->status_message = 'You cannont delete this MAWB because it has connected AWBs';
+
+        return $this->status_message;
+
+      }else{
+
+        //calling the timer fetch function;
+        $this->timer_id = $this->fetch_time();
+
+        $query = "DELETE FROM `mawb_details` WHERE mawb_id='$mawb_id'";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'MAWB is deleted by User';
+
+          $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully deleted MAWB';
+
+            return $this->status_message;
+
+          }else{
+
+            $this->status_message = 'MAWB is deleted but log report cannot be generated';
+
+            return $this->status_message;
+
+
+          }
+
+        }else{
+
+          $this->status_message = 'Cannot delete MAWB. Please try again';
+
+          return $this->status_message;
+
+        }
+
+      }
+
+
+    }
+
+
     public function bulk_awb_lock($mawb_number, $flight_number, $bag_number, $next_delivery, array $awb_numbers, $user_id)
     {
 

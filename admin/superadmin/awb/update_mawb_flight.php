@@ -17,6 +17,8 @@
 
           <?php
 
+            $check_successful_message = 0;
+
             if(isset($_POST['submit'])){
 
           ?>
@@ -99,12 +101,16 @@
                                 ?>
                                 <div class="alert bg-green">
                                     <?php echo 'Successfully updated MAWB, Flight and Next Destination'; ?>
+                                    <?php $check_successful_message++; ?>
                                 </div>
                                 <?php
                               }else{
                                 ?>
                                 <div class="alert bg-red">
-                                    <?php echo $new_awb; ?>
+                                    <?php
+
+                                        echo $new_awb;
+                                    ?>
                                 </div>
                                 <?php
                               }
@@ -132,6 +138,15 @@
 <!-- Vertical Layout -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                  <?php
+
+                    //this filter is because the below lock status message was showing on successful page;
+
+                    if($check_successful_message == 0){
+
+                  ?>
+
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -266,6 +281,13 @@
 
                         </div>
                     </div>
+
+                    <?php
+
+                      }
+
+                    ?>
+
                 </div>
             </div>
 <!-- #END# Vertical Layout -->
