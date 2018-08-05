@@ -243,11 +243,10 @@
                                     <h4 class="modal-title" id="defaultModalLabel">Delete Branch?</h4>
                                 </div>
                                 <div class="modal-body">
-                                  Are you sure you want to delete this branch? If you delete then all the Users and Data
-                                  associated with it will be deleted and can't be recovered.
+                                  Are you sure you want to delete this branch?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Branch</button>
+                                  <a href="/powerlinebd/admin/superadmin/office_management/branch-delete/<?php echo $branch_id ?>" type="button" class="btn bg-blue waves-effect">I understand, Delete</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

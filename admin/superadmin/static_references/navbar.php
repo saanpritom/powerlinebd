@@ -275,7 +275,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
 
                 <?php
 
-                  if($url_active->child_menu == 'place-add' or $url_active->child_menu == 'origin-list' or $url_active->child_menu == 'destination-list' or $url_active->child_menu == 'country-list' or $url_active->child_menu == 'place-detail' or $url_active->child_menu == 'place-edit'){
+                  if($url_active->child_menu == 'place-add' or $url_active->child_menu == 'origin-list' or $url_active->child_menu == 'destination-list' or $url_active->child_menu == 'country-list' or $url_active->child_menu == 'place-detail' or $url_active->child_menu == 'place-edit'
+                      or $url_active->child_menu == 'place-delete'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -349,7 +350,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 <?php
 
                   if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-add' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit'
-                      or $url_active->child_menu == 'contract-add' or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit'){
+                      or $url_active->child_menu == 'contract-add' or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit' or $url_active->child_menu == 'shipper-delete' or $url_active->child_menu == 'contact-delete'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -364,7 +365,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       <?php
 
                         if($url_active->child_menu == 'shipper-list' or $url_active->child_menu == 'shipper-detail' or $url_active->child_menu == 'shipper-edit' or $url_active->child_menu == 'contract-add'
-                            or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit'){
+                            or $url_active->child_menu == 'contact-detail' or $url_active->child_menu == 'contact-edit' or $url_active->child_menu == 'shipper-delete' or $url_active->child_menu == 'contact-delete'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -397,7 +398,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
 
                   if($url_active->child_menu == 'consignee-list' or $url_active->child_menu == 'consignee-add' or $url_active->child_menu == 'consignee-detail' or $url_active->child_menu == 'consignee-edit'
                       or $url_active->child_menu == 'contact-add' or $url_active->child_menu == 'consignee-contact-detail' or $url_active->child_menu == 'consignee-contact-edit'
-                      or $url_active->child_menu == 'consignee-shipper-add'){
+                      or $url_active->child_menu == 'consignee-shipper-add' or $url_active->child_menu == 'consignee-delete' or $url_active->child_menu == 'consignee-contact-delete'){
                     echo '<li class="active">';
                   }else{
                     echo '<li>';
@@ -412,7 +413,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       <?php
 
                         if($url_active->child_menu == 'consignee-list' or $url_active->child_menu == 'consignee-detail' or $url_active->child_menu == 'consignee-edit' or $url_active->child_menu == 'contact-add'
-                            or $url_active->child_menu == 'consignee-contact-detail' or $url_active->child_menu == 'consignee-contact-edit' or $url_active->child_menu == 'consignee-shipper-add'){
+                            or $url_active->child_menu == 'consignee-contact-detail' or $url_active->child_menu == 'consignee-contact-edit' or $url_active->child_menu == 'consignee-shipper-add' or $url_active->child_menu == 'consignee-delete'
+                           or $url_active->child_menu == 'consignee-contact-delete'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -457,7 +459,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                     <ul class="ml-menu">
                       <?php
 
-                        if($url_active->child_menu == 'branch-list' or $url_active->child_menu == 'branch-detail' or $url_active->child_menu == 'branch-edit'){
+                        if($url_active->child_menu == 'branch-list' or $url_active->child_menu == 'branch-detail' or $url_active->child_menu == 'branch-edit' or $url_active->child_menu == 'branch-delete'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';
@@ -471,7 +473,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       </li>
                       <?php
 
-                        if($url_active->child_menu == 'user-list' or $url_active->child_menu == 'user-detail' or $url_active->child_menu == 'user-edit'){
+                        if($url_active->child_menu == 'user-list' or $url_active->child_menu == 'user-detail' or $url_active->child_menu == 'user-edit' or $url_active->child_menu == 'delete-user'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';

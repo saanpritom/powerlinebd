@@ -320,6 +320,45 @@ class ContactCrudOperation extends DbConfig
     }
 
 
+    public function delete_contact($contact_id, $user_id){
+
+      $query = "DELETE FROM `contact_person_details` WHERE contact_id='$contact_id'";
+
+      if($this->connection->query($query)){
+
+
+        $report_data = 'Contact person is deleted by User';
+
+        //calling the timer fetch function;
+        $this->timer_id = $this->fetch_time();
+
+        //update log record data;
+        $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+        if($report_status){
+
+          $this->status_message = 'Contact deleted Successfully';
+          return $this->status_message;
+
+        }else{
+
+          //insert log report not working unknown reason;
+          $this->status_message = 'Contact deleted but log report can not be inserted';
+          return $this->status_message;
+
+        }
+
+
+      }else{
+
+        $this->status_message = 'Cannot delete this person. Please try again';
+
+        return $this->status_message;
+
+      }
+
+
+    }
 
 
 

@@ -176,7 +176,7 @@
                                   Are you sure you want to delete this shipper?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Shipper</button>
+                                  <a href="/powerlinebd/admin/superadmin/shippers/contact-delete/<?php echo $contact_id; ?>" type="button" class="btn bg-blue waves-effect">I understand, Delete</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

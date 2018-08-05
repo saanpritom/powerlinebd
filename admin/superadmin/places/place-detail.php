@@ -56,22 +56,18 @@
                         <div class="body">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                              <li role="presentation">
+                              <li role="presentation" class="active">
                                   <a href="#profile_with_icon_title" data-toggle="tab">
                                       <i class="material-icons">library_books</i> Detailed Information
                                   </a>
                               </li>
-                              <li role="presentation" class="active">
-                                  <a href="#home_with_icon_title" data-toggle="tab">
-                                      <i class="material-icons">list</i> Connected MAWB Lists
-                                  </a>
-                              </li>
+
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
 
-                                <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title">
+                                <?php /* ?><div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title">
 
 
                                   <div class="body table-responsive">
@@ -107,55 +103,36 @@
 
                                             if($place_type == 'country'){
 
-                                              $query = "SELECT mawb_details.mawb_id, mawb_details.mawb_number
-                                                        FROM mawb_details
-                                                        INNER JOIN creation_details
-                                                        ON mawb_details.timer_id=creation_details.timer_id
-                                                        INNER JOIN awb_details
-                                                        ON mawb_details.mawb_id=awb_details.mawb_id
-                                                        INNER JOIN freight_transport_relation
-                                                        ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                        INNER JOIN origin_destination_details
-                                                        ON freight_transport_relation.country_id=origin_destination_details.o_id_id
-                                                        WHERE origin_destination_details.o_id_id = '$place_id' AND
-                                                        origin_destination_details.type='country' ORDER BY creation_details.creation_date DESC
-                                                        LIMIT 20 OFFSET $low_point";
+
+
+                                              $query = "SELECT awb_mawb_flight_relation.mawb_id, mawb_details.mawb_number FROM
+                                                        awb_mawb_flight_relation INNER JOIN awb_details
+                                                        ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                        INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                        INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                        WHERE shipper_details.shipper_id='$place_id' LIMIT 20 OFFSET $low_point";
 
                                             }elseif($place_type='origin'){
 
-                                              $query = "SELECT mawb_details.mawb_id, mawb_details.mawb_number
-                                                        FROM mawb_details
-                                                        INNER JOIN creation_details
-                                                        ON mawb_details.timer_id=creation_details.timer_id
-                                                        INNER JOIN awb_details
-                                                        ON mawb_details.mawb_id=awb_details.mawb_id
-                                                        INNER JOIN freight_transport_relation
-                                                        ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                        INNER JOIN origin_destination_details
-                                                        ON freight_transport_relation.origin_d_id=origin_destination_details.o_id_id
-                                                        WHERE origin_destination_details.o_id_id = '$place_id' AND
-                                                        origin_destination_details.type='origin' ORDER BY creation_details.creation_date DESC
-                                                        LIMIT 20 OFFSET $low_point";
+                                              $query = "SELECT awb_mawb_flight_relation.mawb_id, mawb_details.mawb_number FROM
+                                                        awb_mawb_flight_relation INNER JOIN awb_details
+                                                        ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                        INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                        INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                        WHERE shipper_details.shipper_id='$place_id' LIMIT 20 OFFSET $low_point";
 
                                             }else{
 
-                                              $query = "SELECT mawb_details.mawb_id, mawb_details.mawb_number
-                                                        FROM mawb_details
-                                                        INNER JOIN creation_details
-                                                        ON mawb_details.timer_id=creation_details.timer_id
-                                                        INNER JOIN awb_details
-                                                        ON mawb_details.mawb_id=awb_details.mawb_id
-                                                        INNER JOIN freight_transport_relation
-                                                        ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                        INNER JOIN origin_destination_details
-                                                        ON freight_transport_relation.destination_d_id=origin_destination_details.o_id_id
-                                                        WHERE origin_destination_details.o_id_id = '$place_id' AND
-                                                        origin_destination_details.type='destination' ORDER BY creation_details.creation_date DESC
-                                                        LIMIT 20 OFFSET $low_point";
+                                              $query = "SELECT awb_mawb_flight_relation.mawb_id, mawb_details.mawb_number FROM
+                                                        awb_mawb_flight_relation INNER JOIN awb_details
+                                                        ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                        INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                        INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                        WHERE shipper_details.shipper_id='$place_id' LIMIT 20 OFFSET $low_point";
 
                                             }
 
-
+                                            echo $query;
 
                                               $result = $get_place->getData($query);
 
@@ -192,39 +169,30 @@
 
                                         if($place_type == 'country'){
 
-                                          $query = "SELECT COUNT(mawb_details.mawb_id) AS total_id FROM mawb_details
-                                                    INNER JOIN awb_details
-                                                    ON mawb_details.mawb_id=awb_details.mawb_id
-                                                    INNER JOIN freight_transport_relation
-                                                    ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                    INNER JOIN origin_destination_details
-                                                    ON freight_transport_relation.country_id=origin_destination_details.o_id_id
-                                                    WHERE origin_destination_details.o_id_id='$place_id' AND
-                                                    origin_destination_details.type='country'";
+                                          $query = "SELECT COUNT(awb_mawb_flight_relation.mawb_id) AS total_id FROM
+                                                    awb_mawb_flight_relation INNER JOIN awb_details
+                                                    ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                    INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                    INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                    WHERE shipper_details.shipper_id='$place_id'";
 
                                         }elseif($place_type == 'origin'){
 
-                                          $query = "SELECT COUNT(mawb_details.mawb_id) AS total_id FROM mawb_details
-                                                    INNER JOIN awb_details
-                                                    ON mawb_details.mawb_id=awb_details.mawb_id
-                                                    INNER JOIN freight_transport_relation
-                                                    ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                    INNER JOIN origin_destination_details
-                                                    ON freight_transport_relation.origin_d_id=origin_destination_details.o_id_id
-                                                    WHERE origin_destination_details.o_id_id='$place_id' AND
-                                                    origin_destination_details.type='origin'";
+                                          $query = "SELECT COUNT(awb_mawb_flight_relation.mawb_id) AS total_id FROM
+                                                    awb_mawb_flight_relation INNER JOIN awb_details
+                                                    ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                    INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                    INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                    WHERE shipper_details.shipper_id='$place_id'";
 
                                         }else{
 
-                                          $query = "SELECT COUNT(mawb_details.mawb_id) AS total_id FROM mawb_details
-                                                    INNER JOIN awb_details
-                                                    ON mawb_details.mawb_id=awb_details.mawb_id
-                                                    INNER JOIN freight_transport_relation
-                                                    ON awb_details.awb_id=freight_transport_relation.awb_id
-                                                    INNER JOIN origin_destination_details
-                                                    ON freight_transport_relation.destination_d_id=origin_destination_details.o_id_id
-                                                    WHERE origin_destination_details.o_id_id='$place_id' AND
-                                                    origin_destination_details.type='destination'";
+                                          $query = "SELECT COUNT(awb_mawb_flight_relation.mawb_id) AS total_id FROM
+                                                    awb_mawb_flight_relation INNER JOIN awb_details
+                                                    ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                                    INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                                    INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
+                                                    WHERE shipper_details.shipper_id='$place_id'";
 
                                         }
 
@@ -248,9 +216,9 @@
 
                                   </div>
 
-                                </div>
+                                </div><?php */ ?>
 
-                                <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title">
+                                <div role="tabpanel" class="tab-pane fade in active" id="profile_with_icon_title">
 
                                   <div class="body table-responsive">
 
@@ -337,10 +305,10 @@
                                     <h4 class="modal-title" id="defaultModalLabel">Delete Place?</h4>
                                 </div>
                                 <div class="modal-body">
-                                  Are you sure you want to delete this place?
+                                  Are you sure you want to delete this place? If you delete then associated field will be empty.
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Place</button>
+                                  <a href="/powerlinebd/admin/superadmin/places/place-delete/<?php echo $place_id ?>" type="button" class="btn bg-blue waves-effect">I understand, Delete</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

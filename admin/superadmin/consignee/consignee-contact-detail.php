@@ -170,13 +170,13 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content modal-col-deep-orange">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="defaultModalLabel">Delete Shipper?</h4>
+                                    <h4 class="modal-title" id="defaultModalLabel">Delete Contact?</h4>
                                 </div>
                                 <div class="modal-body">
-                                  Are you sure you want to delete this shipper?
+                                  Are you sure you want to delete this contact?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-link waves-effect">I understand Delete Shipper</button>
+                                  <a href="/powerlinebd/admin/superadmin/consignee/consignee-contact-delete/<?php echo $contact_id; ?>" type="button" class="btn bg-blue waves-effect">I understand, Delete</a>
                                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Don't Delete</button>
                                 </div>
                             </div>

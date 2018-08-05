@@ -10,5 +10,6 @@
     RewriteRule ^origin-list/(.*) origin-list.php?b_id=$1
     RewriteRule ^place-detail/(.*) place-detail.php?b_id=$1
     RewriteRule ^place-edit/(.*) place-edit.php?b_id=$1
+    RewriteRule ^place-delete/(.*) place-delete.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

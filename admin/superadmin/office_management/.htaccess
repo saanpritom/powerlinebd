@@ -7,11 +7,13 @@
     RewriteRule ^branch-list/(.*) branch-list.php?b_id=$1
     RewriteRule ^branch-detail/(.*) branch-detail.php?b_id=$1
     RewriteRule ^branch-edit/(.*) branch-edit.php?b_id=$1
+    RewriteRule ^branch-delete/(.*) branch-delete.php?b_id=$1
     RewriteRule ^user-list/(.*) user-list.php?b_id=$1
     RewriteRule ^user-detail/(.*) user-detail.php?b_id=$1
     RewriteRule ^user-edit/(.*) user-edit.php?b_id=$1
     RewriteRule ^excel-download/(.*) excel-download.php?b_id=$1
     RewriteRule ^create-branch create-branch.php
     RewriteRule ^create-user create-user.php
+    RewriteRule ^delete-user/(.*) delete-user.php?b_id=$1
     RewriteRule ^/signout ../../../../signout.php
 </IfModule>

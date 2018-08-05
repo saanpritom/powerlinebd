@@ -153,6 +153,82 @@ class BranchCrudOperation extends DbConfig
     }
 
 
+    public function delete_branch($branch_id, $user_id){
+
+      //check if this branch has associated users
+      $query = "SELECT sl_num FROM admin_details WHERE branch_id='$branch_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows > 0) {
+
+        $this->status_message = 'You cannot delete this branch. This branch has users with it. At first delete
+                                or update user branch then delete this branch';
+
+        return $this->status_message;
+
+      }else{
+
+        //check if this branch has AWB MAWB data
+
+        $query = "SELECT sl_num FROM awb_mawb_flight_relation WHERE next_branch='$branch_id'";
+
+        $result = $this->connection->query($query);
+
+        if($result->num_rows > 0){
+
+          $this->status_message = 'You cannot delete this branch. This branch has assigned as a Next branch for some
+                                    AWB. Please change those next branch and then delete it';
+
+          return $this->status_message;
+
+        }else{
+
+          //delete branch details
+          $query = "DELETE FROM `office_branch` WHERE branch_id='$branch_id'";
+
+          if($this->connection->query($query)){
+
+            $report_data = 'Branch is deleted by User';
+
+            //calling the timer fetch function;
+            $this->timer_id = $this->fetch_time();
+
+            //update log record data;
+            $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+            if($report_status){
+
+              $this->status_message = 'Branch deleted Successfully';
+              return $this->status_message;
+
+            }else{
+
+              //insert log report not working unknown reason;
+              $this->status_message = 'Branch deleted but log report can not be inserted';
+              return $this->status_message;
+
+            }
+
+
+          }else{
+
+            $this->status_message = 'Problem deleting this branch. Please try again';
+
+            return $this->status_message;
+
+          }
+
+
+        }
+
+
+      }
+
+
+    }
+
+
 }
 
 

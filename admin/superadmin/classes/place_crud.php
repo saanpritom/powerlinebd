@@ -207,6 +207,102 @@ class PlaceCrudOperation extends DbConfig
     }
 
 
+    public function delete_place($place_id, $user_id){
+
+
+      //check if this place has some associated value;
+      $query = "SELECT sl_num FROM shipper_details WHERE country_id='$place_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows > 0) {
+
+         $this->status_message = 'You cannot delete this place. This place has associated Shippers with it. Please update
+                                    the shipper address first with another place then delete it.';
+
+         return $this->status_message;
+
+      }else{
+
+
+        $query = "SELECT sl_num FROM consignee_details WHERE country_id='$place_id'";
+
+        $result = $this->connection->query($query);
+
+        if($result->num_rows > 0) {
+
+          $this->status_message = 'You cannot delete this place. This place has associated Consignee with it. Please update
+                                     the consginee address first with another place then delete it.';
+
+          return $this->status_message;
+
+        }else{
+
+          //calling the timer fetch function;
+          $this->timer_id = $this->fetch_time();
+
+          //delete place details
+          $query = "DELETE FROM `origin_destination_details` WHERE o_id_id='$place_id'";
+
+          if($this->connection->query($query)){
+
+            //update place details on shipper details place field
+            $query = "UPDATE `shipper_details` SET `country_id`='0' WHERE country_id='$place_id'";
+
+            if($this->connection->query($query)){
+
+              //update place details on consignee details place field
+              $query = "UPDATE `consignee_details` SET `country_id`='0' WHERE country_id='$place_id'";
+
+              if($this->connection->query($query)){
+
+                $report_data = 'Place deleted by User';
+
+                if($this->log_report_insert($user_id, $report_data, $this->timer_id)){
+
+                  $this->status_message = 'Place deleted Successfully';
+                  return $this->status_message;
+
+                }else{
+
+                  $this->status_message = 'Problem creating log report but place deleted';
+                  return $this->status_message;
+
+                }
+
+
+              }else{
+
+                $this->status_message = 'Cannot update consignee place code. Please try again';
+
+                return $this->status_message;
+
+              }
+
+            }else{
+
+              $this->status_message = 'Cannot update shippers place code. Please try again';
+
+              return $this->status_message;
+
+            }
+
+          }else{
+
+            $this->status_message = 'Cannot delete place. Please try again';
+
+            return $this->status_message;
+
+          }
+
+        }
+
+
+      }
+
+    }
+
+
 }
 
 

@@ -307,5 +307,94 @@ class ConsigneeCrudOperation extends DbConfig
         return $this->status_message;
       }
     }
+
+
+    public function delete_consignee($consignee_id, $user_id){
+
+      //check consignee has associated data with it
+      $query = "SELECT sl_num FROM contact_person_details WHERE parent_organization_id='$consignee_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows > 0) {
+
+        $this->status_message = 'You cannot delete this consignee. This consignee has contact details with it. At first change
+                                  the contact details with another one then delete this consignee';
+
+        return $this->status_message;
+
+      }else{
+
+        //check if this shipper has any consignee relation
+        $query = "SELECT sl_num FROM consignee_shipper_relation WHERE consignee_id='$consignee_id'";
+
+        $result = $this->connection->query($query);
+
+        if($result->num_rows > 0) {
+
+          $this->status_message = 'You cannot delete this consignee. This consignee has shipper relations with it. At first change
+                                    the shipper relations with another one then delete this consignee';
+
+          return $this->status_message;
+
+        }else{
+
+          //check if this shipper has any associated awb details with it
+          $query = "SELECT sl_num FROM awb_details WHERE consignee_id='$consignee_id'";
+
+          $result = $this->connection->query($query);
+
+          if($result->num_rows > 0) {
+
+            $this->status_message = 'You cannot delete this consignee. This consignee has AWB details with it. At first change
+                                      the AWB details with another one then delete this consignee';
+
+            return $this->status_message;
+
+          }else{
+
+            $query = "DELETE FROM `consignee_details` WHERE consignee_id='$consignee_id'";
+
+            if($this->connection->query($query)){
+
+
+              $report_data = 'Consignee is deleted by User';
+
+              //calling the timer fetch function;
+              $this->timer_id = $this->fetch_time();
+
+              //update log record data;
+              $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+              if($report_status){
+
+                $this->status_message = 'Consignee deleted Successfully';
+
+                return $this->status_message;
+
+              }else{
+
+                $this->status_message = 'Consignee deleted but log report cannot inserted';
+
+                return $this->status_message;
+
+              }
+
+
+            }else{
+
+              $this->status_message = 'Problem deleting consignee. Please try again';
+
+              return $this->status_message;
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
 }
 ?>

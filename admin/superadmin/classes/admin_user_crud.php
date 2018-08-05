@@ -299,6 +299,104 @@ class UserCrudOperation extends DbConfig
     }
 
 
+    public function delete_user($u_id, $user_id){
+
+      //check if this one is the current user
+      if($u_id != $user_id){
+
+
+              //check if this user has awb details with it
+              $query = "SELECT sl_num FROM awb_details WHERE user_id='$u_id'";
+
+              $result = $this->connection->query($query);
+
+              if($result->num_rows > 0) {
+
+                $this->status_message = 'You cannot delete this user. This user has AWB associated with it. Please delete or
+                                          change the AWB then delete this user';
+
+                return $this->status_message;
+
+              }else{
+
+                //check awb status for this user
+                $query = "SELECT sl_num FROM awb_status WHERE user_id='$u_id'";
+
+                $result = $this->connection->query($query);
+
+                if($result->num_rows > 0) {
+
+                  $this->status_message = 'You cannot delete this user. This user has multiple AWB status. You have to change them
+                                            first then try again.';
+
+                  return $this->status_message;
+
+                }else{
+
+                  //delete login information of this user
+                  $query = "DELETE FROM `login_info` WHERE user_id='$u_id'";
+
+                  if($this->connection->query($query)){
+
+                    //delete user detail information
+
+                    $query = "DELETE FROM `admin_details` WHERE admin_id='$u_id'";
+
+                    if($this->connection->query($query)){
+
+                      $report_data = 'An user is deleted by User';
+
+                      //calling the timer fetch function;
+                      $this->timer_id = $this->fetch_time();
+
+                      //update log record data;
+                      $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                      if($report_status){
+
+                        $this->status_message = 'User deleted Successfully';
+                        return $this->status_message;
+
+                      }else{
+
+                        //insert log report not working unknown reason;
+                        $this->status_message = 'User deleted but log report can not be inserted';
+                        return $this->status_message;
+
+                      }
+
+                    }else{
+
+                      $this->status_message = 'Problem deleting users detail information. Please try again';
+
+                      return $this->status_message;
+
+                    }
+
+                  }else{
+
+                    $this->status_message = 'Problem deleting users login information. Please try again';
+
+                    return $this->status_message;
+
+                  }
+
+                }
+
+              }
+
+      }else{
+
+        $this->status_message = 'You cannot delete yourself. Donot try this';
+
+        return $this->status_message;
+
+      }
+
+
+    }
+
+
 }
 
 
