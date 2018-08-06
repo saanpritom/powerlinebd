@@ -2,6 +2,7 @@
 <?php
 
 include('../classes/navigation-active.php');
+include_once('../classes/user-topbar-info.php');
 
 $url_active = new NavigationActive();
 $url_active->url_detection($_SERVER['REQUEST_URI']);
@@ -21,37 +22,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 <!-- Call Search -->
                 <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
                 <!-- #END# Call Search -->
-                <!-- Notifications -->
-                <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        <i class="material-icons">notifications</i>
-                        <span class="label-count">1</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">NOTIFICATIONS</li>
-                        <li class="body">
-                            <ul class="menu">
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-light-green">
-                                            <i class="material-icons">person_add</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4>12 new members joined</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 14 mins ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="footer">
-                            <a href="javascript:void(0);">View All Notifications</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- #END# Notifications -->
+
             </ul>
         </div>
     </div>
@@ -66,12 +37,21 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 <img src="/powerlinebd/static/images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
+                <?php
+
+                  $usn_id = $_SESSION["plbd_id"];
+
+                  $usn_detail = new UserInfo();
+
+                  $usn_name = $usn_detail->fetch_user_details($usn_id);
+
+                ?>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usn_name; ?></div>
                 <div class="email">Superuser Panel</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                        <li><a href="/powerlinebd/admin/superadmin/office_management/user-detail/<?php echo $usn_id; ?>"><i class="material-icons">person</i>Profile</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="/powerlinebd/signout"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
@@ -473,7 +453,8 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       </li>
                       <?php
 
-                        if($url_active->child_menu == 'user-list' or $url_active->child_menu == 'user-detail' or $url_active->child_menu == 'user-edit' or $url_active->child_menu == 'delete-user'){
+                        if($url_active->child_menu == 'user-list' or $url_active->child_menu == 'user-detail' or $url_active->child_menu == 'user-edit' or $url_active->child_menu == 'delete-user'
+                            or $url_active->child_menu == 'user-login-edit'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';

@@ -397,6 +397,60 @@ class UserCrudOperation extends DbConfig
     }
 
 
+    public function update_password($password, $user_id, $usn_id){
+
+      //check the charcter limit of the password
+      if(strlen($password) >= 8){
+
+        //hash the default password;
+        $hash_password = hash('sha256', $password);
+
+        //update password to table
+        $query = "UPDATE `login_info` SET `password`='$hash_password', `login_status`='0' WHERE user_id='$user_id'";
+
+        if($this->connection->query($query)){
+
+          $report_data = 'Password changed of ' . $user_id . ' by Super Admin' . $usn_id;
+
+          //calling the timer fetch function;
+          $this->timer_id = $this->fetch_time();
+
+          //update log record data;
+          $report_status = $this->log_report_insert($usn_id, $report_data, $this->timer_id);
+
+          if($report_status){
+
+            $this->status_message = 'Successfully changed password';
+            return $this->status_message;
+
+          }else{
+
+            //insert log report not working unknown reason;
+            $this->status_message = 'Password changed but log report can not be inserted';
+            return $this->status_message;
+
+          }
+
+        }else{
+
+          $this->status_message = 'Problem updating password. Please try again';
+
+          return $this->status_message;
+
+        }
+
+
+      }else{
+
+        $this->status_message = 'Password must contain 8 characters';
+
+        return $this->status_message;
+
+      }
+
+    }
+
+
 }
 
 

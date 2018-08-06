@@ -74,6 +74,7 @@
                               ?>
 
                               <a href="/powerlinebd/admin/superadmin/office_management/user-edit/<?php echo $user_id ?>" type="button" class="btn bg-blue waves-effect">Edit</a>
+                              <a href="/powerlinebd/admin/superadmin/office_management/user-login-edit/<?php echo $user_id ?>" type="button" class="btn bg-red waves-effect">Edit Login</a>
                               <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
 
                             </div>
