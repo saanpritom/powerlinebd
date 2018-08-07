@@ -62,8 +62,26 @@
 
                                 if($lock_status == 'unlocked'){
 
+                                  
+
+                                  if($get_awb->check_thirdparty_exists($awb_id)){
+
+                                    ?>
+                                    <a href="/powerlinebd/admin/superadmin/awb/third-party-edit/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Edit Third Party Information</a>
+                                    <?php
+
+                                  }else{
+
+                                    ?>
+
+                                    <a href="/powerlinebd/admin/superadmin/awb/awb-third-party/<?php echo $awb_id ?>" type="button" class="btn bg-red waves-effect">Add Third Party Delivery</a>
+
+                                    <?php
+
+                                  }
+
                                   ?>
-                                  <a href="/powerlinebd/admin/superadmin/awb/awb-third-party/<?php echo $awb_id ?>" type="button" class="btn bg-red waves-effect">Add Third Party Delivery</a>
+                                  <a href="/powerlinebd/admin/superadmin/awb/awb-delivery/<?php echo $awb_id ?>" type="button" class="btn bg-yellow waves-effect">Delivery/3P</a>
                                   <a href="/powerlinebd/admin/superadmin/awb/awb-edit/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Edit</a>
                                   <a href="/powerlinebd/admin/superadmin/awb/update_mawb_flight/<?php echo $awb_id ?>" type="button" class="btn bg-green waves-effect">Update MAWB & Flight</a>
                                   <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>

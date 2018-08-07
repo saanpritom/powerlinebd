@@ -82,7 +82,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 <?php
 
                 if($url_active->child_menu == 'awb-add' or $url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit' or $url_active->child_menu == 'update_mawb_flight'
-                    or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party' or $url_active->child_menu == 'third-party-edit'){
+                    or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party' or $url_active->child_menu == 'third-party-edit' or $url_active->child_menu == 'awb-delivery'){
                   echo '<li class="active">';
                 }else{
                   echo '<li>';
@@ -97,7 +97,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                       <?php
 
                         if($url_active->child_menu == 'awb-list' or $url_active->child_menu == 'awb-detail' or $url_active->child_menu == 'awb-edit' or $url_active->child_menu == 'update_mawb_flight'
-                            or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party' or $url_active->child_menu == 'third-party-edit'){
+                            or $url_active->child_menu == 'unlock_awb' or $url_active->child_menu == 'awb-third-party' or $url_active->child_menu == 'third-party-edit' or $url_active->child_menu == 'awb-delivery'){
                           echo '<li class="active">';
                         }else{
                           echo '<li>';

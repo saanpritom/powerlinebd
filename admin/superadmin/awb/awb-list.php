@@ -112,7 +112,6 @@
 
                                             <?php
 
-
                                               if($res['delivery_status'] == 'Created'){
 
                                                 ?>

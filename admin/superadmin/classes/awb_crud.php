@@ -52,6 +52,25 @@ class AWBCrudOperation extends DbConfig
     }
 
 
+    public function check_thirdparty_exists($awb_id){
+
+      $query = "SELECT sl_num FROM awb_third_party WHERE awb_id='$awb_id'";
+
+      $result = $this->connection->query($query);
+
+      if($result->num_rows >= 1) {
+
+        return true;
+
+      }else{
+
+        return false;
+
+      }
+
+    }
+
+
     public function get_consignee_id($consignee_name){
 
       //check if the string contains -
@@ -398,6 +417,78 @@ class AWBCrudOperation extends DbConfig
 
         return $this->status_message;
 
+
+      }
+
+
+    }
+
+
+    public function update_delivery_tp($awb_id, $next_delivery, $user_id){
+
+      //calling the timer fetch function;
+      $this->timer_id = $this->fetch_time();
+
+
+      //update AWB status;
+      //First make previous status inactive
+      $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
+
+      if($this->connection->query($query)){
+
+        //insert new status
+        $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                  VALUES ('$awb_id', '$user_id', '$this->timer_id', '$next_delivery', '1')";
+
+        if($this->connection->query($query)){
+
+          $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
+
+          if($this->connection->query($query)){
+
+
+            $report_data = 'AWB Delivery or Third Party status updated by User';
+
+            $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+            if($report_status){
+
+              $this->status_message = 'Successfully updated';
+
+              return $this->status_message;
+
+            }else{
+
+              $this->status_message = 'Status is updated but log report cannot be generated';
+
+              return $this->status_message;
+
+
+            }
+
+
+
+          }else{
+
+            $this->status_message = 'Problem locking AWB status. Please try again';
+
+            return $this->status_message;
+
+          }
+
+        }else{
+
+          $this->status_message = 'Cannot update AWB status. Please try again';
+
+          return $this->status_message;
+
+        }
+
+      }else{
+
+        $this->status_message = 'Problem updating previous status. Please try again';
+
+        return $this->status_message;
 
       }
 

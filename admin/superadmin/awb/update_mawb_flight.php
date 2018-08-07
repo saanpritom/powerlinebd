@@ -219,10 +219,6 @@
                                       <div class="form-group">
                                         <select class="form-control show-tick" name="next_delivery">
 
-                                          <option value="consignee">Consignee</option>
-                                          <option value="third_party">Third Party</option>
-                                          <hr>
-
                                             <?php
 
 
