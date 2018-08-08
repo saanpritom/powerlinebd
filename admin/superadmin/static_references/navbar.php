@@ -127,7 +127,7 @@ $url_active->url_detection($_SERVER['REQUEST_URI']);
                 </li>
 
                 <li>
-                    <a href="../superadmin/dashboard">
+                    <a href="/powerlinebd/admin/superadmin/manifest/report">
                         <i class="material-icons">description</i>
                         <span>Manifest Report</span>
                     </a>

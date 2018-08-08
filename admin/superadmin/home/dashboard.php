@@ -5,7 +5,7 @@
   require_once('../static_references/header.php');
   require_once('../static_references/search.php');
   require_once('../static_references/navbar.php');
-  //require_once('../classes/dashboard-data.php');
+  require_once('../classes/dashboard-data.php');
 
 ?>
 
@@ -16,6 +16,29 @@
                 <h2>DASHBOARD</h2>
             </div>
 
+            <?php
+
+              $get_data = new DashboardData();
+
+              $total_awb = $get_data->total_awb();
+
+              $total_un_awb = $get_data->total_undelivered();
+
+              $total_shippers = $get_data->total_shippers();
+
+              $total_users = $get_data->total_users();
+
+              $top_five_shippers = $get_data->top_shippers();
+
+              $top_five_branches = $get_data->top_branches();
+
+              $top_five_users = $get_data->top_users();
+
+              $lt_awbs = $get_data->latest_awbs();
+
+
+            ?>
+
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -25,7 +48,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Total AWBs</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $total_awb; ?>" data-speed="15" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
@@ -35,8 +58,8 @@
                             <i class="material-icons">help</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW TICKETS</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">Total Undelivered AWB</div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $total_un_awb; ?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
@@ -46,8 +69,8 @@
                             <i class="material-icons">forum</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW COMMENTS</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">Total Shippers</div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $total_shippers; ?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
@@ -57,105 +80,71 @@
                             <i class="material-icons">person_add</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW VISITORS</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">Total Employee</div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $total_users; ?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- #END# Widgets -->
-            <!-- CPU Usage -->
             <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    <h2>CPU USAGE (%)</h2>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 align-right">
-                                    <div class="switch panel-switch-btn">
-                                        <span class="m-r-10 font-12">REAL TIME</span>
-                                        <label>OFF<input type="checkbox" id="realtime" checked><span class="lever switch-col-cyan"></span>ON</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <div id="real_time_chart" class="dashboard-flot-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# CPU Usage -->
-            <div class="row clearfix">
-                <!-- Visitors -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="body bg-pink">
-                            <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
-                                 data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
-                                 data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
-                                 data-fill-Color="rgba(0, 188, 212, 0)">
-                                12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
-                            </div>
-                            <ul class="dashboard-stat-list">
+              <!-- Answered Tickets -->
+              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                  <div class="card">
+                      <div class="body bg-teal">
+                          <div class="font-bold m-b--35">Top Five Users</div>
+                          <ul class="dashboard-stat-list">
+                            <?php
+
+                              foreach ($top_five_users as $key => $value) {
+
+                                ?>
+
                                 <li>
-                                    TODAY
-                                    <span class="pull-right"><b>1 200</b> <small>USERS</small></span>
+                                    <?php echo $value; ?>
+                                    <span class="pull-right">
+                                        <i class="material-icons">trending_up</i>
+                                    </span>
                                 </li>
-                                <li>
-                                    YESTERDAY
-                                    <span class="pull-right"><b>3 872</b> <small>USERS</small></span>
-                                </li>
-                                <li>
-                                    LAST WEEK
-                                    <span class="pull-right"><b>26 582</b> <small>USERS</small></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Visitors -->
+
+                                <?php
+
+                              }
+
+                             ?>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <!-- #END# Answered Tickets -->
                 <!-- Latest Social Trends -->
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-cyan">
-                            <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
+                            <div class="m-b--35 font-bold">Top Five Shippers</div>
                             <ul class="dashboard-stat-list">
-                                <li>
-                                    #socialtrends
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>
-                                    #materialdesign
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>#adminbsb</li>
-                                <li>#freeadmintemplate</li>
-                                <li>#bootstraptemplate</li>
-                                <li>
-                                    #freehtmltemplate
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
+
+                              <?php
+
+                                foreach ($top_five_shippers as $key => $value) {
+
+                                  ?>
+
+                                  <li>
+                                      <?php echo $value; ?>
+                                      <span class="pull-right">
+                                          <i class="material-icons">trending_up</i>
+                                      </span>
+                                  </li>
+
+                                  <?php
+
+                                }
+
+                               ?>
+
+
+
                             </ul>
                         </div>
                     </div>
@@ -165,32 +154,26 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-teal">
-                            <div class="font-bold m-b--35">ANSWERED TICKETS</div>
+                            <div class="font-bold m-b--35">Top Five Branches</div>
                             <ul class="dashboard-stat-list">
-                                <li>
-                                    TODAY
-                                    <span class="pull-right"><b>12</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    YESTERDAY
-                                    <span class="pull-right"><b>15</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    LAST WEEK
-                                    <span class="pull-right"><b>90</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    LAST MONTH
-                                    <span class="pull-right"><b>342</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    LAST YEAR
-                                    <span class="pull-right"><b>4 225</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    ALL
-                                    <span class="pull-right"><b>8 752</b> <small>TICKETS</small></span>
-                                </li>
+                              <?php
+
+                                foreach ($top_five_branches as $key => $value) {
+
+                                  ?>
+
+                                  <li>
+                                      <?php echo $value; ?>
+                                      <span class="pull-right">
+                                          <i class="material-icons">trending_up</i>
+                                      </span>
+                                  </li>
+
+                                  <?php
+
+                                }
+
+                               ?>
                             </ul>
                         </div>
                     </div>
@@ -200,22 +183,11 @@
 
             <div class="row clearfix">
                 <!-- Task Info -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
-                            <h2>TASK INFOS</h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <h2>Most Recent AWBs</h2>
+                            
                         </div>
                         <div class="body">
                             <div class="table-responsive">
@@ -223,70 +195,44 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Task</th>
+                                            <th>AWB Number</th>
                                             <th>Status</th>
-                                            <th>Manager</th>
-                                            <th>Progress</th>
+                                            <th>Branch</th>
+                                            <th>Destination</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Task A</td>
-                                            <td><span class="label bg-green">Doing</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Task B</td>
-                                            <td><span class="label bg-blue">To Do</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Task C</td>
-                                            <td><span class="label bg-light-blue">On Hold</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-light-blue" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Task D</td>
-                                            <td><span class="label bg-orange">Wait Approvel</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Task E</td>
-                                            <td>
-                                                <span class="label bg-red">Suspended</span>
-                                            </td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-red" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width: 87%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
+
+                                      <?php
+
+                                          $count = 1;
+
+                                          for($i=0; $i<sizeof($lt_awbs)-3; $i=$i+4){
+
+
+                                            ?>
+
+                                              <tr>
+
+                                                <td><?php echo $count; ?></td>
+                                                <td><?php echo $lt_awbs[$i]; ?></td>
+                                                <td><span class="label bg-green"><?php echo $lt_awbs[$i+1]; ?></span></td>
+                                                <td><?php echo $lt_awbs[$i+2]; ?></td>
+                                                <td>
+                                                    <?php echo $lt_awbs[$i+3]; ?>
+                                                </td>
+
+
+                                              </tr>
+                                            <?php
+
+                                            $count++;
+
+                                          }
+
+
+                                       ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -295,28 +241,7 @@
                 </div>
                 <!-- #END# Task Info -->
                 <!-- Browser Usage -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="header">
-                            <h2>BROWSER USAGE</h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <div id="donut_chart" class="dashboard-donut-chart"></div>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- #END# Browser Usage -->
             </div>
         </div>
