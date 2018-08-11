@@ -120,6 +120,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/office_management/user-detail/<?php echo $user_id; ?>" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>

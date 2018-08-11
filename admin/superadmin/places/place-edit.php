@@ -82,6 +82,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/places/place-detail/<?php echo $place_id; ?>/1" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>

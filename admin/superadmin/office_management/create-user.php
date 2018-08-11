@@ -115,6 +115,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/office_management/branch-detail/<?php echo $branch_id; ?>/1" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>

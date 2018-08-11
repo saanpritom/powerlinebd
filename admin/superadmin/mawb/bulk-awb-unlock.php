@@ -33,11 +33,24 @@
                           //mysql escape string clearence;
                           $mawb_number = $clearence->escape_string($_POST['mawb_number']);
 
+
                           //input data triming;
                           $mawb_number = strip_tags(trim($mawb_number));
 
                           // Escape any html characters;
                           $mawb_number = htmlentities($mawb_number);
+
+                          //fetch MAWB_ID. This is important because of Go Back button;
+                          $query = "SELECT mawb_id FROM mawb_details WHERE mawb_number='$mawb_number'";
+
+                          $fetch_mawb_id = $mawb_operation->getData($query);
+
+                          foreach ($fetch_mawb_id as $key => $value) {
+
+                            $mawb_id = $value['mawb_id'];
+
+                          }
+
 
                           //check refined and input values are empty and valid or not;
                           $msg = $validation->check_empty(array($mawb_number));
@@ -74,6 +87,8 @@
                           }
 
                       ?>
+
+                      <a href="/powerlinebd/admin/superadmin/mawb/mawb-detail/<?php echo $mawb_id; ?>" type="button" class="btn bg-teal waves-effect">Go back</a>
 
                     </div>
                   </div>

@@ -54,6 +54,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/consignee/consignee-detail/<?php echo $consignee_id; ?>/1" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>

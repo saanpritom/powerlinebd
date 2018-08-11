@@ -106,6 +106,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/shippers/contact-detail/<?php echo $contact_id; ?>" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>

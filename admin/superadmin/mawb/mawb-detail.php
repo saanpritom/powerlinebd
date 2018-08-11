@@ -39,6 +39,7 @@
                             </h2>
                             <div style="text-align: right;">
 
+                              <a href="/powerlinebd/admin/superadmin/mawb/excel-download/<?php echo $mawb_id ?>" type="button" class="btn bg-teal waves-effect">Download Manifest Report</a>
                               <a href="/powerlinebd/admin/superadmin/mawb/mawb-edit/<?php echo $mawb_id ?>" type="button" class="btn bg-blue waves-effect">Edit</a>
                               <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
 

@@ -77,6 +77,8 @@
 
                       ?>
 
+                      <a href="/powerlinebd/admin/superadmin/mawb/mawb-detail/<?php echo $mawb_id; ?>" type="button" class="btn bg-teal waves-effect">Go back</a>
+
                     </div>
                   </div>
               </div>
