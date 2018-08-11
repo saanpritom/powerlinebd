@@ -35,7 +35,8 @@
                           //mysql escape string clearence;
                           $awb_number = $clearence->escape_string($_POST['awb_number']);
                           $shipper_id = $clearence->escape_string($_POST['shipper_id']);
-                          $consignee_name = $clearence->escape_string($_POST['consignee_id']);
+                          $consignee_id = $clearence->escape_string($_POST['consignee_id']);
+                          $consignee_name = $clearence->escape_string($_POST['consignee_name']);
                           $destination = $clearence->escape_string($_POST['destination']);
                           $type = $clearence->escape_string($_POST['type']);
                           $pcs = $clearence->escape_string($_POST['pcs']);
@@ -46,6 +47,7 @@
                           //input data triming;
                           $awb_number = strip_tags(trim($awb_number));
                           $shipper_id = strip_tags(trim($shipper_id));
+                          $consignee_id = strip_tags(trim($consignee_id));
                           $consignee_name = strip_tags(trim($consignee_name));
                           $destination = strip_tags(trim($destination));
                           $type = strip_tags(trim($type));
@@ -57,6 +59,7 @@
                           // Escape any html characters;
                           $awb_number = htmlentities($awb_number);
                           $shipper_id = htmlentities($shipper_id);
+                          $consignee_id = htmlentities($consignee_id);
                           $consignee_name = htmlentities($consignee_name);
                           $destination = htmlentities($destination);
                           $type = htmlentities($type);
@@ -64,6 +67,18 @@
                           $a_weight = htmlentities($a_weight);
                           $b_weight = htmlentities($b_weight);
                           $price_value = htmlentities($price_value);
+
+
+                          //check if consignee is new or existing;
+                          if(is_numeric($consignee_id)){
+
+                            $consignee_name = $consignee_id;
+
+                            $destination = '0';
+
+
+                          }
+
 
                           //check refined and input values are empty and valid or not;
                           $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $type, $pcs, $a_weight, $b_weight, $price_value));
@@ -254,10 +269,40 @@
                                   </div>
                                   <br>
 
-                                  <label for="consignee">To</label>
+                                  <label for="shippers">To (Put it blank if the edited consignee is new)</label>
+                                  <div class="form-group">
+                                    <select class="form-control show-tick" name="consignee_id">
+
+                                      <option value="novalue">Not Selected</option>
+
+                                        <?php
+
+
+                                          $query = "SELECT consignee_details.consignee_id, consignee_details.name, origin_destination_details.short_form
+                                                    FROM consignee_details
+                                                    INNER JOIN origin_destination_details ON
+                                                    consignee_details.country_id=origin_destination_details.o_id_id
+                                                    WHERE 1";
+                                          $result = $get_data->getData($query);
+
+                                          foreach ($result as $key => $res)
+                                          {
+
+                                            ?>
+
+                                            <option value="<?php echo $res['consignee_id']; ?>"><?php echo $res['name']; ?></option>
+
+                                            <?php
+                                          }
+                                        ?>
+                                    </select>
+                                  </div>
+                                  <br>
+
+                                  <label for="consignee">To (Put it blank if consignee is a existing consignee)</label>
                                   <div class="form-group">
                                     <div class="form-line frmSearch">
-                                      <input type="text" id="search-box" placeholder="Consignee Name" class="form-control" required aria-required="true" name="consignee_id"  autocomplete="off" value="<?php echo $consignee_name; ?>"/>
+                                      <input type="text" id="search-box" placeholder="Consignee Name, Put it blank if you select existing consignee" class="form-control" name="consignee_name"  autocomplete="off" value="<?php echo $consignee_name; ?>"/>
                                       <div id="suggesstion-box"></div>
                                     </div>
                                   </div>
@@ -303,6 +348,9 @@
                                           <input type="text" id="price" class="form-control" required aria-required="true" placeholder="Enter Value" name="price_value" value="<?php echo $value; ?>">
                                       </div>
                                   </div>
+
+
+
 
                                   <input type="submit" name="submit" class="btn bg-deep-orange waves-effect m-t-15" value="Update">
                               </form>

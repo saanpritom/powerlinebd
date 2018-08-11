@@ -257,10 +257,16 @@ class AWBCrudOperation extends DbConfig
       //calling the timer fetch function;
       $this->timer_id = $this->fetch_time();
 
+      $check_consignee = 'abc';
 
 
-        //determine new or existing consignee;
-        $check_consignee = $this->get_consignee_id($consignee_name);
+        if(!is_numeric($consignee_name) or strpos($consignee_name, '-') !== false){
+
+          //determine new or existing consignee;
+          $check_consignee = $this->get_consignee_id($consignee_name);
+
+        }
+
 
         //if check consignee numeric then need to check shipper consignee relation table;
         if(is_numeric($check_consignee)){
@@ -282,6 +288,8 @@ class AWBCrudOperation extends DbConfig
           }
 
           $destination = '0';
+
+          $consignee_name = $check_consignee;
 
         }else{
 
