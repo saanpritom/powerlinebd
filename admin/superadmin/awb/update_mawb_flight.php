@@ -37,16 +37,19 @@
                           //mysql escape string clearence;
                           $mawb_id = $clearence->escape_string($_POST['mawb_id']);
                           $flight_number = $clearence->escape_string($_POST['flight_number']);
+                          $bag_number = $clearence->escape_string($_POST['bag_number']);
                           $next_delivery = $clearence->escape_string($_POST['next_delivery']);
 
                           //input data triming;
                           $mawb_id = strip_tags(trim($mawb_id));
                           $flight_number = strip_tags(trim($flight_number));
+                          $bag_number = strip_tags(trim($bag_number));
                           $next_delivery = strip_tags(trim($next_delivery));
 
                           // Escape any html characters;
                           $mawb_id = htmlentities($mawb_id);
                           $flight_number = htmlentities($flight_number);
+                          $bag_number = htmlentities($bag_number);
                           $next_delivery = htmlentities($next_delivery);
 
                           if($mawb_id == 'no_mawb'){
@@ -78,7 +81,7 @@
                           }else{
 
                             //check refined and input values are empty and valid or not;
-                            $msg = $validation->check_empty(array($mawb_id, $flight_number, $next_delivery));
+                            $msg = $validation->check_empty(array($mawb_id, $flight_number, $bag_number, $next_delivery));
 
                             if($msg != null){
                               ?>
@@ -94,7 +97,7 @@
                               $awb_id = $_GET['b_id'];
 
                               //sending all variables to branch_crud for creating new branch;
-                              $new_awb = $awb_operation->update_mawb_flight($awb_id, $mawb_id, $flight_number, $next_delivery, $user_id);
+                              $new_awb = $awb_operation->update_mawb_flight($awb_id, $mawb_id, $flight_number, $bag_number, $next_delivery, $user_id);
 
                               //check if branch created properly;
                               if($new_awb == 'Successfully updated MAWB, Flight and Next Destination'){
@@ -190,8 +193,12 @@
 
                                               $query = "SELECT mawb_details.mawb_id, mawb_details.mawb_number FROM mawb_details
                                                         INNER JOIN creation_details ON
-                                                        mawb_details.timer_id=creation_details.timer_id WHERE 1
+                                                        mawb_details.timer_id=creation_details.timer_id
+                                                        INNER JOIN mawb_validity_counter ON mawb_details.mawb_id=mawb_validity_counter.mawb_id
+                                                        WHERE NOT (mawb_validity_counter.counter='2')
                                                         ORDER BY creation_details.creation_date DESC";
+
+                                                        echo $query;
                                               $result = $get_data->getData($query);
 
                                               foreach ($result as $key => $res)
@@ -213,6 +220,13 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input type="text" id="destination" class="form-control" placeholder="Flight Number" name="flight_number">
+                                        </div>
+                                    </div>
+
+                                    <label for="destination">Bag Number</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" id="destination" class="form-control" placeholder="Bag Number" name="bag_number">
                                         </div>
                                     </div>
 

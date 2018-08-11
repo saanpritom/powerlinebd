@@ -37,7 +37,6 @@
                           $shipper_id = $clearence->escape_string($_POST['shipper_id']);
                           $consignee_name = $clearence->escape_string($_POST['consignee_id']);
                           $destination = $clearence->escape_string($_POST['destination']);
-                          $bag_number = $clearence->escape_string($_POST['bag_number']);
                           $type = $clearence->escape_string($_POST['type']);
                           $pcs = $clearence->escape_string($_POST['pcs']);
                           $a_weight = $clearence->escape_string($_POST['a_weight']);
@@ -49,7 +48,6 @@
                           $shipper_id = strip_tags(trim($shipper_id));
                           $consignee_name = strip_tags(trim($consignee_name));
                           $destination = strip_tags(trim($destination));
-                          $bag_number = strip_tags(trim($bag_number));
                           $type = strip_tags(trim($type));
                           $pcs = strip_tags(trim($pcs));
                           $a_weight = strip_tags(trim($a_weight));
@@ -61,7 +59,6 @@
                           $shipper_id = htmlentities($shipper_id);
                           $consignee_name = htmlentities($consignee_name);
                           $destination = htmlentities($destination);
-                          $bag_number = htmlentities($bag_number);
                           $type = htmlentities($type);
                           $pcs = htmlentities($pcs);
                           $a_weight = htmlentities($a_weight);
@@ -69,7 +66,7 @@
                           $price_value = htmlentities($price_value);
 
                           //check refined and input values are empty and valid or not;
-                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value));
+                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $type, $pcs, $a_weight, $b_weight, $price_value));
 
                           if($msg != null){
                             ?>
@@ -83,7 +80,7 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_awb = $awb_operation->create_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
+                            $new_awb = $awb_operation->create_awb($awb_number, $shipper_id, $consignee_name, $destination, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
 
                             //check if branch created properly;
                             if($new_awb == 'Successfully created a new AWB'){
@@ -180,12 +177,7 @@
                                     </div>
                                 </div>
 
-                                <label for="bag_number">Bag Number</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="bag_number" class="form-control" required aria-required="true" placeholder="Enter Bag number here" name="bag_number">
-                                    </div>
-                                </div>
+
 
                                 <label for="type">Type</label>
                                 <div class="form-group">

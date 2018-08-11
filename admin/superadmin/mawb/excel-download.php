@@ -3,33 +3,147 @@
   include_once('../classes/data_clearence.php');
   include_once('../classes/mawb_crud.php');
   include_once('../classes/excel_generate.php');
-  include_once('../../../super_classes/Spreadsheet/Excel/Writer.php');
 
 
-  /*$mawb_id = $_GET['b_id'];
+                          //declare object;
+                          $get_mawb = new MAWBCrudOperation();
+                          $clearence = new Clearence();
+                          $excel = new ExcelExporter();
 
-  $user_id = $_SESSION['plbd_id'];
+                          $mawb_id = $_GET['b_id'];
 
-  $document_name = $mawb_id . $user_id . '.xls';
-
-  $document_path = '/powerlinebd/media/excel_reports/' . $document_name;
-
-  // Creating a workbook
-  $workbook = new Spreadsheet_Excel_Writer($document_path);
+                          //data clearance;
+                          $mawb_id = $clearence->escape_string($mawb_id);
+                          $mawb_id = strip_tags(trim($mawb_id));
+                          $mawb_id = htmlentities($mawb_id);
 
 
-  $worksheet =& $workbook->addWorksheet('My first worksheet');
+                          $report_array = array();
 
-  $worksheet->write(0, 0, 'Name');
-  $worksheet->write(0, 1, 'Age');
-  $worksheet->write(1, 0, 'John Smith');
-  $worksheet->write(1, 1, 30);
-  $worksheet->write(2, 0, 'Johann Schmidt');
-  $worksheet->write(2, 1, 31);
-  $worksheet->write(3, 0, 'Juan Herrera');
-  $worksheet->write(3, 1, 32);
+                          $i=0;
 
-  // We still need to explicitly close the workbook
-  $workbook->close();*/
 
-?>
+                          //query to get data;
+                          $query = "SELECT awb_mawb_flight_relation.flight_id, awb_details.awb_id, awb_details.consignee_id,
+                                    awb_details.destination_id, awb_details.bag_number, awb_details.type, awb_details.pcs,
+                                    awb_details.`a.weight`, awb_details.`b.weight`, awb_details.value, shipper_details.name AS s_name,
+                                    shipper_details.address AS s_address, origin_destination_details.short_form AS s_s_form FROM awb_mawb_flight_relation
+                                    INNER JOIN awb_details ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                                    INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
+                                    INNER JOIN origin_destination_details ON shipper_details.country_id=origin_destination_details.o_id_id
+                                    WHERE awb_mawb_flight_relation.mawb_id='$mawb_id'";
+
+                          $result = $get_mawb->getData($query);
+
+                          foreach ($result as $key => $value) {
+
+                            $report_array[$i] = $value['flight_id'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['awb_id'];
+
+                            $i++;
+
+                            //check if consignee is new or existing
+                            if(is_numeric($value['consignee_id'])){
+
+                              $temp_consignee_id = $value['consignee_id'];
+
+                              $query2 = "SELECT consignee_details.name AS c_name, consignee_details.address AS c_address, origin_destination_details.short_form AS c_s_address,
+                                        origin_destination_details.full_name FROM consignee_details
+                                        INNER JOIN origin_destination_details ON consignee_details.country_id=origin_destination_details.o_id_id
+                                        WHERE consignee_details.consignee_id='$temp_consignee_id'";
+
+                              $result2 = $get_mawb->getData($query2);
+
+                              foreach ($result2 as $key => $value2) {
+
+                                $report_array[$i] = $value2['c_name'];
+
+                                $i++;
+
+                                $report_array[$i] = $value2['c_address'];
+
+                                $i++;
+
+                                $report_array[$i] = $value2['c_s_address'];
+
+                                $i++;
+
+                                $report_array[$i] = $value2['full_name'];
+
+                                $i++;
+
+                              }
+
+
+                            }else{
+
+                              $report_array[$i] = $value['consignee_id'];
+
+                              $i++;
+
+                              $report_array[$i] = $value['destination_id'];
+
+                              $i++;
+
+
+                            }
+
+
+                            $report_array[$i] = $value['bag_number'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['type'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['pcs'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['a.weight'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['b.weight'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['value'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['s_name'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['s_address'];
+
+                            $i++;
+
+                            $report_array[$i] = $value['s_s_form'];
+
+                            $i++;
+
+
+                          }
+
+                          /*$result = $excel->excel_generator($query, $user_id, 'user_login');
+
+
+                          //create excel file;
+                          header("Content-Type: application/vnd.ms-excel");
+                          header("Content-disposition: attachment; filename=user_login_details.xls");
+
+                          echo 'IP Address' . "\t" . 'Date' . "\t" . 'Time' . "\n";
+
+                          foreach($result as $key => $res){
+                            echo $res['public_ip'] . "\t" . $res['creation_date'] . "\t" . $res['creation_time'] . "\n";
+                          }*/
+
+
+
+                      ?>

@@ -107,7 +107,7 @@ class AWBCrudOperation extends DbConfig
     }
 
     //creating a new user on the database;
-    public function create_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
+    public function create_awb($awb_number, $shipper_id, $consignee_name, $destination, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
     {
 
       //calling the timer fetch function;
@@ -152,8 +152,8 @@ class AWBCrudOperation extends DbConfig
 
           //first query inserting data into login table;
           $query ="INSERT INTO `awb_details`(`awb_id`, `shipper_id`, `consignee_id`, `destination_id`,
-                   `bag_number`, `type`, `pcs`, `a.weight`, `b.weight`, `value`, `timer_id`, `user_id`)
-                   VALUES ('$awb_number', '$shipper_id', '$consignee_name', '$destination', '$bag_number',
+                    `type`, `pcs`, `a.weight`, `b.weight`, `value`, `timer_id`, `user_id`)
+                   VALUES ('$awb_number', '$shipper_id', '$consignee_name', '$destination',
                            '$type', '$pcs', '$a_weight', '$b_weight', '$price_value', '$this->timer_id', '$user_id')";
 
           if($this->connection->query($query)){
@@ -240,7 +240,7 @@ class AWBCrudOperation extends DbConfig
 
 
     //updating a new user on the database;
-    public function update_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
+    public function update_awb($awb_number, $shipper_id, $consignee_name, $destination, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id)
     {
 
       //fetch sl_num by awb_id
@@ -292,7 +292,7 @@ class AWBCrudOperation extends DbConfig
         //update awb details table
 
         $query = "UPDATE `awb_details` SET `awb_id`='$awb_number',`shipper_id`='$shipper_id',
-                 `consignee_id`='$consignee_name',`destination_id`='$destination',`bag_number`='$bag_number',
+                 `consignee_id`='$consignee_name',`destination_id`='$destination',
                  `type`='$type',`pcs`='$pcs',`a.weight`='$a_weight',`b.weight`='$b_weight',`value`='$price_value',
                  `timer_id`='$this->timer_id' WHERE sl_num='$sl_num'";
 
@@ -326,48 +326,89 @@ class AWBCrudOperation extends DbConfig
 
 
 
-    public function update_mawb_flight($awb_id, $mawb_id, $flight_number, $next_delivery, $user_id){
+    public function update_mawb_flight($awb_id, $mawb_id, $flight_number, $bag_number, $next_delivery, $user_id){
 
 
-      //calling the timer fetch function;
-      $this->timer_id = $this->fetch_time();
+      //check if this MAWB id is valid or not;
+      $query = "SELECT counter FROM mawb_validity_counter WHERE mawb_id='$mawb_id'";
 
-      if(is_numeric($this->timer_id)){
+      $result = $this->getData($query);
 
-        $query = "INSERT INTO `awb_mawb_flight_relation`(`awb_id`, `mawb_id`, `flight_id`, `next_branch`)
-                  VALUES ('$awb_id', '$mawb_id', '$flight_number', '$next_delivery')";
+      foreach ($result as $key => $value) {
 
-        if($this->connection->query($query)){
+        $validity_counter = $value['counter'];
 
-          //update AWB status;
-          //First make previous status inactive
-          $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
+      }
+
+      if($validity_counter != 2){
+
+
+
+        //calling the timer fetch function;
+        $this->timer_id = $this->fetch_time();
+
+        if(is_numeric($this->timer_id)){
+
+          $query = "INSERT INTO `awb_mawb_flight_relation`(`awb_id`, `mawb_id`, `flight_id`, `bag_number`, `next_branch`)
+                    VALUES ('$awb_id', '$mawb_id', '$flight_number', '$bag_number', '$next_delivery')";
 
           if($this->connection->query($query)){
 
-            //insert new status
-            $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
-                      VALUES ('$awb_id', '$user_id', '$this->timer_id', 'On the way', '1')";
+            //update AWB status;
+            //First make previous status inactive
+            $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
 
             if($this->connection->query($query)){
 
-              $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
+              //insert new status
+              $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                        VALUES ('$awb_id', '$user_id', '$this->timer_id', 'On the way', '1')";
 
               if($this->connection->query($query)){
 
-                $report_data = 'MAWB and Flight of AWB Number ' . $awb_id . ' is updated and locked by User';
+                $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
 
-                $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+                if($this->connection->query($query)){
 
-                if($report_status){
+                  //update MAWB validity
+                  $query = "UPDATE `mawb_validity_counter` SET `counter`='1' WHERE mawb_id='$mawb_id'";
 
-                  $this->status_message = 'Successfully updated MAWB, Flight and Next Destination';
+                  if($this->connection->query($query)){
 
-                  return $this->status_message;
+                    $report_data = 'MAWB and Flight of AWB Number ' . $awb_id . ' is updated and locked by User';
+
+                    $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+
+                    if($report_status){
+
+                      $this->status_message = 'Successfully updated MAWB, Flight and Next Destination';
+
+                      return $this->status_message;
+
+                    }else{
+
+                      $this->status_message = 'AWB is updated but log report cannot be generated';
+
+                      return $this->status_message;
+
+
+                    }
+
+
+                  }else{
+
+                    $this->status_message = 'MAWB validity cannot be updated';
+
+                    return $this->status_message;
+
+
+                  }
+
+
 
                 }else{
 
-                  $this->status_message = 'AWB is updated but log report cannot be generated';
+                  $this->status_message = 'AWB is updated but lock status cannot be changed';
 
                   return $this->status_message;
 
@@ -376,7 +417,7 @@ class AWBCrudOperation extends DbConfig
 
               }else{
 
-                $this->status_message = 'AWB is updated but lock status cannot be changed';
+                $this->status_message = 'AWB is updated but new status cannot be changed';
 
                 return $this->status_message;
 
@@ -385,7 +426,7 @@ class AWBCrudOperation extends DbConfig
 
             }else{
 
-              $this->status_message = 'AWB is updated but new status cannot be changed';
+              $this->status_message = 'AWB is updated but previous status cannot be changed';
 
               return $this->status_message;
 
@@ -394,16 +435,17 @@ class AWBCrudOperation extends DbConfig
 
           }else{
 
-            $this->status_message = 'AWB is updated but previous status cannot be changed';
+            $this->status_message = 'Problem updating MAWB and Flight. Please try again';
 
             return $this->status_message;
 
 
           }
 
+
         }else{
 
-          $this->status_message = 'Problem updating MAWB and Flight. Please try again';
+          $this->status_message = 'Problem updating. Please try again';
 
           return $this->status_message;
 
@@ -411,14 +453,17 @@ class AWBCrudOperation extends DbConfig
         }
 
 
+
       }else{
 
-        $this->status_message = 'Problem updating. Please try again';
+        $this->status_message = 'You cannot use this MAWB. This MAWB has already locked and unlocked AWBs';
 
         return $this->status_message;
 
 
       }
+
+
 
 
     }
@@ -516,8 +561,6 @@ class AWBCrudOperation extends DbConfig
 
             $sl_num = $res['sl_num'];
 
-            echo $sl_num;
-
           }
 
           //query running double times for unkown reason. This only works in 'Received by branch' is seletcted
@@ -549,9 +592,69 @@ class AWBCrudOperation extends DbConfig
 
                 if($report_status){
 
-                  $this->status_message = 'Successfully unlocked AWB';
 
-                  return $this->status_message;
+
+                  //check if this associated MAWB has still some AWB in locked state. This is important as
+                  // if locked found then the validity of this MAWB will remain same if not then the MAWB_ID
+                  // will be declared invalid
+                  //fetch MAWB_ID of this AWB_ID
+                  $query = "SELECT mawb_id FROM awb_mawb_flight_relation WHERE awb_id='$awb_id'";
+
+                  $result = $this->getData($query);
+
+                  foreach ($result as $key => $value) {
+
+                    $mawb_id = $value['mawb_id'];
+
+                  }
+
+                  $query = "SELECT COUNT(awb_lock.sl_num) AS t_lock FROM awb_lock
+                            INNER JOIN awb_mawb_flight_relation ON awb_lock.awb_id=awb_mawb_flight_relation.awb_id
+                            WHERE awb_mawb_flight_relation.mawb_id='$mawb_id' AND awb_lock.lock_status='locked'";
+
+                  $result = $this->getData($query);
+
+                  foreach ($result as $key => $value) {
+
+                    $t_lock = $value['t_lock'];
+
+                  }
+
+                  if($t_lock == 0){
+
+
+                    $query = "UPDATE `mawb_validity_counter` SET `counter`='2' WHERE mawb_id='$mawb_id'";
+
+
+                    if($this->connection->query($query)){
+
+                      $this->status_message = 'Successfully unlocked AWB and As this correspondent MAWB has no AWB unlocked So, disable the MAWB';
+
+                      return $this->status_message;
+
+
+                    }else{
+
+                      $this->status_message = 'Successfully unlocked AWB but MAWB validity status cannot be updated';
+
+                      return $this->status_message;
+
+
+                    }
+
+
+                  }else{
+
+                    $this->status_message = 'Successfully unlocked AWB';
+
+                    return $this->status_message;
+
+                  }
+
+
+
+
+
 
                 }else{
 

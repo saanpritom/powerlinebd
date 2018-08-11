@@ -42,7 +42,7 @@ if(!empty($_POST["keyword"])) {
 
   $query ="SELECT consignee_details.consignee_id, consignee_details.name, origin_destination_details.short_form FROM consignee_details INNER JOIN
             origin_destination_details ON consignee_details.country_id=origin_destination_details.o_id_id
-            WHERE name LIKE '$keyword %' ORDER BY `name` LIMIT 0,6";
+            WHERE name LIKE '$keyword%' ORDER BY `name` LIMIT 0,6";
 
             //echo $query;
   $result = $get_data->getData($query);

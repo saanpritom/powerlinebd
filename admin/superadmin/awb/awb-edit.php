@@ -37,7 +37,6 @@
                           $shipper_id = $clearence->escape_string($_POST['shipper_id']);
                           $consignee_name = $clearence->escape_string($_POST['consignee_id']);
                           $destination = $clearence->escape_string($_POST['destination']);
-                          $bag_number = $clearence->escape_string($_POST['bag_number']);
                           $type = $clearence->escape_string($_POST['type']);
                           $pcs = $clearence->escape_string($_POST['pcs']);
                           $a_weight = $clearence->escape_string($_POST['a_weight']);
@@ -49,7 +48,6 @@
                           $shipper_id = strip_tags(trim($shipper_id));
                           $consignee_name = strip_tags(trim($consignee_name));
                           $destination = strip_tags(trim($destination));
-                          $bag_number = strip_tags(trim($bag_number));
                           $type = strip_tags(trim($type));
                           $pcs = strip_tags(trim($pcs));
                           $a_weight = strip_tags(trim($a_weight));
@@ -61,7 +59,6 @@
                           $shipper_id = htmlentities($shipper_id);
                           $consignee_name = htmlentities($consignee_name);
                           $destination = htmlentities($destination);
-                          $bag_number = htmlentities($bag_number);
                           $type = htmlentities($type);
                           $pcs = htmlentities($pcs);
                           $a_weight = htmlentities($a_weight);
@@ -69,7 +66,7 @@
                           $price_value = htmlentities($price_value);
 
                           //check refined and input values are empty and valid or not;
-                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value));
+                          $msg = $validation->check_empty(array($awb_number, $shipper_id, $consignee_name, $type, $pcs, $a_weight, $b_weight, $price_value));
 
                           if($msg != null){
                             ?>
@@ -83,7 +80,7 @@
                             $user_id = $_SESSION["plbd_id"];
 
                             //sending all variables to branch_crud for creating new branch;
-                            $new_awb = $awb_operation->update_awb($awb_number, $shipper_id, $consignee_name, $destination, $bag_number, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
+                            $new_awb = $awb_operation->update_awb($awb_number, $shipper_id, $consignee_name, $destination, $type, $pcs, $a_weight, $b_weight, $price_value, $user_id);
 
                             //check if branch created properly;
                             if($new_awb == 'Successfully updated a new AWB'){
@@ -106,7 +103,7 @@
 
                       ?>
 
-                      <a href="/powerlinebd/admin/superadmin/awb/awb-detail/<?php echo $awb_id; ?>/1" type="button" class="btn bg-teal waves-effect">Go back</a>
+                      <a href="/powerlinebd/admin/superadmin/awb/awb-detail/<?php echo $awb_number; ?>/1" type="button" class="btn bg-teal waves-effect">Go back</a>
 
                     </div>
                   </div>
@@ -154,7 +151,7 @@
 
                             $destination_id = '';
 
-                            $query = "SELECT `shipper_id`, `consignee_id`, `destination_id`, `bag_number`, `type`, `pcs`,
+                            $query = "SELECT `shipper_id`, `consignee_id`, `destination_id`, `type`, `pcs`,
                                       `a.weight`, `b.weight`, `value`
                                       FROM `awb_details` WHERE awb_id = '$awb_id'";
 
@@ -165,7 +162,6 @@
                               $shipper_id = $res['shipper_id'];
                               $consignee_id = $res['consignee_id'];
                               $destination_id = $res['destination_id'];
-                              $bag_number = $res['bag_number'];
                               $type = $res['type'];
                               $pcs = $res['pcs'];
                               $a_weight = $res['a.weight'];
@@ -269,14 +265,7 @@
                                   <label for="destination">Destination</label>
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text" id="destination" class="form-control" placeholder="Enter Destination" name="destination" required aria-required="true" value="<?php echo $destination_id; ?>">
-                                      </div>
-                                  </div>
-
-                                  <label for="bag_number">Bag Number</label>
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                          <input type="text" id="bag_number" class="form-control" required aria-required="true" placeholder="Enter Bag number here" name="bag_number" value="<?php echo $bag_number; ?>">
+                                          <input type="text" id="destination" class="form-control" placeholder="Enter Destination" name="destination" value="<?php echo $destination_id; ?>">
                                       </div>
                                   </div>
 

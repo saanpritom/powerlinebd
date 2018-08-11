@@ -62,7 +62,7 @@
 
                                 if($lock_status == 'unlocked'){
 
-                                  
+
 
                                   if($get_awb->check_thirdparty_exists($awb_id)){
 
@@ -134,6 +134,7 @@
                                                   <th>#</th>
                                                   <th>MAWB Number</th>
                                                   <th>Flight Number</th>
+                                                  <th>Bag Number</th>
                                                   <th>Next Branch</th>
                                               </tr>
                                           </thead>
@@ -145,6 +146,7 @@
                                             $low_point = ($awb_page_number * 20) - 20;
 
                                               $query = "SELECT awb_mawb_flight_relation.mawb_id, awb_mawb_flight_relation.flight_id,
+                                                        awb_mawb_flight_relation.bag_number,
                                                         awb_mawb_flight_relation.next_branch, mawb_details.mawb_number
                                                         FROM awb_mawb_flight_relation
                                                         INNER JOIN mawb_details ON awb_mawb_flight_relation.mawb_id=mawb_details.mawb_id
@@ -163,6 +165,7 @@
                                                   <td><?php echo $counter; ?></td>
                                                   <td><a href="/powerlinebd/admin/superadmin/mawb/mawb-detail/<?php echo $res['mawb_id']; ?>"><?php echo $res['mawb_number']; ?></a></td>
                                                   <td><?php echo $res['flight_id']; ?></td>
+                                                  <td><?php echo $res['bag_number']; ?></td>
 
                                                   <?php
 
@@ -275,7 +278,6 @@
                                                         shipper_details.name AS shipper_name,
                                                         awb_details.consignee_id,
                                                         awb_details.destination_id,
-                                                        awb_details.bag_number,
                                                         awb_details.type,
                                                         awb_details.pcs,
                                                         awb_details.value,
@@ -390,12 +392,6 @@
                                                     ?>
 
                                                   </th>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>5</th>
-                                                  <th>Bag Number</th>
-                                                  <th><?php echo $res['bag_number']; ?></th>
                                                 </tr>
 
                                                 <tr>

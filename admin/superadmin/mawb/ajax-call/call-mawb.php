@@ -40,7 +40,9 @@ if(!empty($_POST["keyword"])) {
 
   //$query = "SELECT `name` FROM `consignee_details` WHERE name LIKE '$keyword %' ORDER BY `name` LIMIT 0,6";
 
-  $query = "SELECT mawb_number FROM mawb_details WHERE mawb_number LIKE '$keyword%' ORDER BY `mawb_number` LIMIT 0,6";
+  $query = "SELECT mawb_details.mawb_number FROM mawb_details
+            INNER JOIN mawb_validity_counter ON mawb_details.mawb_id=mawb_validity_counter.mawb_id
+            WHERE mawb_number LIKE '$keyword%' AND NOT(mawb_validity_counter.counter='2') ORDER BY `mawb_number` LIMIT 0,6";
 
             //echo $query;
   $result = $get_data->getData($query);
