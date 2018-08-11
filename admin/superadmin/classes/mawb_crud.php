@@ -89,9 +89,20 @@ class MAWBCrudOperation extends DbConfig
         //check if timer_id created properly
         if(is_numeric($this->timer_id)){
 
+          //fetch branch_id by user_id
+          $query = "SELECT branch_id FROM admin_details WHERE admin_id='$user_id'";
+
+          $result = $this->getData($query);
+
+          foreach ($result as $key => $value) {
+
+            $branch_id = $value['branch_id'];
+
+          }
+
           //first query inserting data into login table;
-          $query = "INSERT INTO `mawb_details`(`mawb_id`, `mawb_number`, `timer_id`)
-                    VALUES ('$mawb_id', '$mawb_number', '$this->timer_id')";
+          $query = "INSERT INTO `mawb_details`(`mawb_id`, `mawb_number`, `mawb_from`, `timer_id`)
+                    VALUES ('$mawb_id', '$mawb_number', '$branch_id', '$this->timer_id')";
 
           if($this->connection->query($query)){
 
@@ -715,6 +726,27 @@ class MAWBCrudOperation extends DbConfig
 
 
 
+
+
+    }
+
+
+    public function create_manifest_report($mawb_id, $manifest_number){
+
+      $this->timer_id = $this->fetch_time();
+
+      $query = "INSERT INTO `manifest_report`(`mawb_id`, `manifest_number`, `timer_id`)
+                VALUES ('$mawb_id', '$manifest_number', '$this->timer_id')";
+
+      if($this->connection->query($query)){
+
+        return true;
+
+      }else{
+
+        return false;
+
+      }
 
 
     }

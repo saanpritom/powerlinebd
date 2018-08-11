@@ -85,7 +85,7 @@
 
             ?>
 
-
+            
 <!-- Vertical Layout -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -105,6 +105,7 @@
                                     </div>
                                 </div>
                                 <br>
+
                                 <input type="submit" name="submit" class="btn bg-deep-orange waves-effect m-t-15" value="Create">
                             </form>
                         </div>

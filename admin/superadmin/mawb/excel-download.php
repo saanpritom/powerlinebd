@@ -1,14 +1,14 @@
 <?php
 
+  require_once('../classes/authentication.php');
   include_once('../classes/data_clearence.php');
   include_once('../classes/mawb_crud.php');
-  include_once('../classes/excel_generate.php');
 
 
                           //declare object;
                           $get_mawb = new MAWBCrudOperation();
                           $clearence = new Clearence();
-                          $excel = new ExcelExporter();
+                          //$excel = new ExcelExporter();
 
                           $mawb_id = $_GET['b_id'];
 
@@ -18,7 +18,130 @@
                           $mawb_id = htmlentities($mawb_id);
 
 
-                          $report_array = array();
+                          $user_id = $_SESSION["plbd_id"];
+
+                          //fetch user branch origin short form
+                          $query = "SELECT office_branch.name FROM office_branch INNER JOIN admin_details
+                                    ON office_branch.branch_id=admin_details.branch_id WHERE admin_details.admin_id='$user_id'";
+
+                          $result = $get_mawb->getData($query);
+
+                          foreach ($result as $key => $value) {
+
+                            $branch_name = $value['name'];
+
+                          }
+
+                          //create manifest_number
+                          //fetch the last number of serial from manifest table
+                          $query = "SELECT MAX(sl_num) AS t_sl FROM manifest_report WHERE 1";
+
+                          $result = $get_mawb->getData($query);
+
+                          foreach ($result as $key => $value) {
+
+                            $maximum_numb = $value['t_sl'];
+
+                          }
+
+                          $maximum_numb = $maximum_numb + 1;
+
+                          $manifest_number = 'MANIFEST-' . $branch_name . ' ' . $maximum_numb;
+
+
+                          $create_manifest_data = $get_mawb->create_manifest_report($mawb_id, $manifest_number);
+
+
+                          if($create_manifest_data){
+
+                            //fetch MAWB from result
+                            $query = "SELECT office_branch.name, mawb_details.mawb_number FROM office_branch INNER JOIN mawb_details
+                                      ON office_branch.branch_id=mawb_details.mawb_from
+                                      WHERE mawb_details.mawb_id='$mawb_id'";
+
+                            $result = $get_mawb->getData($query);
+
+                            foreach ($result as $key => $value) {
+
+                              $mawb_from = $value['name'];
+
+                              $mawb_number = $value['mawb_number'];
+
+                            }
+
+                            //fetch MAWB to result
+                            $flight_number = 0;
+
+                            $bag_number = 0;
+
+                            $mawb_to = 0;
+
+
+                            $query = "SELECT DISTINCT awb_mawb_flight_relation.flight_id, awb_mawb_flight_relation.bag_number,
+                                      office_branch.name FROM awb_mawb_flight_relation
+                                      INNER JOIN office_branch ON awb_mawb_flight_relation.next_branch=office_branch.branch_id
+                                      WHERE awb_mawb_flight_relation.mawb_id='$mawb_id'";
+
+                            $result = $get_mawb->getData($query);
+
+                            foreach ($result as $key => $value) {
+
+                              $flight_number = $value['flight_id'];
+
+                              $bag_number = $value['bag_number'];
+
+                              $mawb_to = $value['name'];
+                            }
+
+                          }else{
+
+                            echo 'cannot create';
+
+                          }
+
+                          //fetch manifest report time and date
+                          $query = "SELECT creation_details.creation_date, creation_details.creation_time FROM creation_details
+                                    INNER JOIN manifest_report ON creation_details.timer_id=manifest_report.timer_id
+                                    WHERE manifest_report.manifest_number='$manifest_number'";
+
+                          $result = $get_mawb->getData($query);
+
+                          foreach ($result as $key => $value) {
+
+                            $creation_date = $value['creation_date'];
+
+                            $creation_time = $value['creation_time'];
+
+                          }
+
+                          $creation_date = 'DATE ' . $creation_date;
+
+                          $creation_time = 'TIME ' . $creation_time;
+
+                          $temp_mawb_number = 'MAWB ' . $mawb_number;
+
+                          $flight_number = 'FLIGHT ' . $flight_number;
+
+                          $bag_number = 'BAG ' . $bag_number;
+
+                          //create excel file header
+                          header("Content-Type: application/vnd.ms-excel");
+                          header("Content-disposition: attachment; filename=user_login_details.xls");
+
+                          echo 'FROM' . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $manifest_number . "\n";
+
+                          echo $mawb_from . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $flight_number . "\n";
+
+                          echo 'TO' . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $creation_date . "\n";
+
+                          echo $mawb_to . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $creation_time . "\n";
+
+                          echo $temp_mawb_number . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $bag_number . "\n";
+
+                          //echo 'IP Address' . "\t" . 'Date' . "\t" . 'Time' . "\n";
+
+
+                          /*$report_array = array();
 
                           $i=0;
 
@@ -129,7 +252,7 @@
                             $i++;
 
 
-                          }
+                          }*/
 
                           /*$result = $excel->excel_generator($query, $user_id, 'user_login');
 

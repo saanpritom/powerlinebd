@@ -78,10 +78,11 @@
 
                                             <?php
 
-                                              $query = "SELECT mawb_details.mawb_number,
+                                              $query = "SELECT mawb_details.mawb_number, office_branch.name,
                                                                creation_details.creation_time, creation_details.creation_date
                                                         FROM `mawb_details` INNER JOIN `creation_details`
                                                         ON mawb_details.timer_id=creation_details.timer_id
+                                                        INNER JOIN office_branch ON mawb_details.mawb_from=office_branch.branch_id
                                                         WHERE mawb_details.mawb_id = '$mawb_id'";
 
                                               $result = $get_mawb->getData($query);
@@ -89,6 +90,7 @@
                                               foreach($result as $key => $res){
 
                                                 $mawb_number = $res['mawb_number'];
+                                                $mawb_from = $res['name'];
                                                 $creation_date = $res['creation_date'];
                                                 $creation_time = $res['creation_time'];
                                               }
@@ -99,6 +101,12 @@
                                                   <th>1</th>
                                                   <th>MAWB Number</th>
                                                   <th><?php echo $mawb_number; ?></th>
+                                                </tr>
+
+                                                <tr>
+                                                  <th>2</th>
+                                                  <th>MAWB Origin Branch</th>
+                                                  <th><?php echo $mawb_from; ?></th>
                                                 </tr>
 
                                                 <tr>
