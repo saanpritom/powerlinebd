@@ -138,134 +138,65 @@
 
                           echo $temp_mawb_number . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $bag_number . "\n";
 
-                          //echo 'IP Address' . "\t" . 'Date' . "\t" . 'Time' . "\n";
+                          echo 'Sl No.' . "\t" . 'AWB' . "\t" . 'Shipper name' . "\t" . 'Shipper Address' . "\t" . 'C/nee. Name' . "\t" . 'C/nee Address' . "\t" . 'Origin' . "\t" . 'Dest.' . "\t" . 'Type' . "\t" . 'Pcs' . "\t" . 'A.Weight' . "\t" . 'B.Weight' . "\t" . 'Value' . "\t" . 'Bag No' . "\t" . 'Country Code' . "\t" . 'FREIGHT' . "\n";
 
 
-                          /*$report_array = array();
+                          $counter = 1;
 
-                          $i=0;
-
-
-                          //query to get data;
-                          $query = "SELECT awb_mawb_flight_relation.flight_id, awb_details.awb_id, awb_details.consignee_id,
-                                    awb_details.destination_id, awb_details.bag_number, awb_details.type, awb_details.pcs,
-                                    awb_details.`a.weight`, awb_details.`b.weight`, awb_details.value, shipper_details.name AS s_name,
-                                    shipper_details.address AS s_address, origin_destination_details.short_form AS s_s_form FROM awb_mawb_flight_relation
-                                    INNER JOIN awb_details ON awb_mawb_flight_relation.awb_id=awb_details.awb_id
+                          $query = "SELECT awb_details.awb_id, shipper_details.name AS shipper_name, awb_details.consignee_id,
+                                    awb_details.destination_id, awb_details.type, awb_details.pcs, awb_details.`a.weight`, awb_details.`b.weight`,
+                                    awb_details.value, shipper_details.address AS shipper_address, origin_destination_details.short_form AS origin
+                                    FROM awb_details
                                     INNER JOIN shipper_details ON awb_details.shipper_id=shipper_details.shipper_id
                                     INNER JOIN origin_destination_details ON shipper_details.country_id=origin_destination_details.o_id_id
+                                    INNER JOIN awb_mawb_flight_relation ON awb_details.awb_id=awb_mawb_flight_relation.awb_id
                                     WHERE awb_mawb_flight_relation.mawb_id='$mawb_id'";
 
                           $result = $get_mawb->getData($query);
 
                           foreach ($result as $key => $value) {
 
-                            $report_array[$i] = $value['flight_id'];
+                            //check consignee id is existed or new
+                            $consignee_id = $value['consignee_id'];
 
-                            $i++;
+                            if(is_numeric($consignee_id)){
 
-                            $report_array[$i] = $value['awb_id'];
-
-                            $i++;
-
-                            //check if consignee is new or existing
-                            if(is_numeric($value['consignee_id'])){
-
-                              $temp_consignee_id = $value['consignee_id'];
-
-                              $query2 = "SELECT consignee_details.name AS c_name, consignee_details.address AS c_address, origin_destination_details.short_form AS c_s_address,
-                                        origin_destination_details.full_name FROM consignee_details
+                              $query2 = "SELECT consignee_details.name AS consignee_name, consignee_details.address AS consignee_address,
+                                        origin_destination_details.short_form AS c_short FROM consignee_details
                                         INNER JOIN origin_destination_details ON consignee_details.country_id=origin_destination_details.o_id_id
-                                        WHERE consignee_details.consignee_id='$temp_consignee_id'";
+                                        WHERE consignee_details.consignee_id='$consignee_id'";
 
                               $result2 = $get_mawb->getData($query2);
 
                               foreach ($result2 as $key => $value2) {
 
-                                $report_array[$i] = $value2['c_name'];
+                                $consignee_name = $value2['consignee_name'];
 
-                                $i++;
+                                $consignee_address = $value2['consignee_address'];
 
-                                $report_array[$i] = $value2['c_address'];
-
-                                $i++;
-
-                                $report_array[$i] = $value2['c_s_address'];
-
-                                $i++;
-
-                                $report_array[$i] = $value2['full_name'];
-
-                                $i++;
+                                $consignee_short = $value2['c_short'];
 
                               }
 
 
                             }else{
 
-                              $report_array[$i] = $value['consignee_id'];
+                              $consignee_name = $value['consignee_id'];
 
-                              $i++;
+                              $consignee_address = $value['destination_id'];
 
-                              $report_array[$i] = $value['destination_id'];
-
-                              $i++;
+                              $consignee_short = '';
 
 
                             }
 
-
-                            $report_array[$i] = $value['bag_number'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['type'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['pcs'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['a.weight'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['b.weight'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['value'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['s_name'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['s_address'];
-
-                            $i++;
-
-                            $report_array[$i] = $value['s_s_form'];
-
-                            $i++;
+                            echo $counter . "\t" . $value['awb_id'] . "\t" . $value['shipper_name'] . "\t" . $value['shipper_address'] . "\t" . $consignee_name . "\t" . $consignee_address . "\t" . $value['origin'] . "\t" . $consignee_short . "\t" . $value['type'] . "\t" . $value['pcs'] . "\t" . $value['a.weight'] . "\t" . $value['b.weight'] . "\t" . $value['value'] . "\t" . ' ' . "\t" . ' ' . "\t" . 'PREPAID' . "\n";
 
 
-                          }*/
 
-                          /*$result = $excel->excel_generator($query, $user_id, 'user_login');
+                            $counter++;
 
-
-                          //create excel file;
-                          header("Content-Type: application/vnd.ms-excel");
-                          header("Content-disposition: attachment; filename=user_login_details.xls");
-
-                          echo 'IP Address' . "\t" . 'Date' . "\t" . 'Time' . "\n";
-
-                          foreach($result as $key => $res){
-                            echo $res['public_ip'] . "\t" . $res['creation_date'] . "\t" . $res['creation_time'] . "\n";
-                          }*/
+                          }
 
 
 
