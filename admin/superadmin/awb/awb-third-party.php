@@ -125,17 +125,19 @@
 
                           $awb_id = $_GET['b_id'];
 
-                          $query = "SELECT next_branch FROM awb_mawb_flight_relation WHERE awb_id='$awb_id'";
+                          //$query = "SELECT next_branch FROM awb_mawb_flight_relation WHERE awb_id='$awb_id'";
+
+                          $query = "SELECT delivery_status FROM awb_status WHERE awb_id='$awb_id' AND status_active='1'";
 
                           $result = $get_data->getData($query);
 
                           foreach ($result as $key => $res) {
 
-                            $next_branch = $res['next_branch'];
+                            $next_branch = $res['delivery_status'];
 
                           }
 
-                          if($next_branch == 'third_party'){
+                          if($next_branch == 'Third Party'){
 
                             ?>
 
@@ -185,7 +187,7 @@
 
                             <div class="alert bg-red">
 
-                              You can only set Third Party details if Third Party is set as the next destination of this AWB.
+                              You can only set Third Party details if the status is set to Third Party.
 
                             </div>
 

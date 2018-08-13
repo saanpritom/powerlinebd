@@ -126,7 +126,7 @@
 
                           //create excel file header
                           header("Content-Type: application/vnd.ms-excel");
-                          header("Content-disposition: attachment; filename=user_login_details.xls");
+                          header("Content-disposition: attachment; filename=$manifest_number.xls");
 
                           echo 'FROM' . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . "\t" . $manifest_number . "\n";
 

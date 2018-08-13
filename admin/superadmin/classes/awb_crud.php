@@ -333,6 +333,38 @@ class AWBCrudOperation extends DbConfig
     }
 
 
+    public function check_input_match($flight_number, $bag_number, $next_delivery, $mawb_id){
+
+
+      $query = "SELECT DISTINCT flight_id, bag_number, next_branch FROM awb_mawb_flight_relation WHERE mawb_id='$mawb_id'";
+
+      $result = $this->getData($query);
+
+      foreach ($result as $key => $value) {
+
+        $temp_flight = $value['flight_id'];
+
+        $temp_bag = $value['bag_number'];
+
+        $temp_branch = $value['next_branch'];
+
+      }
+
+      if($flight_number == $temp_flight and $bag_number == $temp_bag and $next_delivery == $temp_branch){
+
+        return true;
+
+
+      }else{
+
+        return false;
+
+      }
+
+
+    }
+
+
 
     public function update_mawb_flight($awb_id, $mawb_id, $flight_number, $bag_number, $next_delivery, $user_id){
 
@@ -351,51 +383,83 @@ class AWBCrudOperation extends DbConfig
       if($validity_counter != 2){
 
 
+        $is_all_input_matched = 0;
 
-        //calling the timer fetch function;
-        $this->timer_id = $this->fetch_time();
+        //check if MAWB is already lock or not;
+        if($validity_counter == 1){
 
-        if(is_numeric($this->timer_id)){
+          //now check if the inputed flight, bag, next branch is matched with the previous one
+          $is_all_input_matched = $this->check_input_match($flight_number, $bag_number, $next_delivery, $mawb_id);
 
-          $query = "INSERT INTO `awb_mawb_flight_relation`(`awb_id`, `mawb_id`, `flight_id`, `bag_number`, `next_branch`)
-                    VALUES ('$awb_id', '$mawb_id', '$flight_number', '$bag_number', '$next_delivery')";
+          if($is_all_input_matched){
 
-          if($this->connection->query($query)){
+            $is_all_input_matched = 'matched';
 
-            //update AWB status;
-            //First make previous status inactive
-            $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
+          }else{
+
+            $is_all_input_matched = 'unmatched';
+
+          }
+
+        }
+
+        if($is_all_input_matched == 'matched' or $validity_counter == 0){
+
+
+          //calling the timer fetch function;
+          $this->timer_id = $this->fetch_time();
+
+          if(is_numeric($this->timer_id)){
+
+            $query = "INSERT INTO `awb_mawb_flight_relation`(`awb_id`, `mawb_id`, `flight_id`, `bag_number`, `next_branch`)
+                      VALUES ('$awb_id', '$mawb_id', '$flight_number', '$bag_number', '$next_delivery')";
 
             if($this->connection->query($query)){
 
-              //insert new status
-              $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
-                        VALUES ('$awb_id', '$user_id', '$this->timer_id', 'On the way', '1')";
+              //update AWB status;
+              //First make previous status inactive
+              $query = "UPDATE `awb_status` SET `status_active`='0' WHERE awb_id='$awb_id'";
 
               if($this->connection->query($query)){
 
-                $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
+                //insert new status
+                $query = "INSERT INTO `awb_status`(`awb_id`, `user_id`, `timer_id`, `delivery_status`, `status_active`)
+                          VALUES ('$awb_id', '$user_id', '$this->timer_id', 'On the way', '1')";
 
                 if($this->connection->query($query)){
 
-                  //update MAWB validity
-                  $query = "UPDATE `mawb_validity_counter` SET `counter`='1' WHERE mawb_id='$mawb_id'";
+                  $query = "UPDATE `awb_lock` SET `lock_status`='locked' WHERE awb_id='$awb_id'";
 
                   if($this->connection->query($query)){
 
-                    $report_data = 'MAWB and Flight of AWB Number ' . $awb_id . ' is updated and locked by User';
+                    //update MAWB validity
+                    $query = "UPDATE `mawb_validity_counter` SET `counter`='1' WHERE mawb_id='$mawb_id'";
 
-                    $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
+                    if($this->connection->query($query)){
 
-                    if($report_status){
+                      $report_data = 'MAWB and Flight of AWB Number ' . $awb_id . ' is updated and locked by User';
 
-                      $this->status_message = 'Successfully updated MAWB, Flight and Next Destination';
+                      $report_status = $this->log_report_insert($user_id, $report_data, $this->timer_id);
 
-                      return $this->status_message;
+                      if($report_status){
+
+                        $this->status_message = 'Successfully updated MAWB, Flight and Next Destination';
+
+                        return $this->status_message;
+
+                      }else{
+
+                        $this->status_message = 'AWB is updated but log report cannot be generated';
+
+                        return $this->status_message;
+
+
+                      }
+
 
                     }else{
 
-                      $this->status_message = 'AWB is updated but log report cannot be generated';
+                      $this->status_message = 'MAWB validity cannot be updated';
 
                       return $this->status_message;
 
@@ -403,20 +467,19 @@ class AWBCrudOperation extends DbConfig
                     }
 
 
+
                   }else{
 
-                    $this->status_message = 'MAWB validity cannot be updated';
+                    $this->status_message = 'AWB is updated but lock status cannot be changed';
 
                     return $this->status_message;
 
 
                   }
 
-
-
                 }else{
 
-                  $this->status_message = 'AWB is updated but lock status cannot be changed';
+                  $this->status_message = 'AWB is updated but new status cannot be changed';
 
                   return $this->status_message;
 
@@ -425,7 +488,7 @@ class AWBCrudOperation extends DbConfig
 
               }else{
 
-                $this->status_message = 'AWB is updated but new status cannot be changed';
+                $this->status_message = 'AWB is updated but previous status cannot be changed';
 
                 return $this->status_message;
 
@@ -434,16 +497,17 @@ class AWBCrudOperation extends DbConfig
 
             }else{
 
-              $this->status_message = 'AWB is updated but previous status cannot be changed';
+              $this->status_message = 'Problem updating MAWB and Flight. Please try again';
 
               return $this->status_message;
 
 
             }
 
+
           }else{
 
-            $this->status_message = 'Problem updating MAWB and Flight. Please try again';
+            $this->status_message = 'Problem updating. Please try again';
 
             return $this->status_message;
 
@@ -451,14 +515,23 @@ class AWBCrudOperation extends DbConfig
           }
 
 
+        }elseif($is_all_input_matched == 'unmatched'){
+
+          $this->status_message = 'This MAWB has different Flight, Bag and Next Destination assigned. You cannot use it';
+
+          return $this->status_message;
+
+
         }else{
 
-          $this->status_message = 'Problem updating. Please try again';
+          $this->status_message = 'Problem matching data. Please try again';
 
           return $this->status_message;
 
 
         }
+
+
 
 
 

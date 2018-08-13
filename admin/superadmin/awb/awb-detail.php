@@ -87,7 +87,22 @@
                                   <button type="button" data-color="deep-orange" data-toggle="modal" data-target="#mdModal" class="btn bg-deep-orange waves-effect">Delete</button>
                                   <?php
                                 }else{
-                                  ?>
+                                  if($get_awb->check_thirdparty_exists($awb_id)){
+
+                                    ?>
+                                    <a href="/powerlinebd/admin/superadmin/awb/third-party-edit/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Edit Third Party Information</a>
+                                    <?php
+
+                                  }else{
+
+                                    ?>
+
+                                    <a href="/powerlinebd/admin/superadmin/awb/awb-third-party/<?php echo $awb_id ?>" type="button" class="btn bg-red waves-effect">Add Third Party Delivery</a>
+
+                                    <?php
+
+                                  }
+                                    ?>
                                   <a href="#" type="button" class="btn bg-red waves-effect">Locked</a>
                                   <a href="/powerlinebd/admin/superadmin/awb/unlock_awb/<?php echo $awb_id ?>" type="button" class="btn bg-blue waves-effect">Unlock AWB</a>
                                   <?php

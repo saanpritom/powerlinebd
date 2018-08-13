@@ -108,6 +108,8 @@ class DashboardData extends DbConfig
                 INNER JOIN awb_details ON awb_details.shipper_id=shipper_details.shipper_id
                 WHERE 1 GROUP BY awb_id ORDER BY COUNT(awb_details.shipper_id) DESC LIMIT 5";
 
+                echo $query;
+
       $result = $this->getData($query);
 
       foreach ($result as $key => $value) {
@@ -216,7 +218,7 @@ class DashboardData extends DbConfig
           $query2 = "SELECT consignee_details.address AS c_name FROM consignee_details INNER JOIN awb_details
                       ON consignee_details.consignee_id=awb_details.consignee_id WHERE awb_details.consignee_id='$temp_consignee'";
 
-                      
+
 
           $result2 = $this->getData($query2);
 
